@@ -5,7 +5,7 @@
 title: initbiz.newsletter::lang.menu.messages
 list: ~/plugins/initbiz/newsletter/models/messages/columns.yaml
 modelClass: Initbiz\Newsletter\Models\Messages
-recordUrl: initbiz/newsletter/messages/update/:slug
+recordUrl: initbiz/newsletter/messages/update/:id
 noRecordsMessage: backend::lang.list.no_records
 
 recordsPerPage: 15

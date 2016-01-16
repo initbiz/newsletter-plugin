@@ -9,9 +9,9 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('initbiz_newsletter_messages', function($table)
         {
-//            $table->engine = 'InnoDB';
+            $table->increments('id');
             $table->string('title', 100);
-            $table->string('slug', 100)->unique();
+            $table->string('slug', 100)->index();
             $table->text('content');
             $table->string('sent', 1)->default(0);
             $table->timestamps();

@@ -16,6 +16,7 @@ fields:
             field: title
             type: slug
 
+
     content:
         label: initbiz.newsletter::lang.form.content
         required: true
