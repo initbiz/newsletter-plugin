@@ -1,0 +1,19 @@
+# ===================================
+#  List Behavior Config
+# ===================================
+
+title: initbiz.newsletter::lang.menu.subscribers
+list: ~/plugins/initbiz/newsletter/models/subscribers/columns.yaml
+modelClass: Initbiz\Newsletter\Models\Subscribers
+noRecordsMessage: backend::lang.list.no_records
+
+recordsPerPage: 15
+showCheckboxes: true
+showSetup: true
+
+toolbar:
+    buttons: list_toolbar
+
+defaultSort:
+    column: email
+    direction: desc

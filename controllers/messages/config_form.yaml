@@ -1,0 +1,16 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: initbiz.newsletter::lang.title.messages
+form: ~/plugins/initbiz/newsletter/models/messages/fields.yaml
+modelClass: Initbiz\Newsletter\Models\Messages
+defaultRedirect: initbiz/newsletter/messages
+
+create:
+    redirect: initbiz/newsletter/messages
+    redirectClose: initbiz/newsletter/messages
+
+update:
+    redirect: initbiz/newsletter/messages
+    redirectClose: initbiz/newsletter/messages

@@ -1,0 +1,8 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: initbiz.newsletter::lang.title.subscribers
+form: ~/plugins/initbiz/newsletter/models/subscribers/fields.yaml
+modelClass: Initbiz\Newsletter\Models\Subscribers
+defaultRedirect: initbiz/newsletter/subscribers
