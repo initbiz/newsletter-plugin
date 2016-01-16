@@ -1,0 +1,28 @@
+# ===================================
+#  Field Definitions
+# ===================================
+
+fields:
+    title:
+        label: indikator.news::lang.form.title
+        required: true
+        span: auto
+
+    slug:
+        label: 'Slug'
+        required: true
+        span: auto
+        preset:
+            field: title
+            type: slug
+
+    content:
+        label: indikator.news::lang.form.content
+        required: true
+        type: richeditor
+        size: large
+
+    sent:
+        label: indikator.news::lang.form.send
+        type: switch
+        default: false

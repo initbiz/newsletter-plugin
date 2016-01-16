@@ -1,0 +1,31 @@
+# ===================================
+#  Column Definitions
+# ===================================
+
+columns:
+
+    title:
+        label: 'Temat'
+        searchable: true
+
+    slug:
+        label: indikator.news::lang.form.slug
+        searchable: true
+        invisible: true
+
+    sent:
+        label: 'Status'
+        searchable: true
+        type: integer
+
+    created_at:
+        label: indikator.news::lang.form.created
+        searchable: true
+        type: datetime
+        format: Y-m-d G:i
+
+    updated_at:
+        label: indikator.news::lang.form.updated
+        searchable: true
+        type: datetime
+        format: Y-m-d G:i

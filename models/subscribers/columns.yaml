@@ -1,0 +1,19 @@
+# ===================================
+#  Column Definitions
+# ===================================
+
+columns:
+
+    email:
+        label: 'E-mail'
+        searchable: true
+
+    confirmed:
+        label: 'Potwierdzony'
+        type: switch
+        searchable: true
+
+    agreed:
+        label: 'Zgoda'
+        type: switch
+        searchable: true
