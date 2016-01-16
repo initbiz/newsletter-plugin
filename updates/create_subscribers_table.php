@@ -13,7 +13,7 @@ class CreateSubscribersTable extends Migration
             $table->string('email', 100);
             $table->boolean('confirmed',false);
             $table->boolean('agreed',false);
-            $table->string('code',40);
+            $table->string('token',40);
 //            $table->string('created', 1)->default(1);
             $table->timestamps();
         });

@@ -10,7 +10,7 @@
         <!--<input type="checkbox" required>-->
     <!--</div>-->
     <!--<div class="col-md-11 text-left">-->
-        <!--<small>{% content 'regulacje-prawne.txt' %}</small>-->
+
     <!--</div>-->
 
     <!--<div class="col-md-12 input-group" id="notifications">-->
@@ -19,21 +19,29 @@
         <!--<div class="alert alert-danger collapse" id="failed" role="alert">Błąd. Coś poszło nie tak.</div>-->
     <!--</div>-->
 <!--</form>-->
-<!--<div class="row">-->
-    <!--<div class="col-md-10 col-md-offset-1">-->
-        <!--<form action="">-->
-            <!--<input type="hidden" value="{{ email }}" name="email">-->
-            <!--<input type="hidden" value="{{ code }}" name="code">-->
-            <!--<div class="input-group">-->
-                <!--<input type="text" name="email" class="no-auto-focus" placeholder="Email" required>-->
-        <!--<span class="input-group-btn">-->
-            <!--<input type="submit" class="btn" value="Subskrybuj">-->
-        <!--</span>-->
-            <!--</div>-->
-        <!--</form>-->
-    <!--</div>-->
-<!--</div>-->
-
-<h4>{{ mail }}
-    {{ code }}</h4>
-
+<div class="row">
+    <div class="col-md-10 col-md-offset-1 well">
+        <form>
+            <input type="hidden" value="{{ email }}" name="email">
+            <input type="hidden" value="{{ token }}" name="token">
+            <div class="input-group">
+                <input type="checkbox" name="checkedData[]" value="przetwarzanieDanych" checked> Przetwarzanie danych
+                <span class="input-group-btn">
+                    <input type="submit" class="btn" value="Zapisz">
+                </span>
+            </div>
+        </form>
+        <button data-request="onUnsubscribe"
+                data-trigger-type="enable"
+                data-trigger-action="enable"
+                onclick="$(this).data('request-data', { 'mail' : '{{mail}}', 'token' : '{{ token }}' })"
+                data-request-success="unsubscribe(data)">
+            Wypisz się
+        </button>
+    </div>
+    <div class="col-md-12 input-group" id="notifications">
+        <div class="alert alert-success collapse" id="success" role="alert">Usunięto.</div>
+        <div class="alert alert-warning collapse" id="taken" role="alert">Ups!</div>
+        <div class="alert alert-danger collapse" id="failed" role="alert">Błąd. Coś poszło nie tak.</div>
+    </div>
+</div>

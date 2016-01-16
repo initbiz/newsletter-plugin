@@ -4,7 +4,7 @@
 
 fields:
     title:
-        label: indikator.news::lang.form.title
+        label: initbiz.newsletter::lang.form.title
         required: true
         span: auto
 
@@ -17,12 +17,12 @@ fields:
             type: slug
 
     content:
-        label: indikator.news::lang.form.content
+        label: initbiz.newsletter::lang.form.content
         required: true
         type: richeditor
         size: large
 
     sent:
-        label: indikator.news::lang.form.send
+        label: initbiz.newsletter::lang.form.send
         type: switch
         default: false

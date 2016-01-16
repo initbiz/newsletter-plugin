@@ -3,21 +3,6 @@
 # ===================================
 
 fields:
-    email:
-        label: 'Email'
-        required: true
-        span: auto
 
-    confirmed:
-        label: 'Potwierdzony'
-        type: dropdown
-        options:
-            1: 'Tak'
-            2: indikator.news::lang.form.status_hide
-            3: indikator.news::lang.form.status_draft
-        span: auto
 
-    agreed:
-        label: 'Zgoda'
-        span: auto
 

@@ -17,3 +17,6 @@ columns:
         label: 'Zgoda'
         type: switch
         searchable: true
+
+    created_at:
+        label: 'Dołączył'

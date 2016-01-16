@@ -17,10 +17,10 @@ class NewsletterConfirm extends ComponentBase {
     public function defineProperties()
     {
         return [
-            'code' => [
+            'token' => [
                 'title'       => 'Kod subskrybenta',
                 'description' => 'Kod subskrybenta',
-                'default'     => '{{ :code }}',
+                'default'     => '{{ :token }}',
                 'type'        => 'string'
             ],
             'mail' => [
@@ -32,17 +32,14 @@ class NewsletterConfirm extends ComponentBase {
         ];
     }
 
-    public function onRun()
-    {
-        $this->code = $this->page['code'] = $this->property('code');
+    public function onRun() {
+        $this->addJs('assets/js/custom-newsletter.js');
+        $this->code = $this->page['token'] = $this->property('token');
         $this->mail = $this->page['mail'] = $this->property('mail');
     }
 
-    protected function loadPost()
-    {
-        $slug = $this->property('slug');
-        $post = NewsPost::isPublished()->where('slug', $slug)->first();
-
-        return $post;
+    public function onUnsubscribe() {
+        return ['status' => (Subscriber::where('token', '=',post('token'))->where('email', '=', post('mail'))->delete())? 'success' : 'failed'];
     }
+
 }

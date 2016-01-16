@@ -9,7 +9,7 @@ columns:
         searchable: true
 
     slug:
-        label: indikator.news::lang.form.slug
+        label: initbiz.newsletter::lang.form.slug
         searchable: true
         invisible: true
 
@@ -19,13 +19,13 @@ columns:
         type: integer
 
     created_at:
-        label: indikator.news::lang.form.created
+        label: initbiz.newsletter::lang.form.created
         searchable: true
         type: datetime
         format: Y-m-d G:i
 
     updated_at:
-        label: indikator.news::lang.form.updated
+        label: initbiz.newsletter::lang.form.updated
         searchable: true
         type: datetime
         format: Y-m-d G:i
