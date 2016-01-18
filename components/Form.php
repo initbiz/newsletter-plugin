@@ -3,6 +3,7 @@
 use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
 use Initbiz\Newsletter\Models\Subscribers as Subscriber;
+use Mail;
 
 class Form extends ComponentBase {
 
@@ -18,13 +19,19 @@ class Form extends ComponentBase {
     }
 
     public function onSubscription() {
-        $data = post();
-
+        $hash = hash('sha1', mt_rand(1,100000) . post('email'));
         $subscriber = new Subscriber();
         $subscriber->email = post('email');
         $subscriber->confirmed = false;
         $subscriber->agreed = (isset(post('formCheck')[1]))? true: false;
-        $subscriber->token = hash('sha1', mt_rand(1,100000) . post('email'));
+        $subscriber->token = $hash;
+
+
+        Mail::send('initbiz.newsletter::mail.subscription', ['email' => post('email'), 'token' => $hash],
+            function($message)
+        {
+            $message->to(post('email'), "Subskrybent")->subject('Potwierdź subskrypcję');
+        });
 
         return ['status' =>  ($subscriber->save())? 'success' : 'fail'];
     }

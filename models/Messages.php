@@ -48,7 +48,7 @@ class Messages extends Model {
 
                 $this->email = $subscriber->email;
 
-                Mail::send('indikator.news::mail.email_'.$locale, $params, function($message)
+                Mail::send('initbiz.newsletter::mail.email_'.$locale, $params, function($message)
                 {
                     $message->to($this->email, "Subskrybent")->subject($this->title);
                 });
