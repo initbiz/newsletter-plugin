@@ -48,4 +48,7 @@ return [
         'agreement' => 'Agreement',
         'joined' => 'Joined',
     ],
+    'flash' => [
+        'delete' => 'Are you sure you want to delete selected items?',
+    ],
 ];

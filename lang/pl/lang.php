@@ -48,4 +48,7 @@ return [
         'agreement' => 'Zgoda',
         'joined' => 'Dołączył',
     ],
+    'flash' => [
+        'delete' => 'Czy jesteś pewny że chcesz usunąć zaznaczone elementy?',
+    ],
 ];
