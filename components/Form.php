@@ -26,8 +26,12 @@ class Form extends ComponentBase {
         $subscriber->agreed = (isset(post('formCheck')[1]))? true: false;
         $subscriber->token = $hash;
 
-
-        Mail::send('initbiz.newsletter::mail.subscription', ['email' => post('email'), 'token' => $hash],
+        Mail::send('initbiz.newsletter::mail.subscription',
+            [
+                'email' => post('email'),
+                'token' => $hash,
+                'path'  => url() . '/' . $this->page->baseFileName
+            ],
             function($message)
         {
             $message->to(post('email'), "Subskrybent")->subject('Potwierdź subskrypcję');
