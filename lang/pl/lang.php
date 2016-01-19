@@ -17,9 +17,8 @@ return [
         'subscribers' => 'Subskrybenci',
     ],
     'permission' => [
-        'newsletter' => 'Zarządzanie newsletterem',
         'messages' => 'Zarządzanie wiadomościami',
-        'subscribers' => 'Zarządzanie subskrybentów',
+        'subscribers' => 'Zarządzanie subskrybentami',
     ],
     'settings' => [
         'label' => 'Newsletter',
@@ -29,14 +28,12 @@ return [
     ],
     'new' => [
         'messages' => 'Nowa wiadomość',
-        'subscribers' => 'Nowy subskrybent',
     ],
     'messages' => [
         'title' => 'Tytuł wiadomości',
         'content' => 'Treść wiadomości',
         'slug' => 'Slug',
         'send' => 'Wyślij wiadomość do subskrybentów',
-        'submit' => 'Zapisz się!',
     ],
     'columns' => [
         'newButton' => 'Dodaj wiadomość',
@@ -48,7 +45,6 @@ return [
     ],
     'userColumns' => [
         'email' => 'E-mail',
-        'confirmed' => 'Potwierdzony',
         'agreement' => 'Zgoda',
         'joined' => 'Dołączył',
     ],
