@@ -3,6 +3,7 @@
 use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
 use Initbiz\Newsletter\Models\Subscribers as Subscriber;
+use Initbiz\Newsletter\Models\Settings;
 use Mail;
 
 class Form extends ComponentBase {
@@ -18,6 +19,7 @@ class Form extends ComponentBase {
         $this->addJs('assets/js/custom-newsletter.js');
     }
 
+
     public function onSubscription() {
         $hash = hash('sha1', mt_rand(1,100000) . post('email'));
         $subscriber = new Subscriber();
@@ -28,9 +30,7 @@ class Form extends ComponentBase {
 
         Mail::send('initbiz.newsletter::mail.subscription',
             [
-                'email' => post('email'),
-                'token' => $hash,
-                'path'  => url() . '/' . $this->page->baseFileName
+                'activationLink' => url() . '/' . Settings::get('managementpage') . '/'.post('email') . '/' .$hash
             ],
             function($message)
         {

@@ -60,6 +60,15 @@ class Plugin extends PluginBase
         ];
     }
 
+
+    public function registerMailTemplates()
+    {
+        return [
+            'initbiz.newsletter::mail.message' => 'E-mail',
+        ];
+    }
+
+
     public function registerPermissions()
     {
         return [
@@ -70,6 +79,19 @@ class Plugin extends PluginBase
             'initbiz.newsletter.subscribers'   =>  [
                 'tab'   =>  'initbiz.newsletter::lang.menu.newsletter',
                 'label' =>  'initbiz.newsletter::lang.permission.subscribers'
+            ]
+        ];
+    }
+
+    public function registerSettings()
+    {
+        return [
+            'settings' => [
+                'label'       => 'initbiz.newsletter::lang.strings.settings_label',
+                'description' => 'initbiz.newsletter::lang.strings.settings_desc',
+                'category'    => 'Newsletter',
+                'icon'        => 'icon-cog',
+                'class'       => 'Initbiz\Newsletter\Models\Settings'
             ]
         ];
     }

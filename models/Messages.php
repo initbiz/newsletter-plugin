@@ -6,6 +6,7 @@ use Str;
 use App;
 use DB;
 use Mail;
+use Initbiz\Newsletter\Models\Settings;
 
 class Messages extends Model {
 
@@ -19,41 +20,28 @@ class Messages extends Model {
         'content' => 'required'
     ];
 
-
-//    public function beforeValidate() {
-//        $invalid = DB::table('initbiz_newsletter_messages')->where('slug', '=', $this->slug)->first();
-//        if ($invalid) {
-//            throw new \ValidationException(['unique_attribute' => 'Podany slug już istnieje!']);
-//        }
-//    }
-
     public function beforeSave() {
         if (!isset($this->slug) || empty($this->slug)) {
             $this->slug = Str::slug($this->title);
         }
 
         if ($this->sent && $this->sent != '') {
-            $locale = App::getLocale();
-
-            if (!File::exists('plugins/initbiz/newsletter/views/mail/email_'.$locale.'.htm')) {
-                $locale = 'en';
-            }
 
             $subscribers = DB::table('initbiz_newsletter_subscribers')->get();
 
             foreach ($subscribers as $subscriber) {
                 $params = [
-                    'email' => $subscriber->email
+                    'title' => $this->title,
+                    'content' => $this->content,
+                    'newsletterLink' =>  url() . '/' . Settings::get('managementpage') . '/'. $subscriber->email. '/' . $subscriber->token
                 ];
 
                 $this->email = $subscriber->email;
 
-                Mail::send('initbiz.newsletter::mail.email_'.$locale, $params, function($message)
+                Mail::send('initbiz.newsletter::mail.message', $params, function($message)
                 {
                     $message->to($this->email, "Subskrybent")->subject($this->title);
                 });
-
-//                DB::table('news_subscribers')->where('id', $user->id)->update(array('statistics' => ($user->statistics + 1)));
             }
 
             unset($this->email, $this->name);

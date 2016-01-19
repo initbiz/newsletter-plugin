@@ -1,0 +1,10 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+  managementpage:
+    label: laminsanneh.flexicontact::lang.strings.recipient_email
+    comment: laminsanneh.flexicontact::lang.strings.recipient_email_comment
+    description: laminsanneh.flexicontact::lang.strings.recipient_email_desc
+    type: dropdown
