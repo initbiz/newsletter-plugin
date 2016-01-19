@@ -8,11 +8,6 @@ columns:
         label: initbiz.newsletter::lang.userColumns.email
         searchable: true
 
-    confirmed:
-        label: initbiz.newsletter::lang.userColumns.confirmed
-        type: switch
-        searchable: true
-
     agreed:
         label: initbiz.newsletter::lang.userColumns.agreement
         type: switch

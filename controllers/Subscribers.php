@@ -27,6 +27,9 @@ class Subscribers extends Controller {
         BackendMenu::setContext('Initbiz.Newsletter', 'newsletter', 'subscribers');
     }
 
+    public function listExtendQuery($query) {
+        $query->where('confirmed', '=', 'true');
+    }
 
 //    public function onRemoveMessages()
 //    {
