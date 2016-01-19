@@ -87,8 +87,8 @@ class Plugin extends PluginBase
     {
         return [
             'settings' => [
-                'label'       => 'initbiz.newsletter::lang.strings.settings_label',
-                'description' => 'initbiz.newsletter::lang.strings.settings_desc',
+                'label'       => 'initbiz.newsletter::lang.settings.label',
+                'description' => 'initbiz.newsletter::lang.settings.description',
                 'category'    => 'Newsletter',
                 'icon'        => 'icon-cog',
                 'class'       => 'Initbiz\Newsletter\Models\Settings'

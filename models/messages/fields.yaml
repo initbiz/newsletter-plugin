@@ -4,12 +4,12 @@
 
 fields:
     title:
-        label: initbiz.newsletter::lang.form.title
+        label: initbiz.newsletter::lang.messages.title
         required: true
         span: auto
 
     slug:
-        label: 'Slug'
+        label: initbiz.newsletter::lang.messages.slug
         required: true
         span: auto
         preset:
@@ -18,12 +18,12 @@ fields:
 
 
     content:
-        label: initbiz.newsletter::lang.form.content
+        label: initbiz.newsletter::lang.messages.content
         required: true
         type: richeditor
         size: large
 
     sent:
-        label: initbiz.newsletter::lang.form.send
+        label: initbiz.newsletter::lang.messages.send
         type: switch
         default: false

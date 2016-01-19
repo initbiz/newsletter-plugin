@@ -5,27 +5,27 @@
 columns:
 
     title:
-        label: 'Temat'
+        label: initbiz.newsletter::lang.columns.title
         searchable: true
 
     slug:
-        label: initbiz.newsletter::lang.form.slug
+        label: initbiz.newsletter::lang.columns.slug
         searchable: true
         invisible: true
 
     sent:
-        label: 'Status'
+        label: initbiz.newsletter::lang.columns.status
         searchable: true
         type: integer
 
     created_at:
-        label: initbiz.newsletter::lang.form.created
+        label: initbiz.newsletter::lang.columns.created
         searchable: true
         type: datetime
         format: Y-m-d G:i
 
     updated_at:
-        label: initbiz.newsletter::lang.form.updated
+        label: initbiz.newsletter::lang.columns.updated
         searchable: true
         type: datetime
         format: Y-m-d G:i

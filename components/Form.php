@@ -15,6 +15,7 @@ class Form extends ComponentBase {
         ];
     }
 
+
     public function onRun() {
         $this->addJs('assets/js/custom-newsletter.js');
     }

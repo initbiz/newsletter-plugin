@@ -5,18 +5,18 @@
 columns:
 
     email:
-        label: 'E-mail'
+        label: initbiz.newsletter::lang.userColumns.email
         searchable: true
 
     confirmed:
-        label: 'Potwierdzony'
+        label: initbiz.newsletter::lang.userColumns.confirmed
         type: switch
         searchable: true
 
     agreed:
-        label: 'Zgoda'
+        label: initbiz.newsletter::lang.userColumns.agreement
         type: switch
         searchable: true
 
     created_at:
-        label: 'Dołączył'
+        label: initbiz.newsletter::lang.userColumns.joined

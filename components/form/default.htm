@@ -2,7 +2,7 @@
     <div class="input-group">
         <input type="text" name="email" class="no-auto-focus" placeholder="Email" required>
         <span class="input-group-btn">
-            <input type="submit" class="btn" value="Subskrybuj">
+            <input type="submit" class="btn" value="Zapisz się">
         </span>
     </div>
 
@@ -10,14 +10,14 @@
         <input type="checkbox" name="formCheck[]" value="rp" required>
     </div>
     <div class="col-md-11 text-left">
-        <small>Regulacje prawne</small>
+        <small>{% content 'newsletter_required_checkbox' %}</small>
     </div>
 
     <div class="col-md-1">
         <input type="checkbox" name="formCheck[]" value="pd">
     </div>
     <div class="col-md-11 text-left">
-        <small>Przetwarzanie danych</small>
+        <small>{% content 'newsletter_optional_checkbox' %}</small>
     </div>
 
     <div class="col-md-12 input-group" id="notifications">
