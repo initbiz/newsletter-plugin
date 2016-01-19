@@ -64,7 +64,8 @@ class Plugin extends PluginBase
     public function registerMailTemplates()
     {
         return [
-            'initbiz.newsletter::mail.message' => 'E-mail',
+            'initbiz.newsletter::mail.message' => 'Wiadomość wysyłana subskrybentom',
+            'initbiz.newsletter::mail.subscription' => 'Potwierdzenie zapisania do newslettera',
         ];
     }
 

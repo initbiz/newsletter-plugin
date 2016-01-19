@@ -39,7 +39,7 @@ return [
         'newButton' => 'Add message',
         'title' => 'Title',
         'slug' => 'Slug',
-        'status' => 'Status',
+        'sent' => 'Sent',
         'created' => 'Created',
         'updated' => 'Updated',
     ],

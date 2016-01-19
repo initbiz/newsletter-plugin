@@ -39,7 +39,7 @@ return [
         'newButton' => 'Dodaj wiadomość',
         'title' => 'Tytuł',
         'slug' => 'Slug',
-        'status' => 'Status',
+        'sent' => 'Wysłano',
         'created' => 'Data utworzenia',
         'updated' => 'Ostatnia aktualizacja',
     ],

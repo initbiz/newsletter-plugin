@@ -1,12 +1,12 @@
-subject = "Hírlevél"
+subject = "Newslette"
 ==
-
-<p>Kedves {{ name }}!</p>
-<p>Új bejegyzés a weboldalunkon:</p>
-<br>
-<p><em>{{ title }}</em><br>
-{{ introductory|raw }}</p>
-<p>www.weboldal.hu/hirek/{{ slug }}</p>
-<br>
-<p>Üdvözlettel:<br>
-A Szerkesztők</p>
+<h1>{{ title }}</h1>
+{{ content|raw }}</p>
+<hr>
+<small>
+    <a href="{{ newsletterLink }}"> Kliknij tutaj aby wypisać się z newslettera.</a>
+    Lub przekopiuj poniższy link do przeglądarki:
+    <pre>
+        {{ newsletterLink }}
+    </pre>
+</small>

@@ -14,9 +14,9 @@ columns:
         invisible: true
 
     sent:
-        label: initbiz.newsletter::lang.columns.status
+        label: initbiz.newsletter::lang.columns.sent
         searchable: true
-        type: integer
+        type: switch
 
     created_at:
         label: initbiz.newsletter::lang.columns.created
