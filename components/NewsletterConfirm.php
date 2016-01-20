@@ -38,12 +38,12 @@ class NewsletterConfirm extends ComponentBase {
         $this->token = $this->page['token'] = $this->property('token');
         $this->mail = $this->page['mail'] = $this->property('mail');
 
-        $this->page['subscriberExist'] = Subscriber::where('email', '=',$this->property('mail'))->where('token', '=', $this->property('token'))->get();
-
+        $this->page['subscriberExist'] = $this->checkIfExist($this->property('mail'),$this->property('token'));
+        $this->page['confirmed'] = true;
 
         if($this->checkIfExist($this->property('mail'), $this->property('token'))) {
-            if(!Subscriber::where('email', '=',$this->property('mail'))->first()->confirmed) {
-                $this->activate($this->property('mail'));
+            if(!Subscriber::where('email', '=',$this->property('mail'))->where('token', '=', $this->property('token'))->first()->confirmed) {
+                $this->activate($this->property('mail'),$this->property('token'));
             }
         }
     }
@@ -52,9 +52,10 @@ class NewsletterConfirm extends ComponentBase {
         return ['status' => (Subscriber::where('token', '=',post('token'))->where('email', '=', post('mail'))->delete())? 'success' : 'failed'];
     }
 
-    public function activate($email) {
-        Subscriber::where('email', '=',$email)->update(['confirmed' => true]);
+    public function activate($email, $token) {
+        Subscriber::where('email', '=',$email)->where('token', '=', $token)->update(['confirmed' => true]);
         $this->page['confirmedBox'] = "Dziękujemy za potwierdzenie subskrybcji";
+        $this->page['confirmed'] = false;
     }
 
     public function checkIfExist($email, $token) {
