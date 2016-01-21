@@ -25,6 +25,8 @@ return [
         'description' => 'Newsletter settings',
         'managementpageLabel' => 'Webpage for newsletter managing',
         'managementpageDesc' => 'Webpage where newsletter managing component is located',
+        'requiredcheckbox' => 'Text that will be displayed next to required checkbox',
+        'optionalcheckbox' => 'Text that will be displayed next to optional checkbox',
     ],
     'new' => [
         'messages' => 'New message',
@@ -50,5 +52,17 @@ return [
     ],
     'flash' => [
         'delete' => 'Are you sure you want to delete selected items?',
+	'deleted' => 'Succesfully deleted selected items',
+    ],
+    'token' => [
+        'title' => 'Subscriber unique code',
+        'description' => 'Code that subscriber will get and can use to authorize'
+    ],
+    'email' => [
+        'title' => 'Subscribers e-mail address',
+        'description' => 'Subscribers e-mail address'
+    ],
+    'confirmedbox' => [
+        'message' => 'Thank you for signing up to our newsletter'
     ],
 ];

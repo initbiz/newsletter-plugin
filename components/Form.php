@@ -18,6 +18,9 @@ class Form extends ComponentBase {
 
     public function onRun() {
         $this->addJs('assets/js/custom-newsletter.js');
+        $this->page['requiredcheckbox'] = Settings::get('requiredcheckbox');
+        $this->page['optionalcheckbox'] = Settings::get('optionalcheckbox');
+
     }
 
 

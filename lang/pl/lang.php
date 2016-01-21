@@ -25,6 +25,8 @@ return [
         'description' => 'Ustawienia newslettera',
         'managementpageLabel' => 'Strona zarządzania newsletterem',
         'managementpageDesc' => 'Strona na której został osadzony komponent zarządzający newsletterem',
+        'requiredcheckbox' => 'Tekst, który pojawi się przy wymaganym checkboksie',
+        'optionalcheckbox' => 'Tekst, który pojawi się przy opcjonalnym checkboksie',
     ],
     'new' => [
         'messages' => 'Nowa wiadomość',
@@ -50,7 +52,7 @@ return [
     ],
     'flash' => [
         'delete' => 'Czy jesteś pewny że chcesz usunąć zaznaczone elementy?',
-        'deleted' => 'Usunięto wybrane elementy',
+	'deleted' => 'Usunięto wybrane elementy',
     ],
     'token' => [
         'title' => 'Kod subskrybenta',

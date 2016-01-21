@@ -10,14 +10,18 @@
         <input type="checkbox" name="formCheck[]" value="rp" required>
     </div>
     <div class="col-md-11 text-left">
-        <small>{% content 'newsletter_required_checkbox' %}</small>
+        <small>
+            {{ requiredcheckbox|raw }}
+        </small>
     </div>
 
     <div class="col-md-1">
         <input type="checkbox" name="formCheck[]" value="pd">
     </div>
     <div class="col-md-11 text-left">
-        <small>{% content 'newsletter_optional_checkbox' %}</small>
+        <small>
+            {{ optionalcheckbox|raw }}
+    	</small>
     </div>
 
     <div class="col-md-12 input-group" id="notifications">

@@ -3,7 +3,15 @@
 # ===================================
 
 fields:
-  managementpage:
-    label: initbiz.newsletter::lang.settings.managementpageLabel
-    comment: initbiz.newsletter::lang.settings.managementpageDesc
-    type: dropdown
+    managementpage:
+        label: initbiz.newsletter::lang.settings.managementpageLabel
+        comment: initbiz.newsletter::lang.settings.managementpageDesc
+        type: dropdown
+
+    requiredcheckbox:
+        label: initbiz.newsletter::lang.settings.requiredcheckbox
+        type: richeditor
+
+    optionalcheckbox:
+        label: initbiz.newsletter::lang.settings.optionalcheckbox
+        type: richeditor
