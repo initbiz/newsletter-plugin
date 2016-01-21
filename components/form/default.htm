@@ -2,7 +2,7 @@
     <div class="input-group">
         <input type="text" name="email" class="no-auto-focus" placeholder="Email" required>
         <span class="input-group-btn">
-            <input type="submit" class="btn" value="Zapisz się">
+            <input type="submit" class="btn" value="{{ button_text }}">
         </span>
     </div>
 
@@ -11,7 +11,7 @@
     </div>
     <div class="col-md-11 text-left">
         <small>
-            {{ requiredcheckbox|raw }}
+            {{ required_checkbox|raw }}
         </small>
     </div>
 
@@ -20,13 +20,12 @@
     </div>
     <div class="col-md-11 text-left">
         <small>
-            {{ optionalcheckbox|raw }}
+            {{ optional_checkbox|raw }}
     	</small>
     </div>
 
     <div class="col-md-12 input-group" id="notifications">
-        <div class="alert alert-success collapse" id="success" role="alert">Dziękujemy za zapisanie się do newslettera!</div>
-        <div class="alert alert-warning collapse" id="taken" role="alert">Ups! Twój email znajduje się w naszej bazie.</div>
-        <div class="alert alert-danger collapse" id="failed" role="alert">Błąd. Coś poszło nie tak.</div>
+        <div class="alert alert-success collapse" id="success" role="alert">{{ sign_up_thanks|raw }}</div>
+        <div class="alert alert-danger collapse" id="failed" role="alert">{{ sign_up_error|raw }}</div>
     </div>
 </form>

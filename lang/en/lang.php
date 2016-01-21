@@ -23,10 +23,10 @@ return [
     'settings' => [
         'label' => 'Newsletter',
         'description' => 'Newsletter settings',
-        'managementpageLabel' => 'Webpage for newsletter managing',
-        'managementpageDesc' => 'Webpage where newsletter managing component is located',
-        'requiredcheckbox' => 'Text that will be displayed next to required checkbox',
-        'optionalcheckbox' => 'Text that will be displayed next to optional checkbox',
+        'managementpage_label' => 'Webpage for newsletter managing',
+        'managementpage_desc' => 'Webpage where newsletter managing component is located',
+        'required_checkbox' => 'Text that will be displayed next to required checkbox',
+        'optional_checkbox' => 'Text that will be displayed next to optional checkbox',
     ],
     'new' => [
         'messages' => 'New message',
@@ -38,7 +38,6 @@ return [
         'send' => 'Send message to subscribers',
     ],
     'columns' => [
-        'newButton' => 'Add message',
         'title' => 'Title',
         'slug' => 'Slug',
         'sent' => 'Sent',

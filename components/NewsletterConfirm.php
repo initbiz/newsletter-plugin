@@ -3,6 +3,7 @@
 use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
 use Initbiz\Newsletter\Models\Subscribers as Subscriber;
+use Lang;
 
 class NewsletterConfirm extends ComponentBase {
 
@@ -35,6 +36,12 @@ class NewsletterConfirm extends ComponentBase {
     public function onRun() {
 
         $this->addJs('assets/js/custom-newsletter.js');
+        $this->page['button_text'] = Lang::get('initbiz.newsletter::lang.manage.button_text');
+        $this->page['thank_you_message'] = Lang::get('initbiz.newsletter::lang.manage.thank_you_message');
+        $this->page['unsubscribe_success'] = Lang::get('initbiz.newsletter::lang.manage.unsubscribe_success');
+        $this->page['unsubscribe_failed'] = Lang::get('initbiz.newsletter::lang.manage.unsubscribe_failed');
+        $this->page['wrong_path'] = Lang::get('initbiz.newsletter::lang.manage.wrong_path');
+
         $token = $this->page['token'] = $this->property('token');
         $email = $this->page['email'] = $this->property('email');
 

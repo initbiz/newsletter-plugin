@@ -23,10 +23,10 @@ return [
     'settings' => [
         'label' => 'Newsletter',
         'description' => 'Ustawienia newslettera',
-        'managementpageLabel' => 'Strona zarządzania newsletterem',
-        'managementpageDesc' => 'Strona na której został osadzony komponent zarządzający newsletterem',
-        'requiredcheckbox' => 'Tekst, który pojawi się przy wymaganym checkboksie',
-        'optionalcheckbox' => 'Tekst, który pojawi się przy opcjonalnym checkboksie',
+        'managementpage_label' => 'Strona zarządzania newsletterem',
+        'managementpage_desc' => 'Strona na której został osadzony komponent zarządzający newsletterem',
+        'required_checkbox' => 'Tekst, który pojawi się przy wymaganym checkboksie',
+        'optional_checkbox' => 'Tekst, który pojawi się przy opcjonalnym checkboksie',
     ],
     'new' => [
         'messages' => 'Nowa wiadomość',
@@ -38,7 +38,6 @@ return [
         'send' => 'Wyślij wiadomość do subskrybentów',
     ],
     'columns' => [
-        'newButton' => 'Dodaj wiadomość',
         'title' => 'Tytuł',
         'slug' => 'Slug',
         'sent' => 'Wysłano',
@@ -56,13 +55,25 @@ return [
     ],
     'token' => [
         'title' => 'Kod subskrybenta',
-        'description' => 'Kod, który otrzyma subskrybent do uwierzytelniania'
+        'description' => 'Kod, który otrzyma subskrybent do uwierzytelniania',
     ],
     'email' => [
         'title' => 'Email subskrybenta',
-        'description' => 'Email subskrybenta'
+        'description' => 'Email subskrybenta',
     ],
     'confirmedbox' => [
-        'message' => 'Dziękujemy za zapisanie się do newslettera'
+        'message' => 'Dziękujemy za zapisanie się do newslettera',
+    ],
+    'form' => [
+        'button_text' => 'Zapisz się',
+        'sign_up_thanks' => 'Dziękujemy za zapisanie się do newslettera!',
+        'sign_up_error' => 'Błąd. Coś poszło nie tak.',
+    ],
+    'manage' => [
+        'button_text' => 'Wypisz się',
+        'unsubscribe_success' => 'Pomyślnie usunięto.',
+        'unsubscribe_failed' => 'Błąd. Coś poszło nie tak.',
+        'thank_you_message' => 'Dziękujemy za zapisanie się do newslettera',
+        'wrong_path' => 'Niepoprawna ścieżka',
     ],
 ];

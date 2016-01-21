@@ -4,14 +4,14 @@
 
 fields:
     managementpage:
-        label: initbiz.newsletter::lang.settings.managementpageLabel
-        comment: initbiz.newsletter::lang.settings.managementpageDesc
+        label: initbiz.newsletter::lang.settings.managementpage_label
+        comment: initbiz.newsletter::lang.settings.managementpage_desc
         type: dropdown
 
-    requiredcheckbox:
-        label: initbiz.newsletter::lang.settings.requiredcheckbox
+    required_checkbox:
+        label: initbiz.newsletter::lang.settings.required_checkbox
         type: richeditor
 
-    optionalcheckbox:
-        label: initbiz.newsletter::lang.settings.optionalcheckbox
+    optional_checkbox:
+        label: initbiz.newsletter::lang.settings.optional_checkbox
         type: richeditor

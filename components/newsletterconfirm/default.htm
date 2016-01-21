@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-10 col-md-offset-1 well">
         {% if not confirmed %}
-            <h6>Dziękujemy za zapisanie się do newslettera.</h6>
+            <h6>{{thank_you_message|raw}}</h6>
         {% else %}
             {% if subscriberExist %}
                 <button data-request="onUnsubscribe"
@@ -9,15 +9,14 @@
                         data-trigger-action="enable"
                         onclick="$(this).data('request-data', { 'email' : '{{email}}', 'token' : '{{ token }}' })"
                         data-request-success="unsubscribe(data)">
-                    Wypisz się ;(
+                    {{ button_text }}
                 </button>
                 <div class="col-md-12 input-group" id="notifications">
-                    <div class="alert alert-success collapse" id="success" role="alert">Usunięto.</div>
-                    <div class="alert alert-warning collapse" id="notExist" role="alert">Użytkownik istnieje!</div>
-                    <div class="alert alert-danger collapse" id="failed" role="alert">Czy nie usunąłeś już maila?</div>
+                    <div class="alert alert-success collapse" id="success" role="alert">{{ unsubscribe_success |raw}}</div>
+                    <div class="alert alert-danger collapse" id="failed" role="alert">{{ unsubscribe_failed |raw}}</div>
                 </div>
             {% else %}
-                <h6>Niepoprawna ścieżka subskrybenta</h6>
+                <h6>{{wrong_path |raw}}</h6>
             {% endif %}
         {% endif %}
     </div>

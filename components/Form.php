@@ -5,6 +5,7 @@ use Cms\Classes\ComponentBase;
 use Initbiz\Newsletter\Models\Subscribers as Subscriber;
 use Initbiz\Newsletter\Models\Settings;
 use Mail;
+use Lang;
 
 class Form extends ComponentBase {
 
@@ -18,8 +19,9 @@ class Form extends ComponentBase {
 
     public function onRun() {
         $this->addJs('assets/js/custom-newsletter.js');
-        $this->page['requiredcheckbox'] = Settings::get('requiredcheckbox');
-        $this->page['optionalcheckbox'] = Settings::get('optionalcheckbox');
+        $this->page['required_checkbox'] = Settings::get('required_checkbox');
+        $this->page['optional_checkbox'] = Settings::get('optional_checkbox');
+        $this->page['button_text'] = Lang::get('initbiz.newsletter::lang.form.button_text');
 
     }
 
