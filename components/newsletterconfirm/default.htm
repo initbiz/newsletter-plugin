@@ -7,13 +7,13 @@
                 <button data-request="onUnsubscribe"
                         data-trigger-type="enable"
                         data-trigger-action="enable"
-                        onclick="$(this).data('request-data', { 'mail' : '{{mail}}', 'token' : '{{ token }}' })"
+                        onclick="$(this).data('request-data', { 'email' : '{{email}}', 'token' : '{{ token }}' })"
                         data-request-success="unsubscribe(data)">
-                    Wypisz się
+                    Wypisz się ;(
                 </button>
                 <div class="col-md-12 input-group" id="notifications">
                     <div class="alert alert-success collapse" id="success" role="alert">Usunięto.</div>
-                    <div class="alert alert-warning collapse" id="taken" role="alert">Ups!</div>
+                    <div class="alert alert-warning collapse" id="notExist" role="alert">Użytkownik istnieje!</div>
                     <div class="alert alert-danger collapse" id="failed" role="alert">Czy nie usunąłeś już maila?</div>
                 </div>
             {% else %}

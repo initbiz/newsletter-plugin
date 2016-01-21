@@ -16,14 +16,10 @@ class Messages extends Model {
 
     public $rules = [
         'title'   => 'required|between:3,100',
-        'slug'    => 'required|between:3,64|unique:initbiz_newsletter_messages',
         'content' => 'required'
     ];
 
     public function beforeSave() {
-        if (!isset($this->slug) || empty($this->slug)) {
-            $this->slug = Str::slug($this->title);
-        }
 
         if ($this->sent && $this->sent != '') {
 

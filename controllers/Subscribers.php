@@ -28,23 +28,6 @@ class Subscribers extends Controller {
     }
 
     public function listExtendQuery($query) {
-        $query->where('confirmed', '=', 'true');
+        $query->where('confirmed', 1);
     }
-
-//    public function onRemoveMessages()
-//    {
-//        if (($checkedSlugs = post('checked')) && is_array($checkedSlugs) && count($checkedSlugs)) {
-//
-//            foreach ($checkedSlugs as $messageSlug) {
-//                if ((!$message = Message::where('slug', '=',$messageSlug)))
-//                    continue;
-//
-//                $message->delete();
-//            }
-//
-//            Flash::success('Successfully deleted those messages.');
-//        }
-//
-//        return $this->listRefresh();
-//    }
 }

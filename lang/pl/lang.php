@@ -50,5 +50,17 @@ return [
     ],
     'flash' => [
         'delete' => 'Czy jesteś pewny że chcesz usunąć zaznaczone elementy?',
+        'deleted' => 'Usunięto wybrane elementy',
+    ],
+    'token' => [
+        'title' => 'Kod subskrybenta',
+        'description' => 'Kod, który otrzyma subskrybent do uwierzytelniania'
+    ],
+    'email' => [
+        'title' => 'Email subskrybenta',
+        'description' => 'Email subskrybenta'
+    ],
+    'confirmedbox' => [
+        'message' => 'Dziękujemy za zapisanie się do newslettera'
     ],
 ];

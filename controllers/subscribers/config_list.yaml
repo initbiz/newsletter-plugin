@@ -8,12 +8,8 @@ modelClass: Initbiz\Newsletter\Models\Subscribers
 noRecordsMessage: backend::lang.list.no_records
 
 recordsPerPage: 15
-showCheckboxes: true
 showSetup: true
 
-toolbar:
-    buttons: list_toolbar
-
 defaultSort:
-    column: email
+    column: created_at
     direction: desc

@@ -8,15 +8,6 @@ fields:
         required: true
         span: auto
 
-    slug:
-        label: initbiz.newsletter::lang.messages.slug
-        required: true
-        span: auto
-        preset:
-            field: title
-            type: slug
-
-
     content:
         label: initbiz.newsletter::lang.messages.content
         required: true

@@ -18,15 +18,15 @@ class NewsletterConfirm extends ComponentBase {
     {
         return [
             'token' => [
-                'title'       => 'Kod subskrybenta',
-                'description' => 'Kod subskrybenta',
+                'title'       => 'initbiz.newsletter::lang.token.title',
+                'description' => 'initbiz.newsletter::lang.token.description',
                 'default'     => '{{ :token }}',
                 'type'        => 'string'
             ],
-            'mail' => [
-                'title'       => 'Email subskrybenta',
-                'description' => 'Email subskrybenta',
-                'default'     => '{{ :mail }}',
+            'email' => [
+                'title'       => 'initbiz.newsletter::lang.email.title',
+                'description' => 'initbiz.newsletter::lang.email.description',
+                'default'     => '{{ :email }}',
                 'type'        => 'string'
             ]
         ];
@@ -35,31 +35,36 @@ class NewsletterConfirm extends ComponentBase {
     public function onRun() {
 
         $this->addJs('assets/js/custom-newsletter.js');
-        $this->token = $this->page['token'] = $this->property('token');
-        $this->mail = $this->page['mail'] = $this->property('mail');
+        $token = $this->page['token'] = $this->property('token');
+        $email = $this->page['email'] = $this->property('email');
 
-        $this->page['subscriberExist'] = $this->checkIfExist($this->property('mail'),$this->property('token'));
+        $subscriber = Subscriber::where('email', '=',$email)->where('token', '=', $token)->first();
         $this->page['confirmed'] = true;
 
-        if($this->checkIfExist($this->property('mail'), $this->property('token'))) {
-            if(!Subscriber::where('email', '=',$this->property('mail'))->where('token', '=', $this->property('token'))->first()->confirmed) {
-                $this->activate($this->property('mail'),$this->property('token'));
+        if(!empty($subscriber)) {
+
+            if($this->page['subscriberExist'] = $this->checkIfExist($subscriber)) {
+                if(!$subscriber->confirmed) {
+
+                    $this->activate($subscriber);
+                    $this->page['confirmed'] = false; //to display "Thank you for registering" message only once
+                }
             }
         }
     }
 
     public function onUnsubscribe() {
-        return ['status' => (Subscriber::where('token', '=',post('token'))->where('email', '=', post('mail'))->delete())? 'success' : 'failed'];
+        return ['status' => (Subscriber::where('token', '=',post('token'))->where('email', '=', post('email'))->delete())? 'success' : 'failed', 'redirectUrl' => url()];
     }
 
-    public function activate($email, $token) {
-        Subscriber::where('email', '=',$email)->where('token', '=', $token)->update(['confirmed' => true]);
-        $this->page['confirmedBox'] = "Dziękujemy za potwierdzenie subskrybcji";
-        $this->page['confirmed'] = false;
+    public function activate(Subscriber $subscriber) {
+        $subscriber->update(['confirmed' => true]);
+        $this->page['confirmedBox'] = "initbiz.newsletter::lang.confirmedBox.message";
+
     }
 
-    public function checkIfExist($email, $token) {
-        return (count(Subscriber::where('email', '=',$email)->where('token', '=', $token)->get()))? true : false;
+    public function checkIfExist(Subscriber $subscriber) {
+        return (count($subscriber->get()))? true : false;
     }
 
 }

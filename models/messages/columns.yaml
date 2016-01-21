@@ -8,11 +8,6 @@ columns:
         label: initbiz.newsletter::lang.columns.title
         searchable: true
 
-    slug:
-        label: initbiz.newsletter::lang.columns.slug
-        searchable: true
-        invisible: true
-
     sent:
         label: initbiz.newsletter::lang.columns.sent
         searchable: true

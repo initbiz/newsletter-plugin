@@ -11,7 +11,6 @@ class CreateMessagesTable extends Migration
         {
             $table->increments('id');
             $table->string('title', 100);
-            $table->string('slug', 100)->index();
             $table->text('content');
             $table->string('sent', 1)->default(0);
             $table->timestamps();

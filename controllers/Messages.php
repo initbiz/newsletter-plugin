@@ -30,16 +30,16 @@ class Messages extends Controller {
 
     public function onRemoveMessages()
     {
-        if (($checkedSlugs = post('checked')) && is_array($checkedSlugs) && count($checkedSlugs)) {
+        if (($checkedId = post('checked')) && is_array($checkedId) && count($checkedId)) {
 
-            foreach ($checkedSlugs as $messageSlug) {
-                if ((!$message = Message::where('slug', '=',$messageSlug)))
+            foreach ($checkedId as $messageId) {
+                if ((!$message = Message::where('id',$messageId)))
                     continue;
 
                 $message->delete();
             }
 
-            Flash::success('Successfully deleted those messages.');
+            Flash::success(Lang::get('initbiz.newsletter::lang.flash.deleted'));
         }
 
         return $this->listRefresh();
