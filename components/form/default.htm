@@ -1,31 +1,27 @@
+<div class="col-md-4 col-md-offset-4">
 <form data-request="onSubscription" data-request-success="subscribtionStatus(data)" id="subscribe">
     <div class="input-group">
-        <input type="text" name="email" class="no-auto-focus" placeholder="Email" required>
+        <input type="text" name="email" class="no-auto-focus form-control" placeholder="Email" required>
         <span class="input-group-btn">
-            <input type="submit" class="btn" value="{{ button_text }}">
+            <input type="submit" class="btn btn-info" value="{{ button_text }}">
         </span>
     </div>
 
-    <div class="col-md-1">
-        <input type="checkbox" name="formCheck[]" value="rp" required>
-    </div>
-    <div class="col-md-11 text-left">
-        <small>
+    <div class="checkbox">
+	<label>
+	    <input type="checkbox" name="formCheck[]" value="rp" required>
             {{ required_checkbox|raw }}
-        </small>
+	</label>
     </div>
-
-    <div class="col-md-1">
-        <input type="checkbox" name="formCheck[]" value="pd">
-    </div>
-    <div class="col-md-11 text-left">
-        <small>
+    <div class="checkbox">
+	<label>
+	    <input type="checkbox" name="formCheck[]" value="rp" required>
             {{ optional_checkbox|raw }}
-    	</small>
+	</label>
     </div>
-
-    <div class="col-md-12 input-group" id="notifications">
+        <div class="col-md-12 input-group" id="notifications">
         <div class="alert alert-success collapse" id="success" role="alert">{{ sign_up_thanks|raw }}</div>
         <div class="alert alert-danger collapse" id="failed" role="alert">{{ sign_up_error|raw }}</div>
     </div>
 </form>
+</div>

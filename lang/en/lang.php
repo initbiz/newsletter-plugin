@@ -64,4 +64,16 @@ return [
     'confirmedbox' => [
         'message' => 'Thank you for signing up to our newsletter'
     ],
+    'form' => [
+        'button_text' => 'Sign up',
+        'sign_up_thanks' => 'Thank you for signing up to our newsletter!',
+        'sign_up_error' => 'Error. Something went wrong.',
+    ],
+    'manage' => [
+        'button_text' => 'Sign out',
+        'unsubscribe_success' => 'Successfully deleted.',
+        'unsubscribe_failed' => 'Error. Something went wrong.',
+        'thank_you_message' => 'Thank you for signing up to our newsletter!',
+        'wrong_path' => 'Wrong path.',
+    ],
 ];
