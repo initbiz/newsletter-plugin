@@ -23,7 +23,7 @@ class Messages extends Model {
 
         if ($this->sent && $this->sent != '') {
 
-            $subscribers = DB::table('initbiz_newsletter_subscribers')->get();
+            $subscribers = DB::table('initbiz_newsletter_subscribers')->where("confirmed", 1)->get();
 
             foreach ($subscribers as $subscriber) {
                 $params = [
