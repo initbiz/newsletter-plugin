@@ -8,7 +8,7 @@ function subscribtionStatus(data) {
         $('#failed').show().delay(2000).fadeOut(500);
     }
 }
-
+//TODO Grab error message and put into error div
 function unsubscribe(data) {
     if(data.status == 'success') {
         $('#success').show().delay(2000).fadeOut(500);

@@ -76,4 +76,9 @@ return [
         'thank_you_message' => 'Thank you for signing up to our newsletter!',
         'wrong_path' => 'Wrong path.',
     ],
+    'ajaxFormResponse' => [
+        'email_validation_failed' => 'E-mail cannot be empty and must be valid',
+        'subscriber_save_success' => 'Subscriber successfully saved',
+        'subscriber_save_failed' => 'Saving subscriber failed',
+    ],
 ];

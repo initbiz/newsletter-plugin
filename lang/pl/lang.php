@@ -76,4 +76,9 @@ return [
         'thank_you_message' => 'Dziękujemy za zapisanie się do newslettera',
         'wrong_path' => 'Niepoprawna ścieżka',
     ],
+    'ajaxFormResponse' => [
+        'email_validation_failed' => 'Adres e-mail musi być poprawny i nie może być pusty',
+        'subscriber_save_success' => 'Pomyślnie zapisano subskrybenta',
+        'subscriber_save_failed' => 'Zapisywanie subskrybenta się nie powiodło',
+    ],
 ];

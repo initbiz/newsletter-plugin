@@ -36,7 +36,7 @@ class Messages extends Model {
 
                 Mail::send('initbiz.newsletter::mail.message', $params, function($message)
                 {
-                    $message->to($this->email, "Subskrybent")->subject($this->title);
+                    $message->to($this->email)->subject($this->title);
                 });
             }
 
