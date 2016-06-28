@@ -1,27 +1,33 @@
 <div class="col-md-4 col-md-offset-4">
-<form data-request="onSubscription" data-request-success="subscribtionStatus(data)" id="subscribe">
-    <div class="input-group">
-        <input type="text" name="email" class="no-auto-focus form-control" placeholder="Email" required>
-        <span class="input-group-btn">
-            <input type="submit" class="btn btn-info" value="{{ button_text }}">
-        </span>
-    </div>
+    <form data-request="onSubscription" data-request-success="subscribtionStatus(data)" id="subscribe">
+        <div class="input-group">
+            <input type="text" name="email" class="no-auto-focus form-control" placeholder="Email" required>
+            <span class="input-group-btn">
+                <input type="submit" class="btn btn-info" value="{{ button_text }}">
+            </span>
+        </div>
 
-    <div class="checkbox">
-	<label>
-	    <input type="checkbox" name="formCheck[]" value="rp" required>
-            {{ required_checkbox|raw }}
-	</label>
-    </div>
-    <div class="checkbox">
-	<label>
-	    <input type="checkbox" name="formCheck[]" value="rp">
-            {{ optional_checkbox|raw }}
-	</label>
-    </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="formCheck[]" required>
+                {{ required_checkbox|raw }}
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="formCheck[]">
+                {{ optional_checkbox|raw }}
+            </label>
+        </div>
         <div class="col-md-12 input-group" id="notifications">
-        <div class="alert alert-success collapse" id="success" role="alert">{{ sign_up_thanks }}</div>
-        <div class="alert alert-danger collapse" id="failed" role="alert">{{ sign_up_error }}</div>
-    </div>
-</form>
+            <div class="alert alert-success collapse" id="success" role="alert">
+                <span id="successMsg">
+                </span>
+            </div>
+            <div class="alert alert-danger collapse" id="failed" role="alert">
+                <span id="errorMsg">
+                </span>
+            </div>
+        </div>
+    </form>
 </div>

@@ -12,8 +12,12 @@
                     {{ button_text }}
                 </button>
                 <div class="col-md-12 input-group" id="notifications">
-                    <div class="alert alert-success collapse" id="success" role="alert">{{ unsubscribe_success |raw}}</div>
-                    <div class="alert alert-danger collapse" id="failed" role="alert">{{ unsubscribe_failed |raw}}</div>
+                    <div class="alert alert-success collapse" id="success" role="alert">
+                        {{ unsubscribe_success |raw}}
+                    </div>
+                    <div class="alert alert-danger collapse" id="failed" role="alert">
+                        {{ unsubscribe_failed |raw}}
+                    </div>
                 </div>
             {% else %}
                 <h6>{{wrong_path |raw}}</h6>

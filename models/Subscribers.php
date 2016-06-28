@@ -15,8 +15,6 @@ class Subscribers extends Model {
 
     protected $fillable = ['confirmed'];
 
-    public $customMessages = ['email.required' => 'E-mail field is required']; //TODO: Translatable
-
     public $rules = [
         'email'   => 'required|email',
     ];

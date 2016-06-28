@@ -4,7 +4,7 @@ use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
 use Initbiz\Newsletter\Models\Subscribers as Subscriber;
 use Initbiz\Newsletter\Models\Settings;
-use Illuminate\Validation\Validator as Validator;
+use Validator;
 use Mail;
 use Lang;
 
@@ -23,13 +23,22 @@ class Form extends ComponentBase {
         $this->page['required_checkbox'] = Settings::get('required_checkbox');
         $this->page['optional_checkbox'] = Settings::get('optional_checkbox');
         $this->page['button_text'] = Lang::get('initbiz.newsletter::lang.form.button_text');
-        $this->page['sign_up_thanks'] = Lang::get('initbiz.newsletter::lang.form.sign_up_thanks');
-        $this->page['sign_up_error'] = Lang::get('initbiz.newsletter::lang.form.sign_up_error');
-
     }
 
 
     public function onSubscription() {
+
+        if (!post('email')) {
+            return ['status' => 'fail',
+                    'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.email_cannot_be_empty')];
+        }
+
+        $validation = Validator::make(['email' => post('email')], ['email'=>'email']);
+        if ($validation->fails()) {
+            return ['status' => 'fail',
+                    'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.email_validation_failed')];
+        }
+
         $subscriber = new Subscriber();
         $subscriber->email = post('email');
         $subscriber->confirmed = false;
@@ -38,14 +47,17 @@ class Form extends ComponentBase {
         if ($subscriber->save()) {
             Mail::send('initbiz.newsletter::mail.subscription',
                 [
-                    'activationLink' => url() . '/' . Settings::get('managementpage') . '/'. $subscriber->email . '/' . $subscriber->token
+                    'activationLink' => url() . '/' . Settings::get('managementpage')
+                        . '/'. $subscriber->email . '/' . $subscriber->token
                 ],
                 function($message) use ($subscriber) {
                     $message->to($subscriber->email, "")->subject($this->title);
                 });
-            return ['status' => 'success'];
+            return ['status' => 'success',
+                    'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_success')];
         } else {
-            return ['status' => 'fail'];
+            return ['status' => 'fail',
+                    'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_error')];
         }
 
 

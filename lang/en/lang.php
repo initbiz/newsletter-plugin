@@ -66,8 +66,6 @@ return [
     ],
     'form' => [
         'button_text' => 'Sign up',
-        'sign_up_thanks' => 'Thank you for signing up to our newsletter!',
-        'sign_up_error' => 'Error. Something went wrong.',
     ],
     'manage' => [
         'button_text' => 'Sign out',
@@ -77,7 +75,10 @@ return [
         'wrong_path' => 'Wrong path.',
     ],
     'ajaxFormResponse' => [
-        'email_validation_failed' => 'E-mail cannot be empty and must be valid',
+        'sign_up_success' => 'Thank you for signing up to our newsletter!',
+        'sign_up_error' => 'Error. Something went wrong.',
+        'email_validation_failed' => 'E-mail must be valid',
+        'email_cannot_be_empty' => 'E-mail cannot be empty',
         'subscriber_save_success' => 'Subscriber successfully saved',
         'subscriber_save_failed' => 'Saving subscriber failed',
     ],
