@@ -6,6 +6,10 @@ return [
         'description' => 'Plugin do zarządzania newsletterem.',
         'author' => 'InIT.biz Ltd.'
     ],
+    'mailTemplates' => [
+        'message' => 'Wiadomość, która jest wysyłana do subskrybentów',
+        'confirmation' => 'Wiadomość potwierdzająca zapisanie do newslettera'
+    ],
     'menu' => [
         'newsletter' => 'Newsletter',
         'messages' => 'Wiadomości',
