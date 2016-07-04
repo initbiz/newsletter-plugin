@@ -6,6 +6,10 @@ return [
         'description' => 'Plugin for newsletter.',
         'author' => 'InIT.biz Ltd.'
     ],
+    'mailTemplates' => [
+        'message' => 'Message that is being sent to subscribers',
+        'confirmation' => 'Mail with confirmation message'
+    ],
     'menu' => [
         'newsletter' => 'Newsletter',
         'messages' => 'Messages',
