@@ -61,7 +61,15 @@ class NewsletterConfirm extends ComponentBase {
     }
 
     public function onUnsubscribe() {
-        return ['status' => (Subscriber::where('token', '=',post('token'))->where('email', '=', post('email'))->delete())? 'success' : 'failed', 'redirectUrl' => url()];
+        if (Subscriber::where('token', '=',post('token'))->where('email', '=', post('email'))->delete()) {
+            return ['status' => 'success', 
+                    'content' => Lang::get('initbiz.newsletter::lang.manage.unsubscribe_success'),
+                    'redirectUrl' => url()];
+        } else {
+            return ['status' => 'fail', 
+                    'content' => Lang::get('initbiz.newsletter::lang.manage.unsubscribe_failed'),
+                    'redirectUrl' => url()];
+        }
     }
 
     public function activate(Subscriber $subscriber) {

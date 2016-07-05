@@ -17,4 +17,4 @@ class Settings extends Model{
 
         return Page::sortBy('baseFileName')->lists('baseFileName', 'baseFileName');
     }
-} 
+}

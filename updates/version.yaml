@@ -1,3 +1,5 @@
+1.0.2:
+    - Error reponses using AJAX and some small fixes
 1.0.1:
     - First version of newsletter
     - create_subscribers_table.php
