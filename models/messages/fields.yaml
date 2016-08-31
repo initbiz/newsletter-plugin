@@ -6,7 +6,6 @@ fields:
     title:
         label: initbiz.newsletter::lang.messages.title
         required: true
-        span: auto
 
     content:
         label: initbiz.newsletter::lang.messages.content
@@ -18,3 +17,16 @@ fields:
         label: initbiz.newsletter::lang.messages.send
         type: switch
         default: false
+        span: left
+
+    sendTo:
+        type: dropdown
+        span: right
+        options:
+            all: initbiz.newsletter::lang.messages.send_to_all
+            agreed: initbiz.newsletter::lang.messages.send_to_agreed
+        default: all
+        trigger:
+            action: show
+            field: sent
+            condition: checked

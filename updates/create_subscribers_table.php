@@ -14,7 +14,6 @@ class CreateSubscribersTable extends Migration
             $table->boolean('confirmed',false);
             $table->boolean('agreed',false);
             $table->string('token',40);
-//            $table->string('created', 1)->default(1);
             $table->timestamps();
         });
     }

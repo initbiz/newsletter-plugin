@@ -3,7 +3,7 @@
 - [Features](#features)
     - [Translations](#translations)
     - [Mail templates](#mailtemplates)
-- [Frontend components](#frontendcomponents)
+- [How-to (frontend components)](#frontendcomponents)
     - [NewsletterForm](#newsletterform)
     - [NewsletterConfirm](#newsletterconfirm)
         - [Usage](#usage)
@@ -15,8 +15,6 @@ The plugin helps sending e-mails to subscribers.
 
 The main purpose is to send e-mails only to subscribers that confirmed their addresses and who accepted the text next to the first checkbox (usually regulations).
 
-**\$2 of \$5 price will go to help fund OctoberCMS project.**
-
 <a name="features"></a>
 ## Features
 Subscribers can confirm they want to get news on e-mail and sign out from getting newsletter by clicking the link stored in `newsletterLink` variable.
@@ -24,6 +22,8 @@ Subscribers can confirm they want to get news on e-mail and sign out from gettin
 Newsletter administrator **cannot** add or delete subscribers.
 
 Newsletter administrator can save message without sending it.
+
+Newsletter administrator can send messages to all confirmed subscribers or only to those who agreed with the text next to the optional checkbox.
 
 Administrator can customize text displayed next to checkboxes (regulations and agreement).
 
@@ -55,8 +55,11 @@ Actually `newsletterlink` and `activationLink` is the same link because of singl
 
 <a name="frontendcomponents"></a>
 ## How-to (frontend components)
+Both of components described below use javascript function that appends content of AJAX response to HTML tag with id `successMsg` for NewsletterForm and `successMsgNC` for NewsletterConfirm.
+That way you can easily customize design of status message using surrounding `<div class="...">`.
+
 <a name="newsletterform"></a>
-### NewsletterForm
+### NewsletterForm 
 This component is responsible for displaying form for people who want to became a subscriber.
 It will display e-mail text field, submit button and two checkboxes:
 
@@ -66,7 +69,7 @@ It will display e-mail text field, submit button and two checkboxes:
 You can customize content displayed next to the checkboxes in `Settings` -> `Newsletter` -> `Newsletter`. You can use HTML there.
 
 <a name="newsletterconfirm"></a>
-### NewsletterConfirm
+### NewsletterConfirm 
 This component is responsible for getting e-mail address and token from URL and display two things:
 
  - *Thank you for registering* message right after e-mail address confirmation

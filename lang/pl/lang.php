@@ -40,6 +40,8 @@ return [
         'content' => 'Treść wiadomości',
         'slug' => 'Slug',
         'send' => 'Wyślij wiadomość do subskrybentów',
+        'send_to_all' => 'Wyślij wiadomość do wszystkich subskrybentów',
+        'send_to_agreed' => 'Wyślij wiadomość tylko to osób, które zgodziły się z treścią opcjonalną'
     ],
     'columns' => [
         'title' => 'Tytuł',
@@ -55,7 +57,7 @@ return [
     ],
     'flash' => [
         'delete' => 'Czy jesteś pewny że chcesz usunąć zaznaczone elementy?',
-	'deleted' => 'Usunięto wybrane elementy',
+        'deleted' => 'Usunięto wybrane elementy',
     ],
     'token' => [
         'title' => 'Kod subskrybenta',
@@ -82,6 +84,9 @@ return [
     ],
     'ajaxFormResponse' => [
         'email_validation_failed' => 'Adres e-mail musi być poprawny i nie może być pusty',
+        'subscriber_save_success' => 'Pomyślnie zapisano subskrybenta',
+        'subscriber_save_failed' => 'Zapisywanie subskrybenta się nie powiodło',
+        'email_cannot_be_empty' => 'E-mail nie może być pusty',
         'subscriber_save_success' => 'Pomyślnie zapisano subskrybenta',
         'subscriber_save_failed' => 'Zapisywanie subskrybenta się nie powiodło',
     ],

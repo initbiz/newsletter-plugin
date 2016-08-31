@@ -40,6 +40,8 @@ return [
         'content' => 'Message content',
         'slug' => 'Slug',
         'send' => 'Send message to subscribers',
+        'send_to_all' => 'Send message to all subscribers',
+        'send_to_agreed' => 'Send message only to those who agreed with second, optional checkbox'
     ],
     'columns' => [
         'title' => 'Title',
@@ -55,7 +57,7 @@ return [
     ],
     'flash' => [
         'delete' => 'Are you sure you want to delete selected items?',
-	'deleted' => 'Succesfully deleted selected items',
+        'deleted' => 'Succesfully deleted selected items',
     ],
     'token' => [
         'title' => 'Subscriber unique code',
@@ -70,6 +72,8 @@ return [
     ],
     'form' => [
         'button_text' => 'Sign up',
+        'sign_up_thanks' => 'Thank you for subscribing our newsletter',
+        'sign_up_error' => 'Oops, something went wrong.',
     ],
     'manage' => [
         'button_text' => 'Sign out',
@@ -82,7 +86,7 @@ return [
         'sign_up_success' => 'Thank you for signing up to our newsletter!',
         'sign_up_error' => 'Error. Something went wrong.',
         'email_validation_failed' => 'E-mail must be valid',
-        'email_cannot_be_empty' => 'E-mail cannot be empty',
+        'email_cannot_be_empty' => 'E-mail address field cannot be empty',
         'subscriber_save_success' => 'Subscriber successfully saved',
         'subscriber_save_failed' => 'Saving subscriber failed',
     ],

@@ -5,7 +5,6 @@ use BackendMenu;
 use DB;
 use Flash;
 use Lang;
-//use Initbiz\Newsletter\Models\Messages as Message;
 
 class Subscribers extends Controller {
 

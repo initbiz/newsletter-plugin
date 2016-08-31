@@ -20,11 +20,12 @@ class Messages extends Model {
     ];
 
     public function beforeSave() {
-
         if ($this->sent && $this->sent != '') {
-
-            $subscribers = DB::table('initbiz_newsletter_subscribers')->where("confirmed", 1)->get();
-
+            if ($this->sendTo == 'agreed') {
+                $subscribers = DB::table('initbiz_newsletter_subscribers')->where("confirmed", 1)->where("agreed", 1)->get();
+            } else {
+                $subscribers = DB::table('initbiz_newsletter_subscribers')->where("confirmed", 1)->get();
+            }
             foreach ($subscribers as $subscriber) {
                 $params = [
                     'title' => $this->title,
@@ -34,12 +35,10 @@ class Messages extends Model {
 
                 $this->email = $subscriber->email;
 
-                Mail::send('initbiz.newsletter::mail.message', $params, function($message)
-                {
+                Mail::send('initbiz.newsletter::mail.message', $params, function($message) {
                     $message->to($this->email)->subject($this->title);
                 });
             }
-
             unset($this->email, $this->name);
         }
     }
