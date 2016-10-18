@@ -13,3 +13,6 @@ showSetup: true
 defaultSort:
     column: created_at
     direction: desc
+
+toolbar:
+    buttons: list_toolbar

@@ -43,6 +43,9 @@ return [
         'send_to_all' => 'Send message to all subscribers',
         'send_to_agreed' => 'Send message only to those who agreed with second, optional checkbox'
     ],
+    'subscribers' => [
+        'export_subscribers' => 'Export Subscribers'
+    ],
     'columns' => [
         'title' => 'Title',
         'slug' => 'Slug',
