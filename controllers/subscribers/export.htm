@@ -6,7 +6,7 @@
     <li><?= e(trans($this->pageTitle)) ?></li>
 </ul>
 <?php Block::endPut() ?>
-<?= Form::open(['class' => 'layout']) ?>
+<?= Form::open(['class' => 'layout', 'style' => 'padding-left:20px']) ?>
 
 <div class="layout-row">
     <?= $this->exportRender() ?>
