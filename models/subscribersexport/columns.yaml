@@ -4,4 +4,4 @@
 
 columns:
 
-    email: email
+    email: initbiz.newsletter::lang.subscribers.email

@@ -31,6 +31,7 @@ return [
         'managementpage_desc' => 'Webpage where newsletter managing component is located',
         'required_checkbox' => 'Text that will be displayed next to required checkbox',
         'optional_checkbox' => 'Text that will be displayed next to optional checkbox',
+
     ],
     'new' => [
         'messages' => 'New message',
@@ -44,7 +45,8 @@ return [
         'send_to_agreed' => 'Send message only to those who agreed with second, optional checkbox'
     ],
     'subscribers' => [
-        'export_subscribers' => 'Export Subscribers'
+        'export_subscribers' => 'Export Subscribers',
+        'email' => 'E-mail',
     ],
     'columns' => [
         'title' => 'Title',

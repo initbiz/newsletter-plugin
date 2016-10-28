@@ -3,15 +3,17 @@
 # ===================================
 
 fields:
-    managementpage:
-        label: initbiz.newsletter::lang.settings.managementpage_label
-        comment: initbiz.newsletter::lang.settings.managementpage_desc
-        type: dropdown
+    checkboxes:
+      label: initbiz.newsletter::lang.settings.checkboxes
+      type: datatable
+      dynamicHeight: true
+      columns  :
+         name  :
+             title  : initbiz.newsletter::lang.settings.name
 
-    required_checkbox:
-        label: initbiz.newsletter::lang.settings.required_checkbox
-        type: richeditor
+         email  :
+             title  : initbiz.newsletter::lang.settings.required
+             type : checkbox
 
-    optional_checkbox:
-        label: initbiz.newsletter::lang.settings.optional_checkbox
-        type: richeditor
+         text:
+             title: initbiz.newsletter::lang.settings.text
