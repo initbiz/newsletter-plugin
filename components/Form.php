@@ -20,8 +20,7 @@ class Form extends ComponentBase {
 
     public function onRun() {
         $this->addJs('assets/js/custom-newsletter.js');
-        $this->page['required_checkbox'] = Settings::get('required_checkbox');
-        $this->page['optional_checkbox'] = Settings::get('optional_checkbox');
+        $this->page['checkboxes'] = Settings::get('checkboxes');
         $this->page['button_text'] = Lang::get('initbiz.newsletter::lang.form.button_text');
     }
 

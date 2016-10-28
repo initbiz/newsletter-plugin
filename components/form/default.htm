@@ -6,18 +6,13 @@
                 <input type="submit" class="btn btn-info" value="{{ button_text }}">
             </span>
         </div>
-
+        {% for checkbox in checkboxes %}
         <div class="checkbox">
             <label>
-                <input type="checkbox" name="formCheck[]" required>
-                {{ required_checkbox|raw }}
+                <input type="checkbox" name="{{ checkbox.name }}" {{ (checkbox.required) ? 'required':''}}>
+                {{ checkbox.text|raw }}
             </label>
-        </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" name="formCheck[]">
-                {{ optional_checkbox|raw }}
-            </label>
+        {% endfor %}
         </div>
         <div class="col-md-12 input-group" id="notifications">
             <div class="alert alert-success collapse" id="success" role="alert">
