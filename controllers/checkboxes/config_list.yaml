@@ -1,0 +1,18 @@
+# ===================================
+#  List Behavior Config
+# ===================================
+
+title: initbiz.newsletter::lang.menu.checkboxes
+list: ~/plugins/initbiz/newsletter/models/checkboxes/columns.yaml
+modelClass: Initbiz\Newsletter\Models\Checkboxes
+noRecordsMessage: backend::lang.list.no_records
+
+recordsPerPage: 15
+showSetup: true
+
+defaultSort:
+    column: created_at
+    direction: desc
+
+toolbar:
+    buttons: list_toolbar

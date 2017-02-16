@@ -14,11 +14,17 @@ return [
         'newsletter' => 'Newsletter',
         'messages' => 'Wiadomości',
         'subscribers' => 'Subskrybenci',
+        'checkboxes' => 'Checkboxy',
     ],
     'title' => [
         'newsletter' => 'Newsletter',
         'messages' => '',
         'subscribers' => 'Subskrybenci',
+        'checkboxes' => 'Checkboxy',
+    ],
+    'subscribers' => [
+        'export_subscribers' => 'Wyeksportuj Subskrybentów',
+        'email' => 'E-mail',
     ],
     'permission' => [
         'messages' => 'Zarządzanie wiadomościami',
@@ -35,6 +41,11 @@ return [
     'new' => [
         'messages' => 'Nowa wiadomość',
     ],
+    'checkboxes' => [
+        'export' => 'Wyeksportuj Checkboxy',
+        'import' => 'Zimportuj Checkboxy',
+
+    ],
     'messages' => [
         'title' => 'Tytuł wiadomości',
         'content' => 'Treść wiadomości',
@@ -49,6 +60,9 @@ return [
         'sent' => 'Wysłano',
         'created' => 'Data utworzenia',
         'updated' => 'Ostatnia aktualizacja',
+        'name' => 'Nazwa',
+        'text' => 'Tekst',
+        'required' => 'Wymagany',
     ],
     'userColumns' => [
         'email' => 'E-mail',

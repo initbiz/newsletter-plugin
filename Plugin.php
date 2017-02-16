@@ -46,7 +46,13 @@ class Plugin extends PluginBase
                             'url'           =>  Backend::url('initbiz/newsletter/subscribers'),
                             'icon'          =>  'icon-male',
                             'permissions'   => ['initbiz.newsletter.subscribers']
-                        ]
+                        ],
+                        'checkboxes' => [
+                            'label'         => 'initbiz.newsletter::lang.menu.checkboxes',
+                            'url'           =>  Backend::url('initbiz/newsletter/checkboxes'),
+                            'icon'          =>  'oc-icon-cog',
+                            'permissions'   => ['initbiz.newsletter.checkboxes']
+                        ],
                     ]
             ]
         ];
@@ -80,6 +86,10 @@ class Plugin extends PluginBase
             'initbiz.newsletter.subscribers'   =>  [
                 'tab'   =>  'initbiz.newsletter::lang.menu.newsletter',
                 'label' =>  'initbiz.newsletter::lang.permission.subscribers'
+            ],
+            'initbiz.newsletter.checkboxes'   =>  [
+                'tab'   =>  'initbiz.newsletter::lang.menu.checkboxes',
+                'label' =>  'initbiz.newsletter::lang.permission.checkboxes'
             ]
         ];
     }

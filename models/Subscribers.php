@@ -18,5 +18,7 @@ class Subscribers extends Model {
     public $rules = [
         'email'   => 'required|email',
     ];
-
+    public $belongsToMany = [
+        'checkboxes' => 'Initbiz\Newsletter\Models\Checkboxes'
+    ];
 }
