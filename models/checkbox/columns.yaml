@@ -3,15 +3,15 @@
 # ===================================
 
 columns:
+    name:
+        label: initbiz.newsletter::lang.columns.name
+        searchable: true
 
     required:
         label: initbiz.newsletter::lang.columns.required
         searchable: true
         type: switch
 
-    name:
-        label: initbiz.newsletter::lang.columns.name
-        searchable: true
     text:
         label: initbiz.newsletter::lang.columns.text
         searchable: true

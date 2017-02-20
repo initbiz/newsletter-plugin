@@ -3,8 +3,8 @@
 # ===================================
 
 title: initbiz.newsletter::lang.menu.subscribers
-list: ~/plugins/initbiz/newsletter/models/subscribers/columns.yaml
-modelClass: Initbiz\Newsletter\Models\Subscribers
+list: ~/plugins/initbiz/newsletter/models/subscriber/columns.yaml
+modelClass: Initbiz\Newsletter\Models\Subscriber
 noRecordsMessage: backend::lang.list.no_records
 
 recordsPerPage: 15

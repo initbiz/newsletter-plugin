@@ -12,7 +12,7 @@ class CreateCheckboxesTable extends Migration
         {
             $table->increments('id');
             $table->boolean('required',false);
-            $table->string('name');
+            $table->string('name')->unique();
             $table->text('text');
             $table->timestamps();
         });

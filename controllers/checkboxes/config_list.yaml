@@ -3,12 +3,13 @@
 # ===================================
 
 title: initbiz.newsletter::lang.menu.checkboxes
-list: ~/plugins/initbiz/newsletter/models/checkboxes/columns.yaml
-modelClass: Initbiz\Newsletter\Models\Checkboxes
+list: ~/plugins/initbiz/newsletter/models/checkbox/columns.yaml
+modelClass: Initbiz\Newsletter\Models\Checkbox
 noRecordsMessage: backend::lang.list.no_records
 
 recordsPerPage: 15
 showSetup: true
+showCheckboxes: true
 
 defaultSort:
     column: created_at

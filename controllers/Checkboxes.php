@@ -4,6 +4,7 @@ use Backend\Classes\Controller;
 use BackendMenu;
 use DB;
 use Flash;
+use Initbiz\Newsletter\Models\Checkbox;
 use Lang;
 
 class Checkboxes extends Controller
@@ -32,5 +33,21 @@ class Checkboxes extends Controller
     }
     public function listExtendQuery($query) {
         $query->get();
+    }
+    public function onRemoveCheckboxes()
+    {
+        if (($checkedId = post('checked')) && is_array($checkedId) && count($checkedId)) {
+
+            foreach ($checkedId as $checkboxId) {
+                if ((!$checkbox = Checkbox::where('id',$checkboxId)))
+                    continue;
+
+                $checkbox->delete();
+            }
+
+            Flash::success(Lang::get('initbiz.newsletter::lang.flash.deleted'));
+        }
+
+        return $this->listRefresh();
     }
 }

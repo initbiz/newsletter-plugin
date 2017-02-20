@@ -2,7 +2,7 @@
 
 use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
-use Initbiz\Newsletter\Models\Subscribers as Subscriber;
+use Initbiz\Newsletter\Models\Subscriber as Subscriber;
 use Lang;
 
 class NewsletterConfirm extends ComponentBase {

@@ -3,6 +3,9 @@
 # ===================================
 
 name: initbiz.newsletter::lang.title.checkboxes
-form: ~/plugins/initbiz/newsletter/models/checkboxes/fields.yaml
-modelClass: Initbiz\Newsletter\Models\Checkboxes
+form: ~/plugins/initbiz/newsletter/models/checkbox/fields.yaml
+modelClass: Initbiz\Newsletter\Models\Checkbox
 defaultRedirect: initbiz/newsletter/checkboxes
+create:
+    redirect: initbiz/newsletter/checkboxes
+    redirectClose: initbiz/newsletter/checkboxes

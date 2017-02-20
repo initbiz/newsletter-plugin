@@ -40,11 +40,15 @@ return [
     ],
     'new' => [
         'messages' => 'Nowa wiadomość',
+        'checkbox' => 'Nowy checkbox',
     ],
     'checkboxes' => [
         'export' => 'Wyeksportuj Checkboxy',
-        'import' => 'Zimportuj Checkboxy',
-
+        'import' => 'Zaimportuj Checkboxy',
+        'name' => 'Nazwa',
+        'text' => 'Tekst pojawiający sie przy checkboxie',
+        'required' => 'Wymagany'
+,
     ],
     'messages' => [
         'title' => 'Tytuł wiadomości',

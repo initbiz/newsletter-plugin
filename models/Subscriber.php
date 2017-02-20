@@ -7,7 +7,7 @@ use App;
 use DB;
 use Mail;
 
-class Subscribers extends Model {
+class Subscriber extends Model {
 
     use \October\Rain\Database\Traits\Validation;
 
@@ -19,6 +19,6 @@ class Subscribers extends Model {
         'email'   => 'required|email',
     ];
     public $belongsToMany = [
-        'checkboxes' => 'Initbiz\Newsletter\Models\Checkboxes'
+        'checkboxes' => ['Initbiz\Newsletter\Models\Checkbox', 'table' => 'initbiz_newsletter_checkbox_subscriber']
     ];
 }

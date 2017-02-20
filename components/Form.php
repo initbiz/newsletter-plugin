@@ -2,7 +2,9 @@
 
 use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
-use Initbiz\Newsletter\Models\Subscribers as Subscriber;
+use Illuminate\Support\Facades\Input;
+use Initbiz\Newsletter\Models\Checkbox;
+use Initbiz\Newsletter\Models\Subscriber as Subscriber;
 use Initbiz\Newsletter\Models\Settings;
 use Validator;
 use Mail;
@@ -20,12 +22,17 @@ class Form extends ComponentBase {
 
     public function onRun() {
         $this->addJs('assets/js/custom-newsletter.js');
-        $this->page['checkboxes'] = Settings::get('checkboxes');
+        $this->page['checkboxes'] = Checkbox::all();
         $this->page['button_text'] = Lang::get('initbiz.newsletter::lang.form.button_text');
     }
 
 
     public function onSubscription() {
+        $checked =[];
+        $checkboxes = Checkbox::all();
+        foreach($checkboxes as $checkbox){
+            isset(post($checkbox->name)[1])? array_push($checked,$checkbox->id):'';
+        }
 
         if (!post('email')) {
             return ['status' => 'fail',
@@ -37,13 +44,11 @@ class Form extends ComponentBase {
             return ['status' => 'fail',
                     'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.email_validation_failed')];
         }
-
         $subscriber = new Subscriber();
         $subscriber->email = post('email');
         $subscriber->confirmed = false;
-        $subscriber->agreed = (isset(post('formCheck')[1]))? true: false;
         $subscriber->token = hash('sha1', mt_rand(1,100000) . $subscriber->email);
-        if ($subscriber->save()) {
+        if ($subscriber->save() && $subscriber->checkboxes()->sync($checked)) {
             Mail::send('initbiz.newsletter::mail.subscription',
                 [
                     'activationLink' => url() . '/' . Settings::get('managementpage')

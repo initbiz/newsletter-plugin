@@ -5,7 +5,7 @@ use BackendMenu;
 use DB;
 use Flash;
 use Lang;
-use Initbiz\Newsletter\Models\Messages as Message;
+use Initbiz\Newsletter\Models\Message as Message;
 
 class Messages extends Controller {
 

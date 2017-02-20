@@ -3,6 +3,6 @@
 # ===================================
 
 name: initbiz.newsletter::lang.title.subscribers
-form: ~/plugins/initbiz/newsletter/models/subscribers/fields.yaml
-modelClass: Initbiz\Newsletter\Models\Subscribers
+form: ~/plugins/initbiz/newsletter/models/subscriber/fields.yaml
+modelClass: Initbiz\Newsletter\Models\Subscriber
 defaultRedirect: initbiz/newsletter/subscribers

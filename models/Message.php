@@ -8,7 +8,7 @@ use DB;
 use Mail;
 use Initbiz\Newsletter\Models\Settings;
 
-class Messages extends Model {
+class Message extends Model {
 
     use \October\Rain\Database\Traits\Validation;
 
