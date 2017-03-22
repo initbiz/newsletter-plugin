@@ -19,13 +19,8 @@ fields:
         default: false
         span: left
 
-    sendTo:
-        type: dropdown
-        span: right
-        options:
-            all: initbiz.newsletter::lang.messages.send_to_all
-            agreed: initbiz.newsletter::lang.messages.send_to_agreed
-        default: all
+    checkboxes:
+        type: partial
         trigger:
             action: show
             field: sent

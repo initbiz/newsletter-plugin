@@ -8,7 +8,7 @@ use ApplicationException;
  */
 class SubscribersExport extends ExportModel
 {
-    public $table = 'initbiz_newsletter_subscribers';
+    public $table = 'initbiz_newsletter_subscriber';
 
     public $fillable = ['emial'];
 

@@ -8,7 +8,7 @@ use ApplicationException;
  */
 class CheckboxesExport extends ExportModel
 {
-    public $table = 'initbiz_newsletter_checkboxes';
+    public $table = 'initbiz_newsletter_checkbox';
 
     public $fillable = ['required', 'name', 'text'];
 

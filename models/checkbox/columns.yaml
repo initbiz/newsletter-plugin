@@ -11,6 +11,7 @@ columns:
         label: initbiz.newsletter::lang.columns.required
         searchable: true
         type: switch
+        default: false
 
     text:
         label: initbiz.newsletter::lang.columns.text

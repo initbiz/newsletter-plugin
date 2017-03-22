@@ -22,7 +22,8 @@ class Checkbox extends Model {
         'text' => 'string'
     ];
     public $belongsToMany = [
-        'subscribers' => ['Initbiz\Newsletter\Models\Subscriber', 'table' => 'initbiz_newsletter_checkbox_subscriber']
+        'subscribers' => ['Initbiz\Newsletter\Models\Subscriber', 'table' => 'initbiz_newsletter_checkbox_subscriber'],
+        'messages' => ['Initbiz\Newsletter\Models\Message', 'table' => 'initbiz_newsletter_checkbox_message']
     ];
 
 }

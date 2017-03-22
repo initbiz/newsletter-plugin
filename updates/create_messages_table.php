@@ -13,7 +13,6 @@ class CreateMessagesTable extends Migration
             $table->string('title', 100);
             $table->text('content');
             $table->string('sent', 1)->default(0);
-            $table->string('sendTo', 10);
             $table->timestamps();
         });
     }

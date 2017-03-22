@@ -2,6 +2,8 @@
     - Adding and removing checkboxes
     - create_checkboxes_table.php
     - create_checkbox_subscriber_table.php
+    - create_chekbox_message_table.php
+
 1.0.2:
     - Error reponses using AJAX and some small fixes
     - update_subscribers_table.php

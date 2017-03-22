@@ -4,6 +4,7 @@ use Backend\Classes\Controller;
 use BackendMenu;
 use DB;
 use Flash;
+use Initbiz\Newsletter\Models\Checkbox;
 use Lang;
 use Initbiz\Newsletter\Models\Message as Message;
 
@@ -23,9 +24,10 @@ class Messages extends Controller {
 
     public function __construct() {
         parent::__construct();
-
+        $this->vars['checkboxes'] = Checkbox::all();
         BackendMenu::setContext('Initbiz.Newsletter', 'newsletter', 'messages');
     }
+
 
 
     public function onRemoveMessages()

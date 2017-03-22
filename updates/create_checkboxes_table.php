@@ -11,7 +11,7 @@ class CreateCheckboxesTable extends Migration
         Schema::create('initbiz_newsletter_checkboxes', function($table)
         {
             $table->increments('id');
-            $table->boolean('required',false);
+            $table->boolean('required')->default(null)->nullable();
             $table->string('name')->unique();
             $table->text('text');
             $table->timestamps();

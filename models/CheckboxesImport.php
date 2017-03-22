@@ -12,7 +12,7 @@ class CheckboxesImport extends \Backend\Models\ImportModel
         foreach ($results as $row => $data) {
 
             try {
-                $subscriber = new Checkboxes();
+                $subscriber = new Checkbox();
                 $subscriber->fill($data);
                 $subscriber->save();
 
