@@ -1,15 +1,15 @@
+1.0.1:
+    - 'First version of newsletter'
+    - create_subscribers_table.php
+    - create_messages_table.php
+1.0.2:
+    - 'Error reponses using AJAX and some small fixes'
+    - update_subscribers_table.php
 1.0.3:
-    - Adding and removing checkboxes
+    - 'Adding and removing checkboxes'
     - create_checkboxes_table.php
     - create_checkbox_subscriber_table.php
     - create_chekbox_message_table.php
-
-1.0.2:
-    - Error reponses using AJAX and some small fixes
-    - update_subscribers_table.php
-
-1.0.1:
-    - First version of newsletter
-    - create_subscribers_table.php
-    - create_messages_table.php
-
+1.0.4:
+    - 'Updated table initbiz_newsletter_checkboxes'
+    - builder_table_update_initbiz_newsletter_checkboxes.php

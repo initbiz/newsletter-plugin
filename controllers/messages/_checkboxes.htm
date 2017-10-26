@@ -1,5 +1,6 @@
 <div class="form-group  checkbox-field span-full">
     <?php foreach($checkboxes as $checkbox): ?>
+    <?php if($checkbox->required) {continue;} ?>
     <div class="checkbox custom-checkbox" tabindex="0">
     <input
             type="hidden"

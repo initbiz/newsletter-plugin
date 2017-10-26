@@ -3,24 +3,8 @@
 # ===================================
 
 fields:
-    checkboxes:
-      label: initbiz.newsletter::lang.settings.checkboxes
-      type: datatable
-      dynamicHeight: true
-      columns:
-         name:
-             title: initbiz.newsletter::lang.columns.name
-             validation:
-                required:
-                  message: initbiz.newsletter::lang.settings.required_error
-                  requiredWith: title
-                regex:
-                  pattern: ^[a-z][a-z0-9]*$
-                  modifiers: i
-                  message: initbiz.newsletter::lang.settings.property_format_error
-         required:
-             title: initbiz.newsletter::lang.columns.required
-             type: checkbox
+    managementpage:
+        label: initbiz.newsletter::lang.settings.managementpage_label
+        comment: initbiz.newsletter::lang.settings.managementpage_desc
+        type: dropdown
 
-         text:
-             title: initbiz.newsletter::lang.columns.text

@@ -10,7 +10,7 @@ class CreateSubscribersTable extends Migration
         Schema::create('initbiz_newsletter_subscribers', function($table)
         {
             $table->increments('id');
-            $table->string('email', 100);
+            $table->string('email', 100)->unique();
             $table->boolean('confirmed',false);
             $table->string('token',40);
             $table->timestamps();

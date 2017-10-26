@@ -38,7 +38,7 @@ class Message extends Model {
                         $query->whereIn('name', $inputs->flatten());
                 })->get();
             }
-            foreach ($subscribers as $subscriber) {
+            foreach ($subscribers->unique('email') as $subscriber) {
                 $params = [
                     'title' => $this->title,
                     'content' => $this->content,
