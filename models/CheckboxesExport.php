@@ -15,11 +15,18 @@ class CheckboxesExport extends ExportModel
 
     public function exportData($columns, $sessionKey = null)
     {
-        $result = self::make()
-            ->get()
-            ->toArray()
-        ;
-        return $result;
+        $checkboxes = Checkbox::all();
+        $checkboxes->each(function ($checkbox) use ($columns) {
+            var_dump($checkbox);
+            if(!$checkbox->required) {
+                $checkbox->required = 0;
+            } else {
+                $checkbox->required = 1;
+            }
+            //TODO: check if necessary
+            $checkbox->addVisible($columns);
+        });
+        return $checkboxes->toArray();
 
     }
 

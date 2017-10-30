@@ -2,11 +2,15 @@
 
 use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use Initbiz\Newsletter\Models\Checkbox;
 use Initbiz\Newsletter\Models\Subscriber as Subscriber;
 use Lang;
 
 class NewsletterConfirm extends ComponentBase {
 
+    protected $subscriber;
     public function componentDetails()
     {
         return [
@@ -45,19 +49,32 @@ class NewsletterConfirm extends ComponentBase {
         $token = $this->page['token'] = $this->property('token');
         $email = $this->page['email'] = $this->property('email');
 
-        $subscriber = Subscriber::where('email', '=',$email)->where('token', '=', $token)->first();
+        $this->subscriber = Subscriber::where('email', '=',$email)->where('token', '=', $token)->first();
         $this->page['confirmed'] = true;
-
-        if(!empty($subscriber)) {
-
-            if($this->page['subscriberExist'] = $this->checkIfExist($subscriber)) {
-                if(!$subscriber->confirmed) {
-
-                    $this->activate($subscriber);
-                    $this->page['confirmed'] = false; //to display "Thank you for registering" message only once
-                }
+        $userCheckboxes = $this->getSubscriberCheckboxes($this->subscriber);
+        $checkboxes = Checkbox::where('required', false)->get()->toArray();
+        foreach ($checkboxes as &$checkbox) {
+            if (in_array( $checkbox['name'], $userCheckboxes)) {
+                $checkedArray = ['checked' => true];
+                $checkbox += $checkedArray;
             }
         }
+
+        $this->page['checkboxes'] = $checkboxes;
+
+        if(!empty($this->subscriber)) {
+
+            if($this->page['subscriberExist'] = $this->checkIfExist($this->subscriber)) {
+                if(!$this->subscriber->confirmed) {
+
+                    $this->activate($this->subscriber);
+                    $this->page['confirmed'] = false; //to display "Thank you for registering" message only once
+
+                }
+
+            }
+        }
+
     }
 
     public function onUnsubscribe() {
@@ -82,4 +99,43 @@ class NewsletterConfirm extends ComponentBase {
         return (count($subscriber->get()))? true : false;
     }
 
+    protected function getSubscriberCheckboxes($subscriber) {
+        $checkboxes = $subscriber->checkboxes()->where('required', false)->lists('name');
+        if ($checkboxes == null) {
+            return [];
+        } else {
+            return $checkboxes;
+        }
+
+    }
+
+    public function onUpdate()
+    {
+        DB::transaction(function () {
+            $checkboxes = Checkbox::where('required', false)->get();
+            $subscriber = Subscriber::where('token', '=',post('token'))
+                ->where('email', '=', post('email'))
+                ->firstOrFail();
+            try {
+                $subscriber->checkboxes()->detach();
+
+                foreach ($checkboxes as $checkbox) {
+                    $checkbox = Checkbox::where('name', $checkbox->name)
+                        ->firstOrFail();
+                    if(post($checkbox->name) != null) {
+                        $subscriber->checkboxes()->save($checkbox);
+                    }
+                }
+            } catch (\PDOException $e) {
+                return ['status' => 'fail',
+                    'content' => Lang::get('initbiz.newsletter::lang.manage.update_failed'),
+                    'redirectUrl' => url()];
+            }
+
+        });
+
+        return ['status' => 'success',
+            'content' => Lang::get('initbiz.newsletter::lang.manage.update_success'),
+            'redirectUrl' => url()];
+    }
 }

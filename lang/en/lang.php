@@ -86,6 +86,8 @@ return [
         'unsubscribe_failed' => 'Error. Something went wrong.',
         'thank_you_message' => 'Thank you for signing up to our newsletter!',
         'wrong_path' => 'Wrong path.',
+        'update_failed' => 'Error. Something went wrong.',
+        'update_success' => 'Successfully deleted.',
     ],
     'ajaxFormResponse' => [
         'sign_up_success' => 'Thank you for signing up to our newsletter!',

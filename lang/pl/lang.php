@@ -99,6 +99,9 @@ return [
         'unsubscribe_failed' => 'Błąd. Coś poszło nie tak.',
         'thank_you_message' => 'Dziękujemy za zapisanie się do newslettera',
         'wrong_path' => 'Niepoprawna ścieżka',
+        'update_failed' => 'Coś poszło nie tak',
+        'update_success' => 'Pomyślnie zaktualizowano',
+
     ],
     'ajaxFormResponse' => [
         'email_validation_failed' => 'Adres e-mail musi być poprawny i nie może być pusty',

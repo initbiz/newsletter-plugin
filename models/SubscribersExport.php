@@ -8,19 +8,17 @@ use ApplicationException;
  */
 class SubscribersExport extends ExportModel
 {
-    public $table = 'initbiz_newsletter_subscriber';
+    public $table = 'initbiz_newsletter_subscribers';
 
-    public $fillable = ['emial'];
-
+    public $fillable = ['email'];
 
     public function exportData($columns, $sessionKey = null)
     {
-        $result = self::make()
-            ->get()
-            ->toArray()
-        ;
-        return $result;
-
+        $subscribers = Subscriber::all();
+        $subscribers->each(function($subscriber) use ($columns) {
+            $subscriber->addVisible($columns);
+        });
+        return $subscribers->toArray();
     }
 
 }
