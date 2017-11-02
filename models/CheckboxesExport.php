@@ -17,7 +17,6 @@ class CheckboxesExport extends ExportModel
     {
         $checkboxes = Checkbox::all();
         $checkboxes->each(function ($checkbox) use ($columns) {
-            var_dump($checkbox);
             if(!$checkbox->required) {
                 $checkbox->required = 0;
             } else {
