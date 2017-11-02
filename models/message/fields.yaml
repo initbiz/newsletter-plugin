@@ -19,9 +19,19 @@ fields:
         default: false
         span: left
 
-    checkboxes:
-        type: partial
+    send_to:
+        type: dropdown
+        span: left
+        default: all
         trigger:
             action: show
             field: sent
             condition: checked
+
+
+    checkboxes:
+        type: partial
+        trigger:
+            action: show
+            field: send_to
+            condition: value[customized]

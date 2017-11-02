@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Lang;
 use Initbiz\Newsletter\Controllers\Checkboxes;
 use Initbiz\Newsletter\Controllers\Subscribers;
 use Model;
@@ -16,6 +17,8 @@ class Message extends Model {
 
     use \October\Rain\Database\Traits\Validation;
 
+    protected $checkedCheckboxes;
+
     public $table = 'initbiz_newsletter_messages';
 
     public $rules = [
@@ -29,31 +32,66 @@ class Message extends Model {
 
     public function beforeSave()
     {
-        if ($this->sent && $this->sent != '') {
-            if (Input::get('toAll') == '1') {
-                $subscribers = DB::table('initbiz_newsletter_subscribers')->where("confirmed", 1)->get();
+        $this->checkedCheckboxes = collect(Input::get('checkboxes'));
+        if ($this->sentCheckboxChecked()) {
+            $recipientsList = $this->getRecipientsList($this->checkedCheckboxes->flatten());
+            $this->sendMessageToRecipients($recipientsList);
+        }
+    }
+
+    public function afterSave()
+    {
+        $messageCheckboxesId = Checkbox::whereIn('name', $this->checkedCheckboxes->flatten())
+            ->get()
+            ->pluck('id')
+            ->toArray();
+        $this->checkboxes()->sync($messageCheckboxesId);
+    }
+
+    public function getSendToOptions()
+    {
+        $options =[
+            'all' => Lang::get('initbiz.newsletter::lang.messages.send_to_all')
+        ];
+        if(Checkbox::where('required', false)->get()->count() != 0) {
+            $options += ['customized' => Lang::get('initbiz.newsletter::lang.messages.send_to_agreed')];
+        }
+        return $options;
+    }
+
+    protected function sentCheckboxChecked()
+    {
+        return ($this->sent && $this->sent != '') ? true: false;
+    }
+
+    protected function getRecipientsList($checkedCheckboxes)
+    {
+        $subscribers = [];
+            if ($this->send_to == 'all') {
+                $subscribers = Subscriber::where('confirmed', 1)->get();
             } else {
-                $inputs = new Collection(Input::get('checkboxes'));
-                $subscribers = Subscriber::whereHas('checkboxes', function ($query) use ($inputs) {
-                        $query->whereIn('name', $inputs->flatten());
+                $subscribers = Subscriber::where('confirmed', 1)
+                    ->whereHas('checkboxes', function ($query) use ($checkedCheckboxes) {
+                        $query->whereIn('name', $checkedCheckboxes);
                 })->get();
             }
-            foreach ($subscribers->unique('email') as $subscriber) {
-                $params = [
-                    'title' => $this->title,
-                    'content' => $this->content,
-                    'newsletterLink' => url() . '/' . Settings::get('managementpage') . '/' . $subscriber->email . '/' . $subscriber->token
-                ];
+        return $subscribers;
+    }
 
-                $this->email = $subscriber->email;
+    public function sendMessageToRecipients($recipientsList)
+    {
+        foreach ($recipientsList->unique('email') as $subscriber) {
+            $params = [
+                'title' => $this->title,
+                'content' => $this->content,
+                'newsletterLink' => url() . '/' . Settings::get('managementpage') . '/' . $subscriber->email . '/' . $subscriber->token
+            ];
 
-                Mail::send('initbiz.newsletter::mail.message', $params, function ($message) {
-                    $message->to($this->email)->subject($this->title);
-                });
-            }
-            unset($this->email, $this->name);
+            $email = $subscriber->email;
+
+            Mail::send('initbiz.newsletter::mail.message', $params, function ($message) use ($email) {
+                $message->to($email)->subject($this->title);
+            });
         }
-
-
     }
 }

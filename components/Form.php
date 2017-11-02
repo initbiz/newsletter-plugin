@@ -12,6 +12,8 @@ use Lang;
 
 class Form extends ComponentBase {
 
+    protected $subscriber;
+
     public function componentDetails() {
         return [
             'name'        => 'NewsletterForm',
@@ -19,20 +21,21 @@ class Form extends ComponentBase {
         ];
     }
 
-
-    public function onRun() {
-        $this->addJs('assets/js/custom-newsletter.js');
+    public function prepareVars()
+    {
         $this->page['checkboxes'] = Checkbox::all();
         $this->page['button_text'] = Lang::get('initbiz.newsletter::lang.form.button_text');
     }
 
+    public function onRun() {
+        $this->addJs('assets/js/custom-newsletter.js');
+        $this->prepareVars();
+    }
+
 
     public function onSubscription() {
-        $checked =[];
-        $checkboxes = Checkbox::all();
-        foreach($checkboxes as $checkbox){
-            isset(post($checkbox->name)[1])? array_push($checked,$checkbox->id):'';
-        }
+
+        $checkedCheckboxes = $this->getCheckedCheckboxesId(post());
 
         if (!post('email')) {
             return ['status' => 'fail',
@@ -44,19 +47,9 @@ class Form extends ComponentBase {
             return ['status' => 'fail',
                     'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.email_validation_failed')];
         }
-        $subscriber = new Subscriber();
-        $subscriber->email = post('email');
-        $subscriber->confirmed = false;
-        $subscriber->token = hash('sha1', mt_rand(1,100000) . $subscriber->email);
-        if ($subscriber->save() && $subscriber->checkboxes()->sync($checked)) {
-            Mail::send('initbiz.newsletter::mail.subscription',
-                [
-                    'activationLink' => url() . '/' . Settings::get('managementpage')
-                        . '/'. $subscriber->email . '/' . $subscriber->token
-                ],
-                function($message) use ($subscriber) {
-                    $message->to($subscriber->email, "")->subject($this->title);
-                });
+
+        if ($this->createSubscriberWithCheckboxes(post('email'), $checkedCheckboxes)) {
+            $this->sendActivationEmailToSubscriber();
             return ['status' => 'success',
                     'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_success')];
         } else {
@@ -65,5 +58,38 @@ class Form extends ComponentBase {
         }
 
 
+    }
+
+    protected function getCheckedCheckboxesId($post)
+    {
+        $checked =[];
+        $checkboxes = Checkbox::all();
+        foreach($checkboxes as $checkbox){
+            isset($post[$checkbox->name][1])? array_push($checked,$checkbox->id):'';
+        }
+        return $checked;
+    }
+
+    protected function createSubscriberWithCheckboxes($email, $checked)
+    {
+        $this->subscriber = new Subscriber();
+        $this->subscriber->email = $email;
+        $this->subscriber->confirmed = false;
+        $this->subscriber->token = hash('sha1', mt_rand(1,100000) . $this->subscriber->email);
+        return ($this->subscriber->save() && $this->subscriber->checkboxes()->sync($checked))? true: false;
+    }
+
+    public function sendActivationEmailToSubscriber()
+    {
+        $subscriberEmail  = $this->subscriber->email;
+
+        Mail::send('initbiz.newsletter::mail.subscription',
+            [
+                'activationLink' => url() . '/' . Settings::get('managementpage')
+                    . '/'. $this->subscriber->email . '/' . $this->subscriber->token
+            ],
+            function($message) use ($subscriberEmail) {
+                $message->to($this->subscriber->email, "")->subject($this->title);
+            });
     }
 }
