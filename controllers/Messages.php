@@ -37,16 +37,19 @@ class Messages extends Controller {
 
     public function onRemoveMessages()
     {
+        //TODO: Message::beforeDelete do not run without two foreach
         if (($checkedId = post('checked')) && is_array($checkedId) && count($checkedId)) {
-
+            $messages = Message::get();
             foreach ($checkedId as $messageId) {
-                if ((!$message = Message::where('id',$messageId)))
-                    continue;
-
-                $message->delete();
+                foreach ($messages as $message) {
+                    trace_log($messageId);
+                    if ($message->id !== (int)$messageId)
+                        continue;
+                    $message->delete();
+                    Flash::success(Lang::get('initbiz.newsletter::lang.flash.deleted'));
+                }
             }
 
-            Flash::success(Lang::get('initbiz.newsletter::lang.flash.deleted'));
         }
 
         return $this->listRefresh();

@@ -48,6 +48,11 @@ class Message extends Model {
         $this->checkboxes()->sync($messageCheckboxesId);
     }
 
+    public function beforeDelete()
+    {
+        trace_log("dupa");
+        $this->checkboxes()->detach();
+    }
     public function getSendToOptions()
     {
         $options =[
