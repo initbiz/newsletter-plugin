@@ -12,9 +12,11 @@
             id="<?= $checkbox->id ?>"
             name="checkboxes[]"
             value="<?= $checkbox->name ?>"
-    <?= $this->previewMode ? 'disabled="disabled"' : '' ?>
-    <?= $field->value == 1 ? 'checked="checked"' : '' ?>
-    <?= $field->getAttributes() ?>>
+        <?= $this->previewMode ? 'disabled="disabled"' : '' ?>
+        <?php if(isset($checked_checkboxes)) { ?>
+        <?php if(in_array($checkbox->name,$checked_checkboxes, true )) echo 'checked="checked"';?>
+        <?php }?>
+        <?= $field->getAttributes() ?>>
 
     <label for="<?= $checkbox->id ?>">
         <?= $checkbox->name ?>
@@ -26,6 +28,7 @@
     <?php endforeach ?>
 
 </div>
-<?php//dd($checkboxes);?>
+
+<?php //dd($checked_checkboxes);?>
 
 

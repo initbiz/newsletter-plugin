@@ -11,8 +11,7 @@ create:
     redirect: initbiz/newsletter/messages
     redirectClose: initbiz/newsletter/messages
 
-preview:
+update:
     redirect: initbiz/newsletter/messages
-    redirectClose: initbiz/newsletter/messagese
-
+    redirectClose: initbiz/newsletter/messages
 

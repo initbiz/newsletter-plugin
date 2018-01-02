@@ -54,6 +54,7 @@ return [
         'title' => 'Tytuł wiadomości',
         'content' => 'Treść wiadomości',
         'slug' => 'Slug',
+        'sent' => 'Wiadomość została wysłana',
         'send' => 'Wyślij wiadomość do subskrybentów',
         'send_to_all' => 'Wyślij wiadomość do wszystkich subskrybentów',
         'send_to_agreed' => 'Wyślij wiadomość tylko to osób, które zgodziły się z treścią opcjonalną'

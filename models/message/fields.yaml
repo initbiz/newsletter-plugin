@@ -28,7 +28,6 @@ fields:
             field: sent
             condition: checked
 
-
     checkboxes:
         type: partial
         trigger:

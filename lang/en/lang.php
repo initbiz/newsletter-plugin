@@ -40,6 +40,7 @@ return [
         'title' => 'Message title',
         'content' => 'Message content',
         'slug' => 'Slug',
+        'sent' => 'Message was sent',
         'send' => 'Send message to subscribers',
         'send_to_all' => 'Send message to all subscribers',
         'send_to_agreed' => 'Send message only to those who agreed with second, optional checkbox'
