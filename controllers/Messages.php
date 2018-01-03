@@ -42,7 +42,6 @@ class Messages extends Controller {
             $messages = Message::get();
             foreach ($checkedId as $messageId) {
                 foreach ($messages as $message) {
-                    trace_log($messageId);
                     if ($message->id !== (int)$messageId)
                         continue;
                     $message->delete();

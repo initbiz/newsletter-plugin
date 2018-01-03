@@ -26,9 +26,14 @@ class Checkbox extends Model {
         'messages' => ['Initbiz\Newsletter\Models\Message', 'table' => 'initbiz_newsletter_checkbox_message']
     ];
 
-   public $implement = ['@RainLab.Translate.Behaviors.TranslatableModel'];
 
-   public $translatable = ['text'];
+    public $implement = ['@RainLab.Translate.Behaviors.TranslatableModel'];
 
+    public $translatable = ['text'];
+
+    public function beforeDelete()
+    {
+        $this->subscribers()->detach();
+    }
 
 }

@@ -36,16 +36,18 @@ class Checkboxes extends Controller
     }
     public function onRemoveCheckboxes()
     {
+        //TODO: Checkbox::beforeDelete do not run without two foreach
         if (($checkedId = post('checked')) && is_array($checkedId) && count($checkedId)) {
-
+             $checkboxes = Checkbox::get();
             foreach ($checkedId as $checkboxId) {
-                if ((!$checkbox = Checkbox::where('id',$checkboxId)))
-                    continue;
-
-                $checkbox->delete();
+                 foreach ($checkboxes as $checkbox) {
+                     if ($checkbox->id !== (int)$checkboxId)
+                         continue;
+                     $checkbox->delete();
+                     Flash::success(Lang::get('initbiz.newsletter::lang.flash.deleted'));
+                 }
             }
 
-            Flash::success(Lang::get('initbiz.newsletter::lang.flash.deleted'));
         }
 
         return $this->listRefresh();

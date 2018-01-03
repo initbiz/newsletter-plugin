@@ -50,7 +50,6 @@ class Message extends Model {
 
     public function beforeDelete()
     {
-        trace_log("dupa");
         $this->checkboxes()->detach();
     }
     public function getSendToOptions()
