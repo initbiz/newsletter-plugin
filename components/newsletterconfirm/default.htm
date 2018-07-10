@@ -5,45 +5,41 @@
             <h6>{{thank_you_message|raw}}</h6>
         {% else %}
             {% if subscriberExist %}
-        <button data-request="onUnsubscribe"
-                data-trigger-type="enable"
-                data-trigger-action="enable"
-                onclick="$(this).data('request-data', { 'email' : '{{email}}', 'token' : '{{ token }}' })"
-                data-request-success="unsubscribe(data)">
-            wypisz sie!
-        </button>
-        <div class="col-md-12">
-            {{ form_ajax('onUpdate',
-                {
-                    success: 'unsubscribe(data)'
-                }
-                )
-            }}
-            {% for checkbox in checkboxes %}
-            <div class="form-group">
-                <input type="checkbox" id="{{ checkbox.name}}" name="{{ checkbox.name }}"
-                       value="{{ checkbox.name}}"{% if checkbox.checked %}checked{% endif %}/>
-                <label for="{{ checkbox.name}}">{{checkbox.text}}</label>
-            </div>
-            {% endfor %}
-            <input type="hidden" value="{{email}}" name="email">
-            <input type="hidden" value="{{token}}" name="token">
-            <button type="submit">Update</button>
+            <button data-request="onUnsubscribe"
+                    data-trigger-type="enable"
+                    data-trigger-action="enable"
+                    onclick="$(this).data('request-data', { 'email' : '{{email}}', 'token' : '{{ token }}' })"
+                    data-request-success="unsubscribe(data)">
+                wypisz sie!
+            </button>
+            <div class="col-md-12">
+                {{ form_ajax('onUpdate', { success: 'unsubscribe(data)' } ) }}
+                    {% for checkbox in checkboxes %}
+                    <div class="form-group">
+                        <input type="checkbox" id="{{ checkbox.name}}" name="{{ checkbox.name }}"
+                               value="{{ checkbox.name}}" {{ (checkbox.checked) ? 'checked' : '' }}/>
+                        <label for="{{ checkbox.name}}">{{ checkbox.text }}</label>
+                    </div>
+                    {% endfor %}
 
-            {{ form_close() }}
-        </div>
+                    <input type="hidden" value="{{ token }}" name="token">
+                    <input type="hidden" value="{{ email }}" name="email">
+                    <button type="submit"> Update </button>
+                {{ form_close() }}
+            </div>
 
-        <div class="col-md-12 input-group" id="notifications">
-            <div class="alert alert-success collapse" id="success" role="alert">
-                        <span id="successMsgNC">
-                        </span>
+            <div class="col-md-12 input-group" id="notifications">
+                <div class="alert alert-success collapse" id="success" role="alert">
+                    <span id="successMsgNC"> </span>
+                </div>
+                <div class="alert alert-danger collapse" id="failed" role="alert">
+                    <span id="errorMsgNC"> </span>
+                </div>
             </div>
-            <div class="alert alert-danger collapse" id="failed" role="alert">
-                        <span id="errorMsgNC">
-                        </span>
-            </div>
-        </div>            {% else %}
-                <h6>{{wrong_path |raw}}</h6>
+            {% else %}
+                <h6>
+                    {{ wrong_path |raw }}
+                </h6>
             {% endif %}
         {% endif %}
     </div>
