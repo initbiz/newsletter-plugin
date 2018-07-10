@@ -12,8 +12,8 @@
                 <input type="checkbox" name="{{ checkbox.name }}" {{ (checkbox.required) ? 'required':''}}>
                 {{ checkbox.text|raw }}
             </label>
-        {% endfor %}
         </div>
+        {% endfor %}
         <div class="col-md-12 input-group" id="notifications">
             <div class="alert alert-success collapse" id="success" role="alert">
                 <span id="successMsg">
