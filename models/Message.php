@@ -13,8 +13,8 @@ use DB;
 use Mail;
 use Initbiz\Newsletter\Models\Settings;
 
-class Message extends Model {
-
+class Message extends Model
+{
     use \October\Rain\Database\Traits\Validation;
 
     protected $checkedCheckboxes;
@@ -57,7 +57,7 @@ class Message extends Model {
         $options =[
             'all' => Lang::get('initbiz.newsletter::lang.messages.send_to_all')
         ];
-        if(Checkbox::where('required', false)->get()->count() != 0) {
+        if (Checkbox::where('required', false)->get()->count() != 0) {
             $options += ['customized' => Lang::get('initbiz.newsletter::lang.messages.send_to_agreed')];
         }
         return $options;
@@ -71,14 +71,14 @@ class Message extends Model {
     protected function getRecipientsList($checkedCheckboxes)
     {
         $subscribers = [];
-            if ($this->send_to == 'all') {
-                $subscribers = Subscriber::where('confirmed', 1)->get();
-            } else {
-                $subscribers = Subscriber::where('confirmed', 1)
+        if ($this->send_to == 'all') {
+            $subscribers = Subscriber::where('confirmed', 1)->get();
+        } else {
+            $subscribers = Subscriber::where('confirmed', 1)
                     ->whereHas('checkboxes', function ($query) use ($checkedCheckboxes) {
                         $query->whereIn('name', $checkedCheckboxes);
-                })->get();
-            }
+                    })->get();
+        }
         return $subscribers;
     }
 
@@ -88,7 +88,7 @@ class Message extends Model {
             $params = [
                 'title' => $this->title,
                 'content' => $this->content,
-                'newsletterLink' => url() . '/' . Settings::get('managementpage') . '/' . $subscriber->email . '/' . $subscriber->token
+                'newsletterLink' => url('/') . '/' . Settings::get('managementpage') . '/' . $subscriber->email . '/' . $subscriber->token
             ];
 
             $email = $subscriber->email;
