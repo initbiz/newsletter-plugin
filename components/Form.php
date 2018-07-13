@@ -10,11 +10,12 @@ use Validator;
 use Mail;
 use Lang;
 
-class Form extends ComponentBase {
-
+class Form extends ComponentBase
+{
     protected $subscriber;
 
-    public function componentDetails() {
+    public function componentDetails()
+    {
         return [
             'name'        => 'NewsletterForm',
             'description' => 'Newsletter Form component'
@@ -27,14 +28,15 @@ class Form extends ComponentBase {
         $this->page['button_text'] = Lang::get('initbiz.newsletter::lang.form.button_text');
     }
 
-    public function onRun() {
+    public function onRun()
+    {
         $this->addJs('assets/js/custom-newsletter.js');
         $this->prepareVars();
     }
 
 
-    public function onSubscription() {
-
+    public function onSubscription()
+    {
         $checkedCheckboxes = $this->getCheckedCheckboxesId(post());
 
         if (!post('email')) {
@@ -56,16 +58,14 @@ class Form extends ComponentBase {
             return ['status' => 'fail',
                     'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_error')];
         }
-
-
     }
 
     protected function getCheckedCheckboxesId($post)
     {
         $checked =[];
         $checkboxes = Checkbox::all();
-        foreach($checkboxes as $checkbox){
-            isset($post[$checkbox->name][1])? array_push($checked,$checkbox->id):'';
+        foreach ($checkboxes as $checkbox) {
+            isset($post[$checkbox->name][1])? array_push($checked, $checkbox->id):'';
         }
         return $checked;
     }
@@ -75,7 +75,7 @@ class Form extends ComponentBase {
         $this->subscriber = new Subscriber();
         $this->subscriber->email = $email;
         $this->subscriber->confirmed = false;
-        $this->subscriber->token = hash('sha1', mt_rand(1,100000) . $this->subscriber->email);
+        $this->subscriber->token = hash('sha1', mt_rand(1, 100000) . $this->subscriber->email);
         return ($this->subscriber->save() && $this->subscriber->checkboxes()->sync($checked))? true: false;
     }
 
@@ -83,13 +83,15 @@ class Form extends ComponentBase {
     {
         $subscriberEmail  = $this->subscriber->email;
 
-        Mail::send('initbiz.newsletter::mail.subscription',
+        Mail::send(
+            'initbiz.newsletter::mail.subscription',
             [
-                'activationLink' => url() . '/' . Settings::get('managementpage')
+                'activationLink' => url('/')  . Settings::get('managementpage')
                     . '/'. $this->subscriber->email . '/' . $this->subscriber->token
             ],
-            function($message) use ($subscriberEmail) {
+            function ($message) use ($subscriberEmail) {
                 $message->to($this->subscriber->email, "")->subject($this->title);
-            });
+            }
+        );
     }
 }

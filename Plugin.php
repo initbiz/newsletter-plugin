@@ -106,5 +106,4 @@ class Plugin extends PluginBase
             ]
         ];
     }
-
 }

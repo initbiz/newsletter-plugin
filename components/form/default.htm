@@ -1,28 +1,16 @@
-<div class="col-md-4 col-md-offset-4">
-    <form data-request="onSubscription" data-request-success="subscribtionStatus(data)" id="subscribe">
-        <div class="input-group">
-            <input type="text" name="email" class="no-auto-focus form-control" placeholder="Email" required>
-            <span class="input-group-btn">
-                <input type="submit" class="btn btn-info" value="{{ button_text }}">
-            </span>
+
+<form data-request="onSubscription" data-request-success="subscribtionStatus(data)" id="subscribe">
+    <div class="form-group">
+        <label for = "email" >{{'initbiz.newsletter::lang.form.label_email'|_}}</label>
+        <input type="email"  name="email" id="email" class="form-control" placeholder = "{{'initbiz.newsletter::lang.form.placeholder_email'}}">
+    </div>
+
+    {% for checkbox in checkboxes %}
+        <div class="form-group">
+            <input type="checkbox" name="{{checkbox.name}}" id="checkbox-{{checkbox.name}}" class="form-control-check" {{ (checkbox.required) ? 'required':''}}>
+            <label for="checkbox-{{checkbox.name}}">{{ checkbox.text | raw }}</label>
         </div>
-        {% for checkbox in checkboxes %}
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" name="{{ checkbox.name }}" {{ (checkbox.required) ? 'required':''}}>
-                {{ checkbox.text|raw }}
-            </label>
-        </div>
-        {% endfor %}
-        <div class="col-md-12 input-group" id="notifications">
-            <div class="alert alert-success collapse" id="success" role="alert">
-                <span id="successMsg">
-                </span>
-            </div>
-            <div class="alert alert-danger collapse" id="failed" role="alert">
-                <span id="errorMsg">
-                </span>
-            </div>
-        </div>
-    </form>
-</div>
+    {% endfor %}
+
+      <button type="submit" class="btn btn-primary">{{'initbiz.newsletter::lang.form.submit_button'}}</button>
+</form>
