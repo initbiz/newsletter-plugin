@@ -47,8 +47,7 @@ return [
         'import' => 'Zaimportuj Checkboxy',
         'name' => 'Nazwa',
         'text' => 'Tekst pojawiający sie przy checkboxie',
-        'required' => 'Wymagany'
-,
+        'required' => 'Wymagany',
     ],
     'messages' => [
         'title' => 'Tytuł wiadomości',
@@ -91,6 +90,8 @@ return [
     ],
     'form' => [
         'button_text' => 'Zapisz się',
+        'placeholder_email' => 'E-mail',
+        'label_email' => 'E-mail',
         'sign_up_thanks' => 'Dziękujemy za zapisanie się do newslettera!',
         'sign_up_error' => 'Błąd. Coś poszło nie tak.',
     ],
@@ -102,6 +103,8 @@ return [
         'wrong_path' => 'Niepoprawna ścieżka',
         'update_failed' => 'Coś poszło nie tak',
         'update_success' => 'Pomyślnie zaktualizowano',
+        'unsubscribe' => 'Wypisz się',
+        'update_button_text' => 'Aktualizuj'
 
     ],
     'ajaxFormResponse' => [

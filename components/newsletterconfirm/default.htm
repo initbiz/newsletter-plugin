@@ -1,45 +1,39 @@
 <div class="row">
-
-    <div class="col-md-10 col-md-offset-1 well">
+    <div class="col-md-10 col-md-offset-1">
         {% if not confirmed %}
-            <h6>{{thank_you_message|raw}}</h6>
+            <h6>{{'initbiz.newsletter::lang.manage.thank_you_message'| trans }}</h6>
         {% else %}
             {% if subscriberExist %}
-            <button data-request="onUnsubscribe"
-                    data-trigger-type="enable"
-                    data-trigger-action="enable"
-                    onclick="$(this).data('request-data', { 'email' : '{{email}}', 'token' : '{{ token }}' })"
-                    data-request-success="unsubscribe(data)">
-                wypisz sie!
-            </button>
-            <div class="col-md-12">
-                {{ form_ajax('onUpdate', { success: 'unsubscribe(data)' } ) }}
+                <div class="">
+                    <button data-request="onUnsubscribe"
+                        data-trigger-type="enable"
+                        data-trigger-action="enable"
+                        onclick="$(this).data('request-data', { 'email' : '{{email}}', 'token' : '{{ token }}' })"
+                        data-request-success="unsubscribe(data)">{{'initbiz.newsletter::lang.manage.unsubscribe'| trans}}</button>
+                </div>
+                <form data-request="onUpdate" data-request-success="unsubscribe(data)" id="update">
                     {% for checkbox in checkboxes %}
-                    <div class="form-group">
-                        <input type="checkbox" id="{{ checkbox.name}}" name="{{ checkbox.name }}"
-                               value="{{ checkbox.name}}" {{ (checkbox.checked) ? 'checked' : '' }}/>
-                        <label for="{{ checkbox.name}}">{{ checkbox.text }}</label>
-                    </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="{{checkbox.name}}" id="checkbox-{{checkbox.name}}" class="form-control-check" {{ (checkbox.required) ? 'required':''}}>
+                            <label for="checkbox-{{checkbox.name}}">{{ checkbox.text | raw }}</label>
+                        </div>
                     {% endfor %}
-
                     <input type="hidden" value="{{ token }}" name="token">
                     <input type="hidden" value="{{ email }}" name="email">
-                    <button type="submit"> Update </button>
-                {{ form_close() }}
-            </div>
 
-            <div class="col-md-12 input-group" id="notifications">
-                <div class="alert alert-success collapse" id="success" role="alert">
-                    <span id="successMsgNC"> </span>
+                    <button type="submit" class="btn btn-primary">{{'initbiz.newsletter::lang.manage.update_button_text'| trans}}</button>
+                </form>
+                <!-- //TODO: check if it is really necessary -->
+                <div class="col-md-12 input-group" id="notifications">
+                    <div class="alert alert-success collapse" id="success" role="alert">
+                        <span id="successMsgNC"> </span>
+                    </div>
+                    <div class="alert alert-danger collapse" id="failed" role="alert">
+                        <span id="errorMsgNC"> </span>
+                    </div>
                 </div>
-                <div class="alert alert-danger collapse" id="failed" role="alert">
-                    <span id="errorMsgNC"> </span>
-                </div>
-            </div>
             {% else %}
-                <h6>
-                    {{ wrong_path |raw }}
-                </h6>
+                 <h6>{{'initbiz.newsletter::lang.manage.wrong_path'| trans }}</h6>
             {% endif %}
         {% endif %}
     </div>

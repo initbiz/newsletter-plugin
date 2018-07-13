@@ -14,11 +14,17 @@ return [
         'newsletter' => 'Newsletter',
         'messages' => 'Messages',
         'subscribers' => 'Subscribers',
+        'checkboxes' => 'Checkboxes',
     ],
     'title' => [
         'newsletter' => 'Newsletter',
         'messages' => 'message',
         'subscribers' => 'Subscribers',
+        'checkboxes' => 'Checkboxes',
+    ],
+    'subscribers' => [
+        'export_subscribers' => 'Export subscribers',
+        'email' => 'Email',
     ],
     'permission' => [
         'messages' => 'Messages managing',
@@ -31,10 +37,17 @@ return [
         'managementpage_desc' => 'Webpage where newsletter managing component is located',
         'required_checkbox' => 'Text that will be displayed next to required checkbox',
         'optional_checkbox' => 'Text that will be displayed next to optional checkbox',
-
     ],
     'new' => [
         'messages' => 'New message',
+        'checkbox' => 'New checkbox',
+    ],
+    'checkboxes' => [
+        'export' => 'Export Checkboxes',
+        'import' => 'Import Checkboxes',
+        'name' => 'Name',
+        'text' => 'Text appearing next to the checkbox',
+        'required' => 'Required',
     ],
     'messages' => [
         'title' => 'Message title',
@@ -45,16 +58,15 @@ return [
         'send_to_all' => 'Send message to all subscribers',
         'send_to_agreed' => 'Send message only to those who agreed with second, optional checkbox'
     ],
-    'subscribers' => [
-        'export_subscribers' => 'Export Subscribers',
-        'email' => 'E-mail',
-    ],
     'columns' => [
         'title' => 'Title',
         'slug' => 'Slug',
         'sent' => 'Sent',
         'created' => 'Created',
         'updated' => 'Updated',
+        'name' => 'Name',
+        'text' => 'Text',
+        'required' => 'Required',
     ],
     'userColumns' => [
         'email' => 'E-mail',
@@ -78,6 +90,8 @@ return [
     ],
     'form' => [
         'button_text' => 'Sign up',
+        'placeholder_email' => 'Email',
+        'label_email' => 'Email',
         'sign_up_thanks' => 'Thank you for subscribing our newsletter',
         'sign_up_error' => 'Oops, something went wrong.',
     ],
@@ -88,7 +102,9 @@ return [
         'thank_you_message' => 'Thank you for signing up to our newsletter!',
         'wrong_path' => 'Wrong path.',
         'update_failed' => 'Error. Something went wrong.',
-        'update_success' => 'Successfully deleted.',
+        'update_success' => 'Successfully updated.',
+        'unsubscribe' => 'Unsubscribe',
+        'update_button_text' => 'Update'
     ],
     'ajaxFormResponse' => [
         'sign_up_success' => 'Thank you for signing up to our newsletter!',

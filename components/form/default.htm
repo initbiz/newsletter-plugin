@@ -1,8 +1,8 @@
 
-<form data-request="onSubscription" data-request-success="subscribtionStatus(data)" id="subscribe">
+<form data-request="onSubscription" data-request-success="subscribtionStatus(data)" data-request-error="subscribtionStatus(data)" id="subscribe">
     <div class="form-group">
-        <label for = "email" >{{'initbiz.newsletter::lang.form.label_email'|_}}</label>
-        <input type="email"  name="email" id="email" class="form-control" placeholder = "{{'initbiz.newsletter::lang.form.placeholder_email'}}">
+        <label for = "email" >{{'initbiz.newsletter::lang.form.label_email'| trans}}</label>
+        <input type="email"  name="email" id="email" class="form-control" placeholder = "{{'initbiz.newsletter::lang.form.placeholder_email'| trans}}">
     </div>
 
     {% for checkbox in checkboxes %}
@@ -12,5 +12,18 @@
         </div>
     {% endfor %}
 
-      <button type="submit" class="btn btn-primary">{{'initbiz.newsletter::lang.form.submit_button'}}</button>
+      <button type="submit" class="btn btn-primary">{{'initbiz.newsletter::lang.form.button_text'| trans}}</button>
 </form>
+
+<!-- //TODO: check if it is really necessary -->
+
+<div class="col-md-12 input-group" id="notifications">
+    <div class="alert alert-success collapse" id="success" role="alert">
+        <span id="successMsg">
+        </span>
+    </div>
+    <div class="alert alert-danger collapse" id="failed" role="alert">
+        <span id="errorMsg">
+        </span>
+    </div>
+</div>

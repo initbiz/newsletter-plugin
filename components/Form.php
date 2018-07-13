@@ -9,6 +9,7 @@ use Initbiz\Newsletter\Models\Settings;
 use Validator;
 use Mail;
 use Lang;
+use Db;
 
 class Form extends ComponentBase
 {
@@ -25,7 +26,6 @@ class Form extends ComponentBase
     public function prepareVars()
     {
         $this->page['checkboxes'] = Checkbox::all();
-        $this->page['button_text'] = Lang::get('initbiz.newsletter::lang.form.button_text');
     }
 
     public function onRun()
@@ -37,27 +37,34 @@ class Form extends ComponentBase
 
     public function onSubscription()
     {
-        $checkedCheckboxes = $this->getCheckedCheckboxesId(post());
+        Db::transaction(function () {
+            $checkedCheckboxes = $this->getCheckedCheckboxesId(post());
 
-        if (!post('email')) {
-            return ['status' => 'fail',
-                    'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.email_cannot_be_empty')];
-        }
+            if (!post('email')) {
+                return ['status' => 'fail',
+                        'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.email_cannot_be_empty')];
+            }
 
-        $validation = Validator::make(['email' => post('email')], ['email'=>'email']);
-        if ($validation->fails()) {
-            return ['status' => 'fail',
-                    'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.email_validation_failed')];
-        }
+            if (Subscriber::where('email', post('email'))->first()) {
+                return ['status' => 'fail',
+                        'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.email_already_exist')];
+            }
 
-        if ($this->createSubscriberWithCheckboxes(post('email'), $checkedCheckboxes)) {
-            $this->sendActivationEmailToSubscriber();
-            return ['status' => 'success',
-                    'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_success')];
-        } else {
-            return ['status' => 'fail',
-                    'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_error')];
-        }
+            $validation = Validator::make(['email' => post('email')], ['email'=>'email']);
+            if ($validation->fails()) {
+                return ['status' => 'fail',
+                        'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.email_validation_failed')];
+            }
+
+            if ($this->createSubscriberWithCheckboxes(post('email'), $checkedCheckboxes)) {
+                $this->sendActivationEmailToSubscriber();
+                return ['status' => 'success',
+                        'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_success')];
+            } else {
+                return ['status' => 'fail',
+                        'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_error')];
+            }
+        });
     }
 
     protected function getCheckedCheckboxesId($post)
@@ -86,7 +93,7 @@ class Form extends ComponentBase
         Mail::send(
             'initbiz.newsletter::mail.subscription',
             [
-                'activationLink' => url('/')  . Settings::get('managementpage')
+                'activationLink' => url('/') . ('/') . Settings::get('managementpage')
                     . '/'. $this->subscriber->email . '/' . $this->subscriber->token
             ],
             function ($message) use ($subscriberEmail) {
