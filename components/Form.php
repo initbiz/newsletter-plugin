@@ -56,6 +56,15 @@ class Form extends ComponentBase
                         'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.email_validation_failed')];
             }
 
+            // check if all reqired checkboxes are checked
+            $requiredCheckboxes = Checkbox::where('required', true)->where('required', 1)->get();
+            foreach ($requiredCheckboxes as $requiredCheckbox) {
+                if (!in_array($requiredCheckbox->id, $checkedCheckboxes)) {
+                    return ['status' => 'fail',
+                            'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.checkbox_validation_failed')];
+                }
+            }
+
             if ($this->createSubscriberWithCheckboxes(post('email'), $checkedCheckboxes)) {
                 $this->sendActivationEmailToSubscriber();
                 return ['status' => 'success',

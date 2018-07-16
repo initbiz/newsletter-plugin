@@ -114,5 +114,6 @@ return [
         'email_cannot_be_empty' => 'E-mail nie może być pusty',
         'subscriber_save_success' => 'Pomyślnie zapisano subskrybenta',
         'subscriber_save_failed' => 'Zapisywanie subskrybenta się nie powiodło',
+        'checkbox_validation_failed' => 'Musisz zaakceptować wszystkie wymagane checkboxy'
     ],
 ];

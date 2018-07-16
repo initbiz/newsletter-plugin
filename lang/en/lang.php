@@ -113,5 +113,6 @@ return [
         'email_cannot_be_empty' => 'E-mail address field cannot be empty',
         'subscriber_save_success' => 'Subscriber successfully saved',
         'subscriber_save_failed' => 'Saving subscriber failed',
+        'checkbox_validation_failed' => 'You must accept all required checkboxes'
     ],
 ];
