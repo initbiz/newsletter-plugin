@@ -109,6 +109,7 @@ return [
     ],
     'ajaxFormResponse' => [
         'email_validation_failed' => 'Adres e-mail musi być poprawny i nie może być pusty',
+        'sign_up_error' => 'Blad',
         'subscriber_save_success' => 'Pomyślnie zapisano subskrybenta',
         'subscriber_save_failed' => 'Zapisywanie subskrybenta się nie powiodło',
         'email_cannot_be_empty' => 'E-mail nie może być pusty',
