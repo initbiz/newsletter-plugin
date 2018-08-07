@@ -10,9 +10,9 @@ use ValidationException;
 use Cms\Classes\ComponentBase;
 use Illuminate\Support\Facades\Input;
 use Initbiz\Newsletter\Models\Checkbox;
-use Initbiz\Newsletter\Classes\SubscribtionException;
 use Initbiz\Newsletter\Models\Settings;
 use October\Rain\Exception\AjaxException;
+use Initbiz\Newsletter\Classes\SubscribtionException;
 use Initbiz\Newsletter\Models\Subscriber as Subscriber;
 
 class Form extends ComponentBase

@@ -2,6 +2,6 @@
 
 use October\Rain\Exception\ApplicationException;
 
-class SubscribtionException extends ApplicationException
+class UpdateSubscriberException extends ApplicationException
 {
 }

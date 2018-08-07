@@ -72,6 +72,7 @@ return [
         'email' => 'E-mail',
         'agreement' => 'Agreement',
         'joined' => 'Joined',
+        'confirmed' => 'Confirmed',
     ],
     'flash' => [
         'delete' => 'Are you sure you want to delete selected items?',
@@ -96,23 +97,23 @@ return [
         'sign_up_error' => 'Oops, something went wrong.',
     ],
     'manage' => [
-        'button_text' => 'Sign out',
-        'unsubscribe_success' => 'Successfully deleted.',
-        'unsubscribe_failed' => 'Error. Something went wrong.',
-        'thank_you_message' => 'Thank you for signing up to our newsletter!',
-        'wrong_path' => 'Wrong path.',
-        'update_failed' => 'Error. Something went wrong.',
-        'update_success' => 'Successfully updated.',
-        'unsubscribe' => 'Unsubscribe',
+        'sign_out_button_text' => 'Sign out',
         'update_button_text' => 'Update'
     ],
     'ajaxFormResponse' => [
-        'sign_up_success' => 'Thank you for signing up to our newsletter!',
+        'sign_up_success' => 'Thank you for signing up to our newsletter! Please confirm your email',
         'sign_up_error' => 'Error. Something went wrong.',
         'email_validation_failed' => 'E-mail must be valid',
         'email_cannot_be_empty' => 'E-mail address field cannot be empty',
         'subscriber_save_success' => 'Subscriber successfully saved',
         'subscriber_save_failed' => 'Saving subscriber failed',
-        'checkbox_validation_failed' => 'You must accept all required checkboxes'
+        'checkbox_validation_failed' => 'You must accept all required checkboxes',
+        'unsubscribe_success' => 'Successfully unsubscribe.',
+        'unsubscribe_failed' => 'Error. Something went wrong.',
+        'wrong_path' => 'Wrong path.',
+        'update_failed' => 'Error. Something went wrong.',
+        'update_success' => 'Successfully updated.',
+        'unsubscribe' => 'Unsubscribe',
+        'error' => 'Error. Something went wrong.',
     ],
 ];

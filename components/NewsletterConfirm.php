@@ -1,13 +1,16 @@
 <?php namespace Initbiz\Newsletter\Components;
 
+use Db;
+use Lang;
 use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
-use Initbiz\Newsletter\Models\Checkbox;
-use Initbiz\Newsletter\Models\Subscriber as Subscriber;
-use Lang;
 use Initbiz\Newsletter\Models\Settings;
+use Initbiz\Newsletter\Models\Checkbox;
+use October\Rain\Exception\ApplicationException;
+use Initbiz\Newsletter\Classes\SubscribtionException;
+use Initbiz\Newsletter\Models\Subscriber as Subscriber;
+use Initbiz\Newsletter\Classes\UpdateSubscriberException;
 
 class NewsletterConfirm extends ComponentBase
 {
@@ -42,47 +45,49 @@ class NewsletterConfirm extends ComponentBase
 
     protected function prepareVars()
     {
-        // $this->page['unsubscribe_success'] = Lang::get('initbiz.newsletter::lang.manage.unsubscribe_success');
-        // $this->page['unsubscribe_failed'] = Lang::get('initbiz.newsletter::lang.manage.unsubscribe_failed');
         $this->page['confirmed'] = true;
         $this->token = $this->page['token'] = $this->property('token');
         $this->email = $this->page['email'] = $this->property('email');
 
         $this->subscriber = Subscriber::where('email', $this->email)
             ->where('token', $this->token)
-            ->first();
+            ->firstOrFail();
     }
 
     public function onRun()
     {
-        $this->addJs('assets/js/custom-newsletter.js');
-        $this->prepareVars();
-        $userCheckboxes = $this->getSubscriberCheckboxesName($this->subscriber);
-        $notRequiredCheckboxes = $this->getAllNotRequiredCheckboxes()->toArray();
-        $checkedNotRequiredCheckboxes = $this->addToCheckboxesIfChecked($notRequiredCheckboxes, $userCheckboxes);
-        $this->page['checkboxes'] = $checkedNotRequiredCheckboxes;
-        $this->activateSubscriber();
+        try {
+            $this->prepareVars();
+            $userCheckboxes = $this->getSubscriberCheckboxesName($this->subscriber);
+            $notRequiredCheckboxes = $this->getAllNotRequiredCheckboxes()->toArray();
+            $checkedNotRequiredCheckboxes = $this->addToCheckboxesIfChecked($notRequiredCheckboxes, $userCheckboxes);
+            $this->page['checkboxes'] = $checkedNotRequiredCheckboxes;
+            $this->activateSubscriber();
+        } catch (\Exception $e) {
+            throw new ApplicationException(Lang::get('initbiz.newsletter::lang.ajaxFormResponse.error'));
+        }
+
     }
 
     public function onUnsubscribe()
     {
-        if ($this->deleteSubscriber(post('email'), post('token'))) {
-            return ['status' => 'success',
-                    'content' => Lang::get('initbiz.newsletter::lang.manage.unsubscribe_success'),
-                    'redirectUrl' => url('/')];
-        } else {
-            return ['status' => 'fail',
-                    'content' => Lang::get('initbiz.newsletter::lang.manage.unsubscribe_failed'),
-                    'redirectUrl' => $this->getRedirectPageUrl($this->email, $this->token)
-                  ];
+        try {
+            $data = post();
+            $this->deleteSubscriber($data);;
+            $result = ['content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.unsubscribe_success'),
+                        'redirectUrl' => url('/')];
+        } catch (\Exception $e) {
+            throw new SubscribtionException(Lang::get('initbiz.newsletter::lang.ajaxFormResponse.unsubscribe_failed'));
         }
+        return $result;
     }
 
-    protected function deleteSubscriber($email, $token)
+    protected function deleteSubscriber($data)
     {
-        $subscriber = Subscriber::where('token', $token)
-            ->where('email', $email)->first();
-        return ($subscriber->checkboxes()->detach() && $subscriber->delete())? true: false;
+        $subscriber = Subscriber::where('token', $data['token'])
+            ->where('email', $data['email'])->first();
+        $subscriber->checkboxes()->detach();
+        $subscriber->delete();
     }
 
     protected function activate(Subscriber $subscriber)
@@ -103,11 +108,13 @@ class NewsletterConfirm extends ComponentBase
                                  ->get()
                                  ->pluck('name')
                                  ->toArray();
+
         if ($checkboxes == null) {
-            return [];
+            $result =  [];
         } else {
-            return $checkboxes;
+            $result = $checkboxes;
         }
+        return $result;
     }
 
     protected function addToCheckboxesIfChecked($notRequiredCheckboxes, $userCheckboxes)
@@ -139,32 +146,28 @@ class NewsletterConfirm extends ComponentBase
     }
     public function onUpdate()
     {
-        $this->token = post('token');
-        $this->email = post('email');
-        DB::transaction(function () {
+        $result = [];
+        Db::transaction(function () use(&$result) {
             try {
-                $this->updateSubscriberCheckboxes();
-            } catch (\PDOException $e) {
-                return ['status' => 'fail',
-                    'content' => Lang::get('initbiz.newsletter::lang.manage.update_failed'),
-                    'redirectUrl' => url()];
+                $data = post();
+                $this->updateSubscriberCheckboxes($data);
+                $result = [ 'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.update_success') ];
+            } catch (\Exception $e) {
+                throw new UpdateSubscriberException(Lang::get('initbiz.newsletter::lang.ajaxFormResponse.update_failed'));
             }
         });
 
-        return ['status' => 'success',
-            'content' => Lang::get('initbiz.newsletter::lang.manage.update_success'),
-            'redirectUrl' => $this->getRedirectPageUrl($this->email, $this->token)
-          ];
+        return $result;
     }
 
-    protected function updateSubscriberCheckboxes()
+    protected function updateSubscriberCheckboxes($data)
     {
         $checkboxes = $this->getAllNotRequiredCheckboxes();
-        $subscriber = $this->getSubscriber($this->token, $this->email);
+        $subscriber = $this->getSubscriber($data['token'], $data['email']);
         $subscriber->checkboxes()->detach();
+
         foreach ($checkboxes as $checkbox) {
-            $checkbox = Checkbox::where('name', $checkbox->name)
-                ->firstOrFail();
+            $checkbox = Checkbox::where('name', $checkbox->name)->firstOrFail();
             if (post($checkbox->name) != null) {
                 $subscriber->checkboxes()->save($checkbox);
             }

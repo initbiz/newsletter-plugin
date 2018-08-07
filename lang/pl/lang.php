@@ -18,7 +18,7 @@ return [
     ],
     'title' => [
         'newsletter' => 'Newsletter',
-        'messages' => '',
+        'messages' => 'Wiadomości',
         'subscribers' => 'Subskrybenci',
         'checkboxes' => 'Checkboxy',
     ],
@@ -72,6 +72,7 @@ return [
         'email' => 'E-mail',
         'agreement' => 'Zgoda',
         'joined' => 'Dołączył',
+        'confirmed' => 'Potwierdzony',
     ],
     'flash' => [
         'delete' => 'Czy jesteś pewny że chcesz usunąć zaznaczone elementy?',
@@ -96,25 +97,24 @@ return [
         'sign_up_error' => 'Błąd. Coś poszło nie tak.',
     ],
     'manage' => [
-        'button_text' => 'Wypisz się',
-        'unsubscribe_success' => 'Pomyślnie usunięto.',
-        'unsubscribe_failed' => 'Błąd. Coś poszło nie tak.',
-        'thank_you_message' => 'Dziękujemy za zapisanie się do newslettera',
-        'wrong_path' => 'Niepoprawna ścieżka',
-        'update_failed' => 'Coś poszło nie tak',
-        'update_success' => 'Pomyślnie zaktualizowano',
-        'unsubscribe' => 'Wypisz się',
+        'sign_out_button_text' => 'Wypisz się',
         'update_button_text' => 'Aktualizuj'
 
     ],
     'ajaxFormResponse' => [
-        'email_validation_failed' => 'Adres e-mail musi być poprawny i nie może być pusty',
-        'sign_up_error' => 'Blad',
-        'subscriber_save_success' => 'Pomyślnie zapisano subskrybenta',
-        'subscriber_save_failed' => 'Zapisywanie subskrybenta się nie powiodło',
-        'email_cannot_be_empty' => 'E-mail nie może być pusty',
-        'subscriber_save_success' => 'Pomyślnie zapisano subskrybenta',
-        'subscriber_save_failed' => 'Zapisywanie subskrybenta się nie powiodło',
-        'checkbox_validation_failed' => 'Musisz zaakceptować wszystkie wymagane checkboxy'
+        'sign_up_success' => 'Dziękujemy za zapisanie się do naszego newslettera! Proszę potwierdź email',
+        'sign_up_error' => 'Coś poszło nie tak',
+        'email_validation_failed' => 'E-mail musi być poprawny',
+        'email_cannot_be_empty' => 'Pole E-mail nie może być puste',
+        'subscriber_save_success' => 'Subskrybent zapisany poprawnie',
+        'subscriber_save_failed' => 'Zapisanie subskrybentan nie powiodło się',
+        'checkbox_validation_failed' => 'Musisz zaznaczyć wszystkie wymagane zgody',
+        'unsubscribe_success' => 'Wypisałeś się z newslettera pomyślnie',
+        'unsubscribe_failed' => 'Coś poszło nie tak',
+        'wrong_path' => 'Zła ścieżka',
+        'update_failed' => 'Coś poszło nie tak',
+        'update_success' => 'Zaktualizowano pomyślnie',
+        'unsubscribe' => 'Wypisz',
+        'error' => 'Coś poszło nie tak',
     ],
 ];
