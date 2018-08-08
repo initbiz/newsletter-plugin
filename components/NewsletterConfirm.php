@@ -66,14 +66,13 @@ class NewsletterConfirm extends ComponentBase
         } catch (\Exception $e) {
             throw new ApplicationException(Lang::get('initbiz.newsletter::lang.ajaxFormResponse.error'));
         }
-
     }
 
     public function onUnsubscribe()
     {
         try {
             $data = post();
-            $this->deleteSubscriber($data);;
+            $this->deleteSubscriber($data);
             $result = ['content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.unsubscribe_success'),
                         'redirectUrl' => url('/')];
         } catch (\Exception $e) {
@@ -147,7 +146,7 @@ class NewsletterConfirm extends ComponentBase
     public function onUpdate()
     {
         $result = [];
-        Db::transaction(function () use(&$result) {
+        Db::transaction(function () use (&$result) {
             try {
                 $data = post();
                 $this->updateSubscriberCheckboxes($data);
