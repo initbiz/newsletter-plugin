@@ -6,19 +6,16 @@ fields:
     title:
         label: initbiz.newsletter::lang.messages.title
         required: true
-
     content:
         label: initbiz.newsletter::lang.messages.content
         required: true
         type: richeditor
         size: large
-
     sent:
         label: initbiz.newsletter::lang.messages.send
         type: switch
         default: false
         span: left
-
     send_to:
         type: dropdown
         span: left
@@ -27,10 +24,18 @@ fields:
             action: show
             field: sent
             condition: checked
-
     checkboxes:
         type: partial
         trigger:
             action: show
             field: send_to
             condition: value[customized]
+    email_template:
+        label: "initbiz.newsletter::lang.messages.email_template"
+        type: dropdown
+        span: left
+        default: 'initbiz.newsletter::mail.message'
+        trigger:
+            action: show
+            field: sent
+            condition: checked
