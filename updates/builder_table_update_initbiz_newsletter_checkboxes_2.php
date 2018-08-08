@@ -1,7 +1,6 @@
 <?php namespace Initbiz\Newsletter\Updates;
 
 use Schema;
-use Initbiz\Newsletter\Models\Settings;
 use Initbiz\Newsletter\Models\Checkbox;
 use October\Rain\Database\Updates\Migration;
 
@@ -13,7 +12,7 @@ class BuilderTableUpdateInitbizNewsletterCheckboxes2 extends Migration
             $table->text('slug')->unique();
         });
 
-        $oldRequired = Settings::get('required_checkbox');
+        $oldRequired = Initbiz\Newsletter\Models\Settings::get('required_checkbox');
         if ($oldRequired !== null || $oldRequired !== "") {
             Checkbox::create([
                 'name'     => 'Required',
@@ -23,7 +22,7 @@ class BuilderTableUpdateInitbizNewsletterCheckboxes2 extends Migration
             ]);
         }
 
-        $oldOptional = Settings::get('optional_checkbox');
+        $oldOptional = Initbiz\Newsletter\Models\Settings::get('optional_checkbox');
         if ($oldRequired !== null || $oldRequired !== "") {
             Checkbox::create([
                 'name'     => 'Optional',

@@ -31,14 +31,6 @@ return [
         'messages' => 'Messages managing',
         'subscribers' => 'Subscribers managing',
     ],
-    'settings' => [
-        'label' => 'Newsletter',
-        'description' => 'Newsletter settings',
-        'managementpage_label' => 'Webpage for newsletter managing',
-        'managementpage_desc' => 'Webpage where newsletter managing component is located',
-        'required_checkbox' => 'Text that will be displayed next to required checkbox',
-        'optional_checkbox' => 'Text that will be displayed next to optional checkbox',
-    ],
     'new' => [
         'messages' => 'New message',
         'checkbox' => 'New checkbox',

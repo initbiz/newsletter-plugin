@@ -93,17 +93,4 @@ class Plugin extends PluginBase
             ]
         ];
     }
-
-    public function registerSettings()
-    {
-        return [
-            'settings' => [
-                'label'       => 'initbiz.newsletter::lang.settings.label',
-                'description' => 'initbiz.newsletter::lang.settings.description',
-                'category'    => 'Newsletter',
-                'icon'        => 'icon-cog',
-                'class'       => 'Initbiz\Newsletter\Models\Settings'
-            ]
-        ];
-    }
 }

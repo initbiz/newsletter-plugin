@@ -19,3 +19,5 @@
 1.0.6:
     - 'Updated table initbiz_newsletter_checkboxes'
     - builder_table_update_initbiz_newsletter_checkboxes_2.php
+1.0.7:
+    - 'Minor fixes'

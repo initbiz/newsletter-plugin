@@ -31,14 +31,6 @@ return [
         'messages' => 'Zarządzanie wiadomościami',
         'subscribers' => 'Zarządzanie subskrybentami',
     ],
-    'settings' => [
-        'label' => 'Newsletter',
-        'description' => 'Ustawienia newslettera',
-        'managementpage_label' => 'Strona zarządzania newsletterem',
-        'managementpage_desc' => 'Strona na której został osadzony komponent zarządzający newsletterem',
-        'required_checkbox' => 'Tekst, który pojawi się przy wymaganym checkboksie',
-        'optional_checkbox' => 'Tekst, który pojawi się przy opcjonalnym checkboksie',
-    ],
     'new' => [
         'messages' => 'Nowa wiadomość',
         'checkbox' => 'Nowy checkbox',

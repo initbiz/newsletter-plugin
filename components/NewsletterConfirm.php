@@ -5,7 +5,6 @@ use Lang;
 use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
 use Illuminate\Support\Facades\Input;
-use Initbiz\Newsletter\Models\Settings;
 use Initbiz\Newsletter\Models\Checkbox;
 use October\Rain\Exception\ApplicationException;
 use Initbiz\Newsletter\Classes\SubscribtionException;
@@ -178,11 +177,5 @@ class NewsletterConfirm extends ComponentBase
         return Subscriber::where('token', $token)
             ->where('email', $email)
             ->firstOrFail();
-    }
-
-    public function getRedirectPageUrl($email, $token)
-    {
-        return url('/') . ('/') . Settings::get('managementpage')
-                      . '/'. $email . '/' . $token;
     }
 }

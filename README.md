@@ -6,7 +6,7 @@ The plugin helps with sending newsletter.
 The basic plugin's use case is as follows:
 1. Visitor on page sees a subscribe-to-our-newsletter form
 1. Enters his/her e-mail address and gets the information to confirm the address after clicking confirmation link in message
-1. Right now admin can see visitor as a subscriber and can send an e-mail to the visitor
+1. Right now admin can send an e-mail to him/her
 1. If user do not like the newsletter he will get an unsubscribe link in every message
 
 What is more:
@@ -21,11 +21,10 @@ What is more:
 
 ### Usage
 1. Create page for managing newsletter options by subscribers so that it has `:email` and `:token` variables (for example `manage-newsletter` with `/manage-newsletter/:email/:token` URL).
-1. Embed component `NewsletterConfirm` on page
-1. Go to backend settings -> Newsletter and set your newly created `manage-newsletter` page in select page list.
+1. Embed component `NewsletterConfirm` on exact one CMS page
 1. Go to backend Newsletter -> Checkboxes and add checkboxes as your business requires
 1. Embed component `NewsletterForm` on page that you want to have form rendered on
-1. Do not forget to configure e-mail settings in your backend settings
+1. Do not forget to configure e-mail sending in your backend settings
 
 ### Translations
 Plugin supports translations for all elements (there is no hardcoded frontend contents) including AJAX responses and displayed errors.
