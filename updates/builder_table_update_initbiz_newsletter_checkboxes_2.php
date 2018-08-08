@@ -11,26 +11,6 @@ class BuilderTableUpdateInitbizNewsletterCheckboxes2 extends Migration
         Schema::table('initbiz_newsletter_checkboxes', function ($table) {
             $table->text('slug')->unique();
         });
-
-        $oldRequired = Initbiz\Newsletter\Models\Settings::get('required_checkbox');
-        if ($oldRequired !== null || $oldRequired !== "") {
-            Checkbox::create([
-                'name'     => 'Required',
-                'slug'     => 'required',
-                'text'     => (string)$oldRequired,
-                'required' => true
-            ]);
-        }
-
-        $oldOptional = Initbiz\Newsletter\Models\Settings::get('optional_checkbox');
-        if ($oldRequired !== null || $oldRequired !== "") {
-            Checkbox::create([
-                'name'     => 'Optional',
-                'slug'     => 'optional',
-                'text'     => (string)$oldOptional,
-                'required' => false
-            ]);
-        }
     }
 
     public function down()
