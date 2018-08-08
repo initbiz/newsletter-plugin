@@ -11,7 +11,7 @@ class UpdateSubscribersTable extends Migration
 {
     public function up()
     {
-        $subscribers = Subscriber::groupBy('email')->pluck('email', 'agreed');
+        $subscribers = Subscriber::all()->pluck('email', 'agreed');
 
         $csv = CsvWriter::createFromFileObject(new SplTempFileObject);
         $csv->setOutputBOM(CsvWriter::BOM_UTF8);

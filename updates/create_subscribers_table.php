@@ -7,12 +7,12 @@ class CreateSubscribersTable extends Migration
 {
     public function up()
     {
-        Schema::create('initbiz_newsletter_subscribers', function($table)
-        {
+        Schema::create('initbiz_newsletter_subscribers', function ($table) {
             $table->increments('id');
             $table->string('email', 100)->unique();
-            $table->boolean('confirmed',false);
-            $table->string('token',40);
+            $table->boolean('confirmed', false);
+            $table->string('token', 40);
+            $table->boolean('agreed', false);
             $table->timestamps();
         });
     }

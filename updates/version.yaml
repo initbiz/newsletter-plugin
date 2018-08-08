@@ -6,7 +6,7 @@
     - 'Error reponses using AJAX and some small fixes'
     - update_subscribers_table.php
 1.0.3:
-    - '!!! Big changes in newsletter plugin. See upgrade guide.'
+    - '!!! Big changes in newsletter plugin. See upgrade guide before upgrading.'
     - update_messages_table.php
     - update_subscribers_table.php
 1.0.4:

@@ -2,8 +2,6 @@
 namespace InITbiz\Newsletter\Updates;
 
 use Schema;
-use Initbiz\Newsletter\Models\Settings;
-use Initbiz\Newsletter\Models\Checkbox;
 use October\Rain\Database\Updates\Migration;
 
 class CreateCheckboxesTable extends Migration
@@ -17,20 +15,6 @@ class CreateCheckboxesTable extends Migration
             $table->text('text');
             $table->timestamps();
         });
-
-        Checkbox::create([
-            'name'     => 'Required',
-            'slug'     => 'required',
-            'text'     => Settings::get('required_checkbox'),
-            'required' => true
-        ]);
-
-        Checkbox::create([
-            'name'     => 'Optional',
-            'slug'     => 'optional',
-            'text'     => Settings::get('optional_checkbox'),
-            'required' => false
-        ]);
     }
 
     public function down()
