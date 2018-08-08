@@ -1,33 +1,32 @@
-# Newsletter plugin
-- [Introduction](#introduction)
-- [Features](#features)
-    - [Translations](#translations)
-    - [Mail templates](#mailtemplates)
-- [How-to (frontend components)](#frontendcomponents)
-    - [NewsletterForm](#newsletterform)
-    - [NewsletterConfirm](#newsletterconfirm)
-        - [Usage](#usage)
-- [Future plans](#futureplans)
+## Newsletter plugin
 
-<a name="introduction"></a>
-## Introduction
-The plugin helps sending e-mails to subscribers.
+### Introduction
+The plugin helps with sending newsletter.
 
-The main purpose is to send e-mails for subscribers that confirmed their address and send e-mails to groups of subscribers who have agreed on optional content.
+The basic plugin's use case is as follows:
+1. Visitor on page sees a subscribe-to-our-newsletter form
+1. Enters his/her e-mail address and gets the information to confirm the address after clicking confirmation link in message
+1. Right now admin can see visitor as a subscriber and can send an e-mail to the visitor
+1. If user do not like the newsletter he will get an unsubscribe link in every message
 
-<a name="features"></a>
-## Features
-Subscribers can confirm they want to get news on e-mail, sign out from getting newsletter and update getting optional content by clicking the link stored in `newsletterLink` variable.
+What is more:
+* Admin can manage checkboxes rendered with form so that there are required and optional checkboxes:
+  * Required have to be checked by visitor (in most cases this will be accepting regulations or policies),
+  * Optional do not have to be checked. Using optional checkboxes we can give subscribers choice what type of messages they want to recieve (our offer, news or just message categories).
+* User can manage the message categories visiting manage newsletter page (and seeing optional checkboxes)
+* Admin can specify if he/she wants to send the message to all users, or just those who accepted the particular optional checkbox
+* Admin can save message without sending it
 
-Newsletter administrator **cannot** add or delete subscribers.
+## Documentation
 
-Newsletter administrator can save message without sending it.
+### Usage
+1. Create page for managing newsletter options by subscribers so that it has `:email` and `:token` variables (for example `manage-newsletter` with `/manage-newsletter/:email/:token` URL).
+1. Embed component `NewsletterConfirm` on page
+1. Go to backend settings -> Newsletter and set your newly created `manage-newsletter` page in select page list.
+1. Go to backend Newsletter -> Checkboxes and add checkboxes as your business requires
+1. Embed component `NewsletterForm` on page that you want to have form rendered on
+1. Do not forget to configure e-mail settings in your backend settings
 
-Newsletter administrator can send messages to all confirmed subscribers or only to those who agreed with the text next to the optional checkboxes.
-
-Administrator can customize text displayed next to checkboxes, add or remove checkboxes, decide if checkbox are required or not (regulations and agreement).
-
-<a name="translations"></a>
 ### Translations
 Plugin supports translations for all elements (there is no hardcoded frontend contents) including AJAX responses and displayed errors.
 
@@ -36,9 +35,8 @@ Currently it supports two languages:
  - pl - Polski
  - en - English
 
-<a name="mailtemplates"></a>
 ### Mail templates
-There are two mail templates you will want to customize:
+There are two mail templates you can to customize:
 
  - `inibiz.newsletter::mail.subscription` which is sent to those who want to became a subscriber
  - `initbiz.newsletter::mail.message` which is sent to subscribers
@@ -51,28 +49,4 @@ In `message` mail template you can use:
  - `{{content}}` - Content of message
  - `{{ newsletterLink }}` - link for subscribers to sign out from newsletter
 
-Actually `newsletterlink` and `activationLink` is the same link because of single component which handles both of actions (confirming and signing out).
-
-<a name="frontendcomponents"></a>
-## How-to (frontend components)
-Both of components described below use javascript function that appends content of AJAX response to HTML tag with id `successMsg` for NewsletterForm and `successMsgNC` for NewsletterConfirm.
-That way you can easily customize design of status message using surrounding `<div class="...">`.
-
-<a name="newsletterform"></a>
-### NewsletterForm
-This component is responsible for displaying form for people who want to became a subscriber.
-It will display e-mail text field, submit button and two checkboxes created in the backend.
-
-<a name="newsletterconfirm"></a>
-### NewsletterConfirm
-This component is responsible for getting e-mail address and token from URL and display two things:
-
- - *Thank you for registering* message right after e-mail address confirmation
- - *Sign out* button and update form after visiting the page next time
-
-<a name="usage"></a>
-#### Usage
-
- 1. Create page we want users to use to manage their subscription (for example `manage-newsletter`) and set URL to `/manage-newsletter/:email/:token`
- 2. Embed component `NewsletterConfirm` on page
- 3. Go to `Settings` -> `Newsletter` -> `Newsletter` and set your newly created `manage-newsletter` page in select page list.
+`newsletterlink` and `activationLink` is the same link because of single component which handles both of actions (confirming and signing out).
