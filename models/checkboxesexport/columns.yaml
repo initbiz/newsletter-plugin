@@ -5,4 +5,5 @@
 columns:
   required: initbiz.newsletter::lang.columns.required
   name: initbiz.newsletter::lang.columns.name
+  slug: initbiz.newsletter::lang.columns.slug
   text: initbiz.newsletter::lang.columns.text

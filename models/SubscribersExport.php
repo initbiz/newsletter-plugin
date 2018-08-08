@@ -10,7 +10,7 @@ class SubscribersExport extends ExportModel
 {
     public $table = 'initbiz_newsletter_subscribers';
 
-    public $fillable = ['email'];
+    public $fillable = ['email', 'confirmed', 'token'];
 
     public function exportData($columns, $sessionKey = null)
     {
