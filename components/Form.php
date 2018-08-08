@@ -118,17 +118,12 @@ class Form extends ComponentBase
      */
     protected function sendActivationEmail()
     {
-        $subscriberEmail = $this->subscriber->email;
-        $activationLink = url('/') . ('/') . Settings::get('managementpage') . '/'. $this->subscriber->email . '/' . $this->subscriber->token;
-
-        Mail::send(
-            'initbiz.newsletter::mail.subscription',
-            [
-                'activationLink' => $activationLink
-            ],
-            function ($message) use ($subscriberEmail) {
-                $message->to($this->subscriber->email, "")->subject($this->title);
-            }
-        );
+        $options = [
+            'recipient_email' => $this->title,
+            'subject' => $this->title,
+            'template' => 'initbiz.newsletter::mail.subscription',
+            'activationLink' => Helpers::getNewsletterManagementUrl($this->subscriber->email, $this->subscriber->token)
+        ];
+        Helpers::sendMail($options);
     }
 }

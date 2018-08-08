@@ -1,17 +1,16 @@
 <?php namespace Initbiz\Newsletter\Models;
 
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Lang;
-use Initbiz\Newsletter\Controllers\Checkboxes;
-use Initbiz\Newsletter\Controllers\Subscribers;
-use Model;
-use File;
+use DB;
 use Str;
 use App;
-use DB;
-use Mail;
-use Initbiz\Newsletter\Models\Settings;
+use File;
+use Model;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Input;
+use Initbiz\Newsletter\Classes\Helpers;
+use Initbiz\Newsletter\Controllers\Checkboxes;
+use Initbiz\Newsletter\Controllers\Subscribers;
 
 class Message extends Model
 {
@@ -110,17 +109,14 @@ class Message extends Model
     {
         //TODO: Create a worker or other non blocking code
         foreach ($recipientsList->unique('email') as $subscriber) {
-            $params = [
-                'title' => $this->title,
+            $options = [
+                'recipient_email' => $subscriber->email,
+                'subject' => $this->title,
+                'template' => $template
                 'content' => $this->content,
-                'newsletterLink' => url('/') . '/' . Settings::get('managementpage') . '/' . $subscriber->email . '/' . $subscriber->token
+                'newsletterLink' => Helpers::getNewsletterManagementUrl($subscriber->email, $subscriber->token)
             ];
-
-            $email = $subscriber->email;
-
-            Mail::send($template, $params, function ($message) use ($email) {
-                $message->to($email)->subject($this->title);
-            });
+            Helpers::sendEmail($options);
         }
     }
 }
