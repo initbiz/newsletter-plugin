@@ -1,45 +1,40 @@
-<div class="row">
-    <div class="col-md-5 col-md-offset-1">
-        {% if not confirmed %}
-            <h6>{{'initbiz.newsletter::lang.manage.thank_you_message'| trans }}</h6>
-        {% else %}
-            {% if subscriberExist %}
-            {% set data = { 'email' : email, 'token' : token } %}
-                <div class="container">
-                    <form data-request="onUnsubscribe" data-request-data='{{ data |json_encode(constant('JSON_PRETTY_PRINT')) | raw }}' id="unsubscribe">
-                        <button class="btm btn-primary" type="submit"> {{'initbiz.newsletter::lang.manage.sign_out_button_text'| trans}} </button>
-                    </form>
-                </div>
-                <div>
-                {% if checkboxes %}
-                    <form data-request="onUpdate" id="update">
-                        {% for checkbox in checkboxes %}
-                            <div class="form-group">
-                                <input type="checkbox" name="{{checkbox.slug}}" id="checkbox-{{checkbox.slug}}" class="form-control-check" {{ (checkbox.required) ? 'required':''}} {{checkbox.checked? 'checked':''}}>
-                                <label for="checkbox-{{checkbox.slug}}">{{ checkbox.text | raw }}</label>
-                            </div>
-                        {% endfor %}
-                        <input type="hidden" value="{{ token }}" name="token">
-                        <input type="hidden" value="{{ email }}" name="email">
-
-                        <button type="submit" class="btn btn-primary">{{'initbiz.newsletter::lang.manage.update_button_text'| trans}}</button>
-                    </form>
-                {% endif %}
-
-                <div class="col-md-12 input-group" id="notifications">
-                    <div class="alert alert-success collapse" id="success" role="alert">
-                        <span id="successMsg"> </span>
+{% if not confirmed %}
+    <h6>{{'initbiz.newsletter::lang.manage.thank_you_message'| trans }}</h6>
+{% else %}
+    {% if subscriberExist %}
+        {% set data = { 'email' : email, 'token' : token } %}
+        <div>
+            <form data-request="onUnsubscribe" data-request-data='{{ data |json_encode(constant('JSON_PRETTY_PRINT')) | raw }}' id="unsubscribe">
+                <button class="btn btn-primary" type="submit"> {{'initbiz.newsletter::lang.manage.sign_out_button_text'| trans}} </button>
+            </form>
+        </div>
+        {% if checkboxes %}
+            <form data-request="onUpdate" id="update">
+                {% for checkbox in checkboxes %}
+                    <div class="form-group">
+                        <input type="checkbox" name="{{checkbox.slug}}" id="checkbox-{{checkbox.slug}}" class="form-control-check" {{ (checkbox.required) ? 'required':''}} {{checkbox.checked? 'checked':''}}>
+                        <label for="checkbox-{{checkbox.slug}}">{{ checkbox.text | raw }}</label>
                     </div>
-                    <div class="alert alert-danger collapse" id="failed" role="alert">
-                        <span id="errorMsg"> </span>
-                    </div>
-                </div>
-            {% else %}
-                 <h6>{{'initbiz.newsletter::lang.manage.wrong_path'| trans }}</h6>
-            {% endif %}
+                {% endfor %}
+                <input type="hidden" value="{{ token }}" name="token">
+                <input type="hidden" value="{{ email }}" name="email">
+
+                <button type="submit" class="btn btn-primary">{{'initbiz.newsletter::lang.manage.update_button_text'| trans}}</button>
+            </form>
         {% endif %}
-    </div>
-</div>
+
+        <div class="col-md-12 input-group" id="notifications">
+            <div class="alert alert-success collapse" id="success" role="alert">
+                <span id="successMsg"> </span>
+            </div>
+            <div class="alert alert-danger collapse" id="failed" role="alert">
+                <span id="errorMsg"> </span>
+            </div>
+        </div>
+    {% else %}
+         <h6>{{'initbiz.newsletter::lang.manage.wrong_path'| trans }}</h6>
+    {% endif %}
+{% endif %}
 
 {% put scripts %}
     <script>
