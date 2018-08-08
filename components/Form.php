@@ -10,10 +10,10 @@ use ValidationException;
 use Cms\Classes\ComponentBase;
 use Illuminate\Support\Facades\Input;
 use Initbiz\Newsletter\Models\Checkbox;
-use Initbiz\Newsletter\Models\Settings;
+use Initbiz\Newsletter\Classes\Helpers;
+use Initbiz\Newsletter\Models\Subscriber;
 use October\Rain\Exception\AjaxException;
 use Initbiz\Newsletter\Classes\SubscribtionException;
-use Initbiz\Newsletter\Models\Subscriber as Subscriber;
 
 class Form extends ComponentBase
 {
@@ -65,15 +65,15 @@ class Form extends ComponentBase
                 }
             }
 
-            try {
-                $this->createSubscriberWithCheckboxes($data['email'], $checkedCheckboxes);
-                $this->sendActivationEmail();
-                $result = [
+            // try {
+            $this->createSubscriberWithCheckboxes($data['email'], $checkedCheckboxes);
+            $this->sendActivationEmail();
+            $result = [
                     'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_success')
                 ];
-            } catch (Exception $e) {
-                throw new SubscribtionException(Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_error'));
-            }
+            // } catch (Exception $e) {
+            //     throw new SubscribtionException(Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_error'));
+            // }
         });
         return $result;
     }
@@ -119,8 +119,8 @@ class Form extends ComponentBase
     protected function sendActivationEmail()
     {
         $options = [
-            'recipient_email' => $this->title,
-            'subject' => $this->title,
+            'recipient_email' => $this->subscriber->email,
+            'subject' => Lang::get('initbiz.newsletter::lang.mail.activation_subject'),
             'template' => 'initbiz.newsletter::mail.subscription',
             'activationLink' => Helpers::getNewsletterManagementUrl($this->subscriber->email, $this->subscriber->token)
         ];

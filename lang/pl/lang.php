@@ -103,6 +103,7 @@ return [
         'sign_up_error' => 'Błąd. Coś poszło nie tak.',
     ],
     'manage' => [
+        'thank_you_message' => 'Dziękujemy za zapisanie się do naszego newslettera',
         'config_heading' => 'Zmień ustawienia newslettera',
         'sign_out_button_text' => 'Wypisz się z naszego newslettera',
         'update_button_text' => 'Aktualizuj',
@@ -123,4 +124,7 @@ return [
         'unsubscribe' => 'Wypisz',
         'error' => 'Coś poszło nie tak',
     ],
+    'mail' => [
+        'activation_subject' => 'Potwierdź swój adres e-mail'
+    ]
 ];

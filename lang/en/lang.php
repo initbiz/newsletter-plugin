@@ -106,6 +106,7 @@ return [
         'sign_up_error' => 'Oops, something went wrong.',
     ],
     'manage' => [
+        'thank_you_message' => 'Thank you for subscribing our newsletter',
         'config_heading' => 'Customize your newsletter configuration',
         'sign_out_button_text' => 'Sign out from our newsletter',
         'update_button_text' => 'Update'
@@ -126,4 +127,7 @@ return [
         'unsubscribe' => 'Unsubscribe',
         'error' => 'Error. Something went wrong.',
     ],
+    'mail' => [
+        'activation_subject' => 'Confirm your e-mail address'
+    ]
 ];

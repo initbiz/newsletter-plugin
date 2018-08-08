@@ -18,7 +18,7 @@ class Helpers
         $recipient_email = $options['recipient_email'];
         $subject = $options['subject'];
 
-        Mail::send($options['template'], $options, function ($message) use ($email, $subject) {
+        Mail::send($options['template'], $options, function ($message) use ($recipient_email, $recipient_name, $subject) {
             $message->to($recipient_email, $recipient_name);
             $message->subject($subject);
         });
@@ -33,6 +33,6 @@ class Helpers
     public static function getNewsletterManagementUrl($email, $token)
     {
         //TODO it sucks, need to change normal url parsing and finding page globally
-        return url('/') . '/' . Settings::get('managementpage') . '/' . $email . '/' . $token
+        return url('/') . '/' . Settings::get('managementpage') . '/' . $email . '/' . $token;
     }
 }
