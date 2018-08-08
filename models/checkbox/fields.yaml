@@ -10,9 +10,9 @@ fields:
         label: initbiz.newsletter::lang.checkboxes.text
         type: textarea
         size: small
+        
     required:
         label: initbiz.newsletter::lang.checkboxes.required
         type: switch
         default: false
         span: left
-
