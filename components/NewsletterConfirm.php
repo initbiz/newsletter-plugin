@@ -58,7 +58,7 @@ class NewsletterConfirm extends ComponentBase
     {
         try {
             $this->prepareVars();
-            $userCheckboxes = $this->getSubscriberCheckboxesName($this->subscriber);
+            $userCheckboxes = $this->getSubscriberCheckboxesSlugs($this->subscriber);
             $notRequiredCheckboxes = $this->getAllNotRequiredCheckboxes()->toArray();
             $checkedNotRequiredCheckboxes = $this->addToCheckboxesIfChecked($notRequiredCheckboxes, $userCheckboxes);
             $this->page['checkboxes'] = $checkedNotRequiredCheckboxes;
@@ -101,12 +101,12 @@ class NewsletterConfirm extends ComponentBase
         return (count($subscriber->get()))? true : false;
     }
 
-    protected function getSubscriberCheckboxesName($subscriber)
+    protected function getSubscriberCheckboxesSlugs($subscriber)
     {
         $checkboxes = $subscriber->checkboxes()
-                                 ->where('required', false)
+                                 ->notRequired()
                                  ->get()
-                                 ->pluck('name')
+                                 ->pluck('slug')
                                  ->toArray();
 
         if ($checkboxes == null) {
@@ -120,7 +120,7 @@ class NewsletterConfirm extends ComponentBase
     protected function addToCheckboxesIfChecked($notRequiredCheckboxes, $userCheckboxes)
     {
         foreach ($notRequiredCheckboxes as &$checkbox) {
-            if (in_array($checkbox['name'], $userCheckboxes)) {
+            if (in_array($checkbox['slug'], $userCheckboxes)) {
                 $checkedArray = ['checked' => true];
                 $checkbox += $checkedArray;
             }
@@ -130,7 +130,7 @@ class NewsletterConfirm extends ComponentBase
 
     protected function getAllNotRequiredCheckboxes()
     {
-        return Checkbox::where('required', false)->get();
+        return Checkbox::notRequired()->get();
     }
 
     protected function activateSubscriber()
@@ -167,8 +167,8 @@ class NewsletterConfirm extends ComponentBase
         $subscriber->checkboxes()->detach();
 
         foreach ($checkboxes as $checkbox) {
-            $checkbox = Checkbox::where('name', $checkbox->name)->firstOrFail();
-            if (post($checkbox->name) != null) {
+            $checkbox = Checkbox::where('slug', $checkbox->slug)->firstOrFail();
+            if (post($checkbox->slug) != null) {
                 $subscriber->checkboxes()->save($checkbox);
             }
         }

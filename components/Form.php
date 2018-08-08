@@ -53,7 +53,7 @@ class Form extends ComponentBase
                     throw new ValidationException($validation);
                 }
                 // check if all reqired checkboxes are checked
-                $requiredCheckboxes = Checkbox::where('required', true)->where('required', 1)->get();
+                $requiredCheckboxes = Checkbox::required()->get();
                 $checkedCheckboxes = $this->getCheckedCheckboxesId(post());
                 foreach ($requiredCheckboxes as $requiredCheckbox) {
                     if (!in_array($requiredCheckbox->id, $checkedCheckboxes)) {
@@ -79,7 +79,7 @@ class Form extends ComponentBase
         $checked =[];
         $checkboxes = Checkbox::all();
         foreach ($checkboxes as $checkbox) {
-            isset($post[$checkbox->name][1])? array_push($checked, $checkbox->id):'';
+            isset($post[$checkbox->slug][1])? array_push($checked, $checkbox->id):'';
         }
         return $checked;
     }

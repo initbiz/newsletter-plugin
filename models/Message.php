@@ -69,7 +69,7 @@ class Message extends Model
      */
     public function afterSave()
     {
-        $messageCheckboxesId = Checkbox::whereIn('name', $this->checkedCheckboxes->flatten())
+        $messageCheckboxesId = Checkbox::whereIn('slug', $this->checkedCheckboxes->flatten())
             ->get()
             ->pluck('id')
             ->toArray();
@@ -80,7 +80,6 @@ class Message extends Model
     {
         $this->checkboxes()->detach();
     }
-
 
     protected function sentCheckboxChecked()
     {
@@ -95,7 +94,7 @@ class Message extends Model
         } else {
             $subscribers = Subscriber::where('confirmed', 1)
                     ->whereHas('checkboxes', function ($query) use ($checkedCheckboxes) {
-                        $query->whereIn('name', $checkedCheckboxes);
+                        $query->whereIn('slug', $checkedCheckboxes);
                     })->get();
         }
         return $subscribers;

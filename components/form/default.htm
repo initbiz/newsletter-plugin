@@ -7,8 +7,8 @@
 
     {% for checkbox in checkboxes %}
         <div class="form-group">
-            <input type="checkbox" name="{{checkbox.name}}" id="checkbox-{{checkbox.name}}" class="form-control-check" {{ (checkbox.required) ? 'required':''}}>
-            <label for="checkbox-{{checkbox.name}}">{{ checkbox.text | raw }}</label>
+            <input type="checkbox" name="{{checkbox.slug}}" id="checkbox-{{checkbox.slug}}" class="form-control-check" {{ (checkbox.required) ? 'required':''}}>
+            <label for="checkbox-{{checkbox.slug}}">{{ checkbox.text | raw }}</label>
         </div>
     {% endfor %}
 

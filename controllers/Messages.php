@@ -27,7 +27,7 @@ class Messages extends Controller {
 
         if(!empty($this->params)) {
             $message = Message::where('id', $this->params[0])->first();
-            $this->vars['checked_checkboxes'] = $message->checkboxes->pluck('name')->all();
+            $this->vars['checked_checkboxes'] = $message->checkboxes->pluck('slug')->all();
         }
         $this->vars['checkboxes'] = Checkbox::all();
         BackendMenu::setContext('Initbiz.Newsletter', 'newsletter', 'messages');

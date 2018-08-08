@@ -29,9 +29,11 @@ class Checkboxes extends Controller
 
         BackendMenu::setContext('Initbiz.Newsletter', 'newsletter', 'checkboxes');
     }
+
     public function listExtendQuery($query) {
         $query->get();
     }
+    
     public function onRemoveCheckboxes()
     {
         //TODO: Checkbox::beforeDelete do not run without two foreach
