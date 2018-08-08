@@ -27,18 +27,46 @@ class Message extends Model
     ];
 
     public $belongsToMany = [
-        'checkboxes' => ['Initbiz\Newsletter\Models\Checkbox', 'table' => 'initbiz_newsletter_checkbox_message']
-     ];
+        'checkboxes' => [
+            'Initbiz\Newsletter\Models\Checkbox', 'table' => 'initbiz_newsletter_checkbox_message'
+        ]
+    ];
 
+    //Getters
+
+    public function getEmailTemplateOptions()
+    {
+        return \System\Models\MailTemplate::listAllTemplates();
+    }
+
+    public function getSendToOptions()
+    {
+        $options =[
+            'all' => Lang::get('initbiz.newsletter::lang.messages.send_to_all')
+        ];
+        if (Checkbox::where('required', false)->get()->count() != 0) {
+            $options += ['customized' => Lang::get('initbiz.newsletter::lang.messages.send_to_agreed')];
+        }
+        return $options;
+    }
+
+    /**
+     * Send messages to recipients if 'sent' checkbox is checked
+     * @return void
+     */
     public function beforeSave()
     {
         $this->checkedCheckboxes = collect(Input::get('checkboxes'));
         if ($this->sentCheckboxChecked()) {
             $recipientsList = $this->getRecipientsList($this->checkedCheckboxes->flatten());
-            $this->sendMessageToRecipients($recipientsList);
+            $this->sendMessageToRecipients($recipientsList, $this->email_template);
         }
     }
 
+    /**
+     * Save which message was sent to which checkboxes
+     * @return void
+     */
     public function afterSave()
     {
         $messageCheckboxesId = Checkbox::whereIn('name', $this->checkedCheckboxes->flatten())
@@ -52,16 +80,7 @@ class Message extends Model
     {
         $this->checkboxes()->detach();
     }
-    public function getSendToOptions()
-    {
-        $options =[
-            'all' => Lang::get('initbiz.newsletter::lang.messages.send_to_all')
-        ];
-        if (Checkbox::where('required', false)->get()->count() != 0) {
-            $options += ['customized' => Lang::get('initbiz.newsletter::lang.messages.send_to_agreed')];
-        }
-        return $options;
-    }
+
 
     protected function sentCheckboxChecked()
     {
@@ -82,8 +101,15 @@ class Message extends Model
         return $subscribers;
     }
 
-    public function sendMessageToRecipients($recipientsList)
+    /**
+     * Send messages to all recipients
+     * @param  Collection   $recipientsList recipients list
+     * @param  string       $template       teplate unique identifier to sent e-mail
+     * @return void
+     */
+    public function sendMessageToRecipients($recipientsList, $template = 'initbiz.newsletter::mail.message')
     {
+        //TODO: Create a worker or other non blocking code
         foreach ($recipientsList->unique('email') as $subscriber) {
             $params = [
                 'title' => $this->title,
@@ -93,7 +119,7 @@ class Message extends Model
 
             $email = $subscriber->email;
 
-            Mail::send('initbiz.newsletter::mail.message', $params, function ($message) use ($email) {
+            Mail::send($template, $params, function ($message) use ($email) {
                 $message->to($email)->subject($this->title);
             });
         }

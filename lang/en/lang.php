@@ -56,7 +56,8 @@ return [
         'sent' => 'Message was sent',
         'send' => 'Send message to subscribers',
         'send_to_all' => 'Send message to all subscribers',
-        'send_to_agreed' => 'Send message only to those who agreed with second, optional checkbox'
+        'send_to_agreed' => 'Send message only to those who agreed with second, optional checkbox',
+        'email_template' => 'Select a template of e-mail to use'
     ],
     'columns' => [
         'title' => 'Title',

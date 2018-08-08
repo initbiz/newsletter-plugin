@@ -7,13 +7,13 @@ class CreateMessagesTable extends Migration
 {
     public function up()
     {
-        Schema::create('initbiz_newsletter_messages', function($table)
-        {
+        Schema::create('initbiz_newsletter_messages', function ($table) {
             $table->increments('id');
             $table->string('title', 100);
             $table->text('content');
             $table->string('sent', 1)->default(0);
             $table->string('send_to');
+            $table->string('email_template')->nullable();
             $table->timestamps();
         });
     }
