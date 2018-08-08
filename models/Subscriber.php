@@ -13,7 +13,7 @@ class Subscriber extends Model {
 
     public $table = 'initbiz_newsletter_subscribers';
 
-    protected $fillable = ['confirmed'];
+    protected $fillable = ['confirmed', 'email', 'token'];
 
     public $rules = [
         'email'   => 'required|email',

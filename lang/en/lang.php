@@ -68,6 +68,9 @@ return [
         'name' => 'Name',
         'text' => 'Text',
         'required' => 'Required',
+        'email' => 'E-mail',
+        'token' => 'Token',
+        'confirmed' => 'Confirmed',
     ],
     'userColumns' => [
         'email' => 'E-mail',

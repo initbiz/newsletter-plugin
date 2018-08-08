@@ -69,6 +69,9 @@ return [
         'text' => 'Tekst',
         'required' => 'Wymagany',
         'slug' => 'Slug',
+        'email' => 'E-mail',
+        'token' => 'Token',
+        'confirmed' => 'Potwierdzony',
     ],
     'userColumns' => [
         'email' => 'E-mail',

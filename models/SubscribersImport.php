@@ -1,6 +1,6 @@
 <?php namespace Initbiz\Newsletter\Models;
 
-class CheckboxesImport extends \Backend\Models\ImportModel
+class SubscribersImport extends \Backend\Models\ImportModel
 {
     /**
      * @var array The rules to be applied to the data.
@@ -12,7 +12,7 @@ class CheckboxesImport extends \Backend\Models\ImportModel
         foreach ($results as $row => $data) {
 
             try {
-                $subscriber = new Checkbox();
+                $subscriber = new Subscriber();
                 $subscriber->fill($data);
                 $subscriber->save();
 
