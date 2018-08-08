@@ -68,6 +68,7 @@ return [
         'name' => 'Nazwa',
         'text' => 'Tekst',
         'required' => 'Wymagany',
+        'slug' => 'Slug',
     ],
     'userColumns' => [
         'email' => 'E-mail',
@@ -99,8 +100,7 @@ return [
     ],
     'manage' => [
         'sign_out_button_text' => 'Wypisz się',
-        'update_button_text' => 'Aktualizuj'
-
+        'update_button_text' => 'Aktualizuj',
     ],
     'ajaxFormResponse' => [
         'sign_up_success' => 'Dziękujemy za zapisanie się do naszego newslettera! Proszę potwierdź email',

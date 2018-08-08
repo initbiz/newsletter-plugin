@@ -4,17 +4,17 @@
     <div class="checkbox custom-checkbox" tabindex="0">
     <input
             type="hidden"
-            name="<?= $checkbox->name ?>"
+            name="<?= $checkbox->slug ?>"
             value="0"
     <?= $this->previewMode ? 'disabled="disabled"' : '' ?>>
     <input
             type="checkbox"
             id="<?= $checkbox->id ?>"
             name="checkboxes[]"
-            value="<?= $checkbox->name ?>"
+            value="<?= $checkbox->slug ?>"
         <?= $this->previewMode ? 'disabled="disabled"' : '' ?>
         <?php if(isset($checked_checkboxes)) { ?>
-        <?php if(in_array($checkbox->name,$checked_checkboxes, true )) echo 'checked="checked"';?>
+        <?php if(in_array($checkbox->slug,$checked_checkboxes, true )) echo 'checked="checked"';?>
         <?php }?>
         <?= $field->getAttributes() ?>>
 
@@ -28,7 +28,3 @@
     <?php endforeach ?>
 
 </div>
-
-<?php //dd($checked_checkboxes);?>
-
-
