@@ -105,7 +105,8 @@ return [
         'sign_up_error' => 'Oops, something went wrong.',
     ],
     'manage' => [
-        'sign_out_button_text' => 'Sign out',
+        'config_heading' => 'Customize your newsletter configuration',
+        'sign_out_button_text' => 'Sign out from our newsletter',
         'update_button_text' => 'Update'
     ],
     'ajaxFormResponse' => [

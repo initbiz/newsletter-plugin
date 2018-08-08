@@ -3,15 +3,11 @@
 {% else %}
     {% if subscriberExist %}
         {% set data = { 'email' : email, 'token' : token } %}
-        <div>
-            <form data-request="onUnsubscribe" data-request-data='{{ data |json_encode(constant('JSON_PRETTY_PRINT')) | raw }}' id="unsubscribe">
-                <button class="btn btn-primary" type="submit"> {{'initbiz.newsletter::lang.manage.sign_out_button_text'| trans}} </button>
-            </form>
-        </div>
+        <h4>{{'initbiz.newsletter::lang.manage.config_heading'| trans }}</h4>
         {% if checkboxes %}
             <form data-request="onUpdate" id="update">
                 {% for checkbox in checkboxes %}
-                    <div class="form-group">
+                    <div>
                         <input type="checkbox" name="{{checkbox.slug}}" id="checkbox-{{checkbox.slug}}" class="form-control-check" {{ (checkbox.required) ? 'required':''}} {{checkbox.checked? 'checked':''}}>
                         <label for="checkbox-{{checkbox.slug}}">{{ checkbox.text | raw }}</label>
                     </div>
@@ -19,9 +15,13 @@
                 <input type="hidden" value="{{ token }}" name="token">
                 <input type="hidden" value="{{ email }}" name="email">
 
-                <button type="submit" class="btn btn-primary">{{'initbiz.newsletter::lang.manage.update_button_text'| trans}}</button>
+                <button type="submit" class="btn btn-primary" style="width:100%">{{'initbiz.newsletter::lang.manage.update_button_text'| trans}}</button>
             </form>
         {% endif %}
+        <hr>
+        <form data-request="onUnsubscribe" data-request-data='{{ data |json_encode(constant('JSON_PRETTY_PRINT')) | raw }}' id="unsubscribe">
+            <button class="btn btn-danger" type="submit" style="width:100%"> {{'initbiz.newsletter::lang.manage.sign_out_button_text'| trans}} </button>
+        </form>
 
         <div class="col-md-12 input-group" id="notifications">
             <div class="alert alert-success collapse" id="success" role="alert">

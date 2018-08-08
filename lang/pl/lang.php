@@ -102,7 +102,8 @@ return [
         'sign_up_error' => 'Błąd. Coś poszło nie tak.',
     ],
     'manage' => [
-        'sign_out_button_text' => 'Wypisz się',
+        'config_heading' => 'Zmień ustawienia newslettera',
+        'sign_out_button_text' => 'Wypisz się z naszego newslettera',
         'update_button_text' => 'Aktualizuj',
     ],
     'ajaxFormResponse' => [
