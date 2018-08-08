@@ -3,8 +3,7 @@
     - create_subscribers_table.php
     - create_messages_table.php
 1.0.2:
-    - 'Error reponses using AJAX and some small fixes'
-    - update_subscribers_table.php
+    - 'Error responses using AJAX and some small fixes'
 1.0.3:
     - '!!! Big changes in newsletter plugin. See upgrade guide before upgrading.'
     - update_messages_table.php

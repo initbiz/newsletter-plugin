@@ -8,7 +8,7 @@ class UpdateMessagesTable extends Migration
     public function up()
     {
         Schema::table('initbiz_newsletter_messages', function ($table) {
-            $table->renameColumn('sendTo', 'send_to');
+            $table->renameColumn('sendto', 'send_to');
             $table->string('email_template')->nullable();
         });
     }
@@ -16,7 +16,7 @@ class UpdateMessagesTable extends Migration
     public function down()
     {
         Schema::table('initbiz_newsletter_messages', function ($table) {
-            $table->renameColumn('send_to', 'sendTo');
+            $table->renameColumn('send_to', 'sendto');
             $table->dropColumn('email_template');
         });
     }

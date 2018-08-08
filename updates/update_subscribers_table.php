@@ -32,10 +32,10 @@ class UpdateSubscribersTable extends Migration
     public function down()
     {
         Schema::table('initbiz_newsletter_subscribers', function ($table) {
-            $table->boolean('agreed', false);
+            $table->boolean('agreed', false)->nullable();
 
             $indexes = Schema::getConnection()->getDoctrineSchemaManager()->listTableIndexes($table->getTable());
-            $index_name = 'initbiz_newsletter_subscribers_email__unique';
+            $index_name = 'initbiz_newsletter_subscribers_email_unique';
 
             if (array_key_exists($index_name, $indexes)) {
                 $table->dropUnique($index_name);
