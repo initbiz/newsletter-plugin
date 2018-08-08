@@ -5,6 +5,7 @@
 title: initbiz.newsletter::lang.menu.checkboxes
 list: ~/plugins/initbiz/newsletter/models/checkbox/columns.yaml
 modelClass: Initbiz\Newsletter\Models\Checkbox
+recordUrl: initbiz/newsletter/checkboxes/update/:id
 noRecordsMessage: backend::lang.list.no_records
 
 recordsPerPage: 15

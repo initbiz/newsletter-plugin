@@ -76,8 +76,12 @@ return [
         'confirmed' => 'Confirmed',
     ],
     'flash' => [
-        'delete' => 'Are you sure you want to delete selected items?',
-        'deleted' => 'Succesfully deleted selected items',
+        'delete' => 'Are you sure you want to delete this checkbox?',
+    ],
+    'flash_checkboxes' => [
+        'deleted' => 'Checkbox succesfully deleted',
+        'saved' => 'Checkbox succesfully saved',
+        'updated' => 'Checkbox succesfully updated',
     ],
     'token' => [
         'title' => 'Subscriber unique code',

@@ -14,7 +14,6 @@ class Checkboxes extends Controller
         'Backend.Behaviors.ListController',
         'Backend.Behaviors.RelationController',
         'Backend.Behaviors.ImportExportController'
-
     ];
 
     public $formConfig = 'config_form.yaml';
@@ -23,7 +22,6 @@ class Checkboxes extends Controller
     public $importExportConfig = 'config_import_export.yaml';
 
     public $requiredPermissions = ['initbiz.newsletter.checkboxes'];
-    public $bodyClass = 'compact-container';
 
     public function __construct()
     {
