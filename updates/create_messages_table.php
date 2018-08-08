@@ -12,8 +12,7 @@ class CreateMessagesTable extends Migration
             $table->string('title', 100);
             $table->text('content');
             $table->string('sent', 1)->default(0);
-            $table->string('send_to');
-            $table->string('email_template')->nullable();
+            $table->string('sendTo');
             $table->timestamps();
         });
     }
