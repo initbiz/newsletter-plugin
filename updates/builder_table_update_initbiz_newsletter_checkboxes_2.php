@@ -18,7 +18,7 @@ class BuilderTableUpdateInitbizNewsletterCheckboxes2 extends Migration
             Checkbox::create([
                 'name'     => 'Required',
                 'slug'     => 'required',
-                'text'     => $oldRequired,
+                'text'     => (string)$oldRequired,
                 'required' => true
             ]);
         }
@@ -28,7 +28,7 @@ class BuilderTableUpdateInitbizNewsletterCheckboxes2 extends Migration
             Checkbox::create([
                 'name'     => 'Optional',
                 'slug'     => 'optional',
-                'text'     => $oldOptional,
+                'text'     => (string)$oldOptional,
                 'required' => false
             ]);
         }
