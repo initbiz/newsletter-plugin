@@ -23,6 +23,7 @@ return [
         'checkboxes' => 'Checkboxes',
     ],
     'subscribers' => [
+        'import_subscribers' => 'Import subscribers',
         'export_subscribers' => 'Export subscribers',
         'email' => 'Email',
     ],

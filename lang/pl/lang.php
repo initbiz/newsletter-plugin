@@ -23,7 +23,8 @@ return [
         'checkboxes' => 'Checkboxy',
     ],
     'subscribers' => [
-        'export_subscribers' => 'Wyeksportuj Subskrybentów',
+        'import_subscribers' => 'Import subskrybentów',
+        'export_subscribers' => 'Eksport subskrybentów',
         'email' => 'E-mail',
     ],
     'permission' => [
