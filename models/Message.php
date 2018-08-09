@@ -112,7 +112,7 @@ class Message extends Model
             $options = [
                 'recipient_email' => $subscriber->email,
                 'subject' => $this->title,
-                'template' => $template
+                'template' => $template,
                 'content' => $this->content,
                 'newsletterLink' => Helpers::getNewsletterManagementUrl($subscriber->email, $subscriber->token)
             ];
