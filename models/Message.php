@@ -116,7 +116,7 @@ class Message extends Model
                 'content' => $this->content,
                 'newsletterLink' => Helpers::getNewsletterManagementUrl($subscriber->email, $subscriber->token)
             ];
-            Helpers::sendEmail($options);
+            Helpers::sendMail($options);
         }
     }
 }
