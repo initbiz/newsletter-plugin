@@ -34,8 +34,6 @@ class Helpers
      */
     public static function getNewsletterManagementUrl($email, $token)
     {
-        //TODO it sucks, need to change normal url parsing and finding page globally
-
         $pageUrl = Cache::get('newsletterManagementUrl');
         $emailVariable = Cache::get('newsletterManagementEmailVariable');
         $tokenVariable = Cache::get('newsletterManagementTokenVariable');
