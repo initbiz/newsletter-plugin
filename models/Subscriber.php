@@ -1,11 +1,7 @@
 <?php namespace Initbiz\Newsletter\Models;
 
 use Model;
-use File;
-use Str;
-use App;
-use DB;
-use Mail;
+use Initbiz\Newsletter\Classes\Helpers;
 
 class Subscriber extends Model {
 
@@ -24,4 +20,13 @@ class Subscriber extends Model {
             'table'     => 'initbiz_newsletter_checkbox_subscriber',
         ]
     ];
+
+    public function getTokenAttribute()
+    {
+        if ($this->exists && $this->attributes['token']) {
+             return $this->attributes['token'];
+        }
+         return Helpers::generateToken();
+    }
+
 }

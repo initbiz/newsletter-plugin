@@ -21,3 +21,5 @@
     - builder_table_update_initbiz_newsletter_checkboxes_2.php
 1.0.7:
     - 'Minor fixes'
+1.0.8:
+    - 'Creating and updating subscriber form backend'

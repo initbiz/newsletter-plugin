@@ -34,6 +34,7 @@ return [
     'new' => [
         'messages' => 'New message',
         'checkbox' => 'New checkbox',
+        'subscriber' => 'New subscriber',
     ],
     'checkboxes' => [
         'export' => 'Export Checkboxes',
@@ -49,7 +50,7 @@ return [
         'sent' => 'Message was sent',
         'send' => 'Send message to subscribers',
         'send_to_all' => 'Send message to all subscribers',
-        'send_to_agreed' => 'Send message only to those who agreed with second, optional checkbox',
+        'send_to_agreed' => 'Send message only to those who agreed optional checkbox',
         'email_template' => 'Select a template of e-mail to use'
     ],
     'columns' => [
@@ -64,6 +65,7 @@ return [
         'email' => 'E-mail',
         'token' => 'Token',
         'confirmed' => 'Confirmed',
+        'checkboxes' => 'Checkboxes',
     ],
     'userColumns' => [
         'email' => 'E-mail',
@@ -78,6 +80,11 @@ return [
         'deleted' => 'Checkbox succesfully deleted',
         'saved' => 'Checkbox succesfully saved',
         'updated' => 'Checkbox succesfully updated',
+    ],
+    'flash_checkboxes' => [
+        'deleted' => 'Subscriber succesfully deleted',
+        'saved' => 'Subscriber succesfully saved',
+        'updated' => 'Subscriber succesfully updated',
     ],
     'token' => [
         'title' => 'Subscriber unique code',

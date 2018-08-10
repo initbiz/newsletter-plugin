@@ -107,7 +107,7 @@ class Form extends ComponentBase
         $this->subscriber = new Subscriber();
         $this->subscriber->email = $email;
         $this->subscriber->confirmed = false;
-        $this->subscriber->token = hash('sha1', mt_rand(1, 100000) . $this->subscriber->email);
+        $this->subscriber->token = Helpers::generateToken();
         $this->subscriber->save();
         $this->subscriber->checkboxes()->sync($checked);
     }

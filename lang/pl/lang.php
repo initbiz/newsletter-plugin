@@ -1,14 +1,13 @@
 <?php
-
 return [
     'plugin' => [
         'name' => 'Newsletter',
         'description' => 'Plugin do zarządzania newsletterem.',
-        'author' => 'InIT.biz Ltd.'
+        'author' => 'InIT.biz Ltd.',
     ],
     'mailTemplates' => [
         'message' => 'Wiadomość, która jest wysyłana do subskrybentów',
-        'confirmation' => 'Wiadomość potwierdzająca zapisanie do newslettera'
+        'confirmation' => 'Wiadomość potwierdzająca zapisanie do newslettera',
     ],
     'menu' => [
         'newsletter' => 'Newsletter',
@@ -34,6 +33,7 @@ return [
     'new' => [
         'messages' => 'Nowa wiadomość',
         'checkbox' => 'Nowy checkbox',
+        'subscriber' => 'Nowy subskrybent',
     ],
     'checkboxes' => [
         'export' => 'Wyeksportuj Checkboxy',
@@ -50,7 +50,7 @@ return [
         'send' => 'Wyślij wiadomość do subskrybentów',
         'send_to_all' => 'Wyślij wiadomość do wszystkich subskrybentów',
         'send_to_agreed' => 'Wyślij wiadomość tylko to osób, które zgodziły się z treścią opcjonalną',
-        'email_template' => 'Wybierz szablon wiadomości e-mail'
+        'email_template' => 'Wybierz szablon wiadomości e-mail',
     ],
     'columns' => [
         'title' => 'Tytuł',
@@ -61,10 +61,10 @@ return [
         'name' => 'Nazwa',
         'text' => 'Tekst',
         'required' => 'Wymagany',
-        'slug' => 'Slug',
         'email' => 'E-mail',
         'token' => 'Token',
         'confirmed' => 'Potwierdzony',
+        'checkboxes' => 'Checkboxy',
     ],
     'userColumns' => [
         'email' => 'E-mail',
@@ -75,6 +75,16 @@ return [
     'flash' => [
         'delete' => 'Czy jesteś pewny że chcesz usunąć zaznaczone elementy?',
         'deleted' => 'Usunięto wybrane elementy',
+    ],
+    'flash_checkboxes' => [
+        'deleted' => 'Checkbox pomyślnie usunięty',
+        'saved' => 'Checkbox pomyślnie zapisany',
+        'updated' => 'Checkbox pomyślnie zaktualizowany',
+    ],
+    'flash_checkboxes' => [
+        'deleted' => 'Subskrybent pomyślnie usunięty',
+        'saved' => 'Subskrybent pomyślnie zapisany',
+        'updated' => 'Subskrybent pomyślnie zaktualizowany ',
     ],
     'token' => [
         'title' => 'Kod subskrybenta',
@@ -117,6 +127,6 @@ return [
         'error' => 'Coś poszło nie tak',
     ],
     'mail' => [
-        'activation_subject' => 'Potwierdź swój adres e-mail'
-    ]
+        'activation_subject' => 'Potwierdź swój adres e-mail',
+    ],
 ];
