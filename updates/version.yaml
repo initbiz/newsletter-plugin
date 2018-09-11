@@ -27,3 +27,5 @@
     - 'Primary key name shortened'
 1.0.10:
     - 'Small type fix'
+1.0.11:
+    - 'DB engine added'

@@ -7,17 +7,19 @@ class BuilderTableUpdateInitbizNewsletterCheckboxes extends Migration
 {
     public function up()
     {
-        Schema::table('initbiz_newsletter_checkboxes', function($table)
-        {
-            $table->boolean('required')->nullable(false)->change();
-        });
+        if (Schema::hasColumn('initbiz_newsletter_checkboxes', 'required')) {
+            Schema::table('initbiz_newsletter_checkboxes', function ($table) {
+                $table->boolean('required')->nullable(false)->change();
+            });
+        }
     }
-    
+
     public function down()
     {
-        Schema::table('initbiz_newsletter_checkboxes', function($table)
-        {
-            $table->boolean('required')->nullable()->change();
-        });
+        if (Schema::hasColumn('initbiz_newsletter_checkboxes', 'required')) {
+            Schema::table('initbiz_newsletter_checkboxes', function ($table) {
+                $table->boolean('required')->nullable()->change();
+            });
+        }
     }
 }

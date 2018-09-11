@@ -8,6 +8,7 @@ class CreateSubscribersTable extends Migration
     public function up()
     {
         Schema::create('initbiz_newsletter_subscribers', function ($table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('email', 100);
             $table->boolean('confirmed', false);
