@@ -23,3 +23,5 @@
     - 'Minor fixes'
 1.0.8:
     - 'Creating and updating subscriber form backend'
+1.0.9:
+    - 'Primary key name shortened'

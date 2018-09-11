@@ -11,7 +11,7 @@ class CreateCheckbox_MessageTable extends Migration
         Schema::create('initbiz_newsletter_checkbox_message', function ($table) {
             $table->integer('checkbox_id')->unsigned();
             $table->integer('message_id')->unsigned();
-            $table->primary(['checkbox_id', 'message_id']);
+            $table->primary(['checkbox_id', 'message_id'], 'initbiz_checkbox_message_primary');
         });
     }
 
