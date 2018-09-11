@@ -25,3 +25,5 @@
     - 'Creating and updating subscriber form backend'
 1.0.9:
     - 'Primary key name shortened'
+1.0.10:
+    - 'Small type fix'

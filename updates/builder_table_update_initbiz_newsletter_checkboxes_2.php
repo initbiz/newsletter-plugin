@@ -9,7 +9,7 @@ class BuilderTableUpdateInitbizNewsletterCheckboxes2 extends Migration
     public function up()
     {
         Schema::table('initbiz_newsletter_checkboxes', function ($table) {
-            $table->text('slug')->unique();
+            $table->string('slug')->unique();
         });
     }
 
