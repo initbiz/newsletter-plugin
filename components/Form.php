@@ -1,19 +1,18 @@
-<?php namespace Initbiz\Newsletter\Components;
+<?php
+
+namespace Initbiz\Newsletter\Components;
 
 use Db;
-use Mail;
 use Lang;
 use Validator;
 use Exception;
-use Cms\Classes\Page;
 use ValidationException;
 use Cms\Classes\ComponentBase;
-use Illuminate\Support\Facades\Input;
 use Initbiz\Newsletter\Models\Checkbox;
 use Initbiz\Newsletter\Classes\Helpers;
+use Initbiz\Newsletter\Classes\SendEmail;
 use Initbiz\Newsletter\Models\Subscriber;
-use October\Rain\Exception\AjaxException;
-use Initbiz\Newsletter\Classes\SubscribtionException;
+use Initbiz\Newsletter\Classes\SubscriptionException;
 
 class Form extends ComponentBase
 {
@@ -69,10 +68,10 @@ class Form extends ComponentBase
             $this->createSubscriberWithCheckboxes($data['email'], $checkedCheckboxes);
             $this->sendActivationEmail();
             $result = [
-                    'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_success')
-                ];
+                'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_success')
+            ];
             // } catch (Exception $e) {
-            //     throw new SubscribtionException(Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_error'));
+            //     throw new SubscriptionException(Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_error'));
             // }
         });
         return $result;
@@ -85,7 +84,7 @@ class Form extends ComponentBase
      */
     protected function getCheckedCheckboxesId($data)
     {
-        $checked =[];
+        $checked = [];
         $checkboxes = Checkbox::all();
         foreach ($checkboxes as $checkbox) {
             //If value in data is set than it means the checkbox is checked
@@ -124,6 +123,7 @@ class Form extends ComponentBase
             'template' => 'initbiz.newsletter::mail.subscription',
             'activationLink' => Helpers::getNewsletterManagementUrl($this->subscriber->email, $this->subscriber->token)
         ];
-        Helpers::sendMail($options);
+
+        SendEmail::send($options);
     }
 }

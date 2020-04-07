@@ -1,9 +1,12 @@
-<?php namespace Initbiz\Newsletter\Models;
+<?php
+
+namespace Initbiz\Newsletter\Models;
 
 use Model;
 use Initbiz\Newsletter\Classes\Helpers;
 
-class Subscriber extends Model {
+class Subscriber extends Model
+{
 
     use \October\Rain\Database\Traits\Validation;
 
@@ -17,16 +20,16 @@ class Subscriber extends Model {
     public $belongsToMany = [
         'checkboxes' => [
             'Initbiz\Newsletter\Models\Checkbox',
-            'table'     => 'initbiz_newsletter_checkbox_subscriber',
+            'table' => 'initbiz_newsletter_checkbox_subscriber',
         ]
     ];
 
     public function getTokenAttribute()
     {
         if ($this->exists && $this->attributes['token']) {
-             return $this->attributes['token'];
+            return $this->attributes['token'];
         }
-         return Helpers::generateToken();
-    }
 
+        return Helpers::generateToken();
+    }
 }

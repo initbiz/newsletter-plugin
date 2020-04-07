@@ -1,16 +1,13 @@
-<?php namespace Initbiz\Newsletter\Models;
+<?php
 
-use DB;
-use Str;
-use App;
-use File;
+namespace Initbiz\Newsletter\Models;
+
 use Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Input;
 use Initbiz\Newsletter\Classes\Helpers;
-use Initbiz\Newsletter\Controllers\Checkboxes;
-use Initbiz\Newsletter\Controllers\Subscribers;
+use Initbiz\Newsletter\Classes\SendEmail;
 
 class Message extends Model
 {
@@ -27,7 +24,8 @@ class Message extends Model
 
     public $belongsToMany = [
         'checkboxes' => [
-            'Initbiz\Newsletter\Models\Checkbox', 'table' => 'initbiz_newsletter_checkbox_message'
+            'Initbiz\Newsletter\Models\Checkbox',
+            'table' => 'initbiz_newsletter_checkbox_message'
         ]
     ];
 
@@ -40,12 +38,14 @@ class Message extends Model
 
     public function getSendToOptions()
     {
-        $options =[
+        $options = [
             'all' => Lang::get('initbiz.newsletter::lang.messages.send_to_all')
         ];
-        if (Checkbox::where('required', false)->get()->count() != 0) {
+
+        if (Checkbox::where('required', false)->get()->count() !== 0) {
             $options += ['customized' => Lang::get('initbiz.newsletter::lang.messages.send_to_agreed')];
         }
+
         return $options;
     }
 
@@ -56,6 +56,7 @@ class Message extends Model
     public function beforeSave()
     {
         $this->checkedCheckboxes = collect(Input::get('checkboxes'));
+
         if ($this->sentCheckboxChecked()) {
             $recipientsList = $this->getRecipientsList($this->checkedCheckboxes->flatten());
             $this->sendMessageToRecipients($recipientsList, $this->email_template);
@@ -68,10 +69,10 @@ class Message extends Model
      */
     public function afterSave()
     {
-        $messageCheckboxesId = Checkbox::whereIn('slug', $this->checkedCheckboxes->flatten())
-            ->get()
-            ->pluck('id')
-            ->toArray();
+        $checkboxes = $this->checkedCheckboxes->flatten();
+
+        $messageCheckboxesId = Checkbox::whereIn('slug', $checkboxes)->get()->pluck('id')->toArray();
+
         $this->checkboxes()->sync($messageCheckboxesId);
     }
 
@@ -82,7 +83,7 @@ class Message extends Model
 
     protected function sentCheckboxChecked()
     {
-        return ($this->sent && $this->sent != '') ? true: false;
+        return ($this->sent && $this->sent != '') ? true : false;
     }
 
     protected function getRecipientsList($checkedCheckboxes)
@@ -92,9 +93,9 @@ class Message extends Model
             $subscribers = Subscriber::where('confirmed', 1)->get();
         } else {
             $subscribers = Subscriber::where('confirmed', 1)
-                    ->whereHas('checkboxes', function ($query) use ($checkedCheckboxes) {
-                        $query->whereIn('slug', $checkedCheckboxes);
-                    })->get();
+                ->whereHas('checkboxes', function ($query) use ($checkedCheckboxes) {
+                    $query->whereIn('slug', $checkedCheckboxes);
+                })->get();
         }
         return $subscribers;
     }
@@ -116,7 +117,8 @@ class Message extends Model
                 'content' => $this->content,
                 'newsletterLink' => Helpers::getNewsletterManagementUrl($subscriber->email, $subscriber->token)
             ];
-            Helpers::sendMail($options);
+
+            SendEmail::send($options);
         }
     }
 }

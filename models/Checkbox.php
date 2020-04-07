@@ -1,15 +1,11 @@
 <?php
+
 namespace Initbiz\Newsletter\Models;
 
 use Model;
-use File;
-use Str;
-use App;
-use DB;
-use Mail;
 
-class Checkbox extends Model {
-
+class Checkbox extends Model
+{
     use \October\Rain\Database\Traits\Validation;
     use \October\Rain\Database\Traits\Sluggable;
 
@@ -25,9 +21,16 @@ class Checkbox extends Model {
         'text' => 'string',
         'slug' => 'string'
     ];
+
     public $belongsToMany = [
-        'subscribers' => ['Initbiz\Newsletter\Models\Subscriber', 'table' => 'initbiz_newsletter_checkbox_subscriber'],
-        'messages' => ['Initbiz\Newsletter\Models\Message', 'table' => 'initbiz_newsletter_checkbox_message']
+        'subscribers' => [
+            'Initbiz\Newsletter\Models\Subscriber',
+            'table' => 'initbiz_newsletter_checkbox_subscriber'
+        ],
+        'messages' => [
+            'Initbiz\Newsletter\Models\Message',
+            'table' => 'initbiz_newsletter_checkbox_message'
+        ]
     ];
 
 
@@ -55,5 +58,4 @@ class Checkbox extends Model {
     {
         return $query->whereIn('required', [false, 0]);
     }
-
 }

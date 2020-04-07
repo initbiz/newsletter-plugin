@@ -22,7 +22,7 @@
                     data-hotkey="ctrl+s, cmd+s"
                     data-load-indicator="<?= e(trans('backend::lang.form.creating_name', ['name'=>$formRecordName])) ?>"
                     class="btn btn-primary">
-                <?= e(trans('backend::lang.form.update')) ?>
+                <?= e(trans('backend::lang.form.save')) ?>
             </button>
             <button
                     type="button"
@@ -33,6 +33,14 @@
                     class="btn btn-default">
                 <?= e(trans('backend::lang.form.save_and_close')) ?>
             </button>
+            <button
+                    type="button"
+                    data-request="onTest"
+                    data-load-indicator="<?= e(trans('system::lang.mail_templates.sending')) ?>"
+                    data-request-confirm="<?= e(trans('system::lang.mail_templates.test_confirm', [ 'email' => e(BackendAuth::getUser()->email)])) ?>"
+                    class="btn btn-info">
+                <?= e(trans('system::lang.mail_templates.test_send')) ?>
+            </button> 
             <?php else: ?>
             <div class="layout-row">
             <span class="flash-message static info">

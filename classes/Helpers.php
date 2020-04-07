@@ -1,31 +1,13 @@
-<?php namespace Initbiz\Newsletter\Classes;
+<?php
 
-use Mail;
+namespace Initbiz\Newsletter\Classes;
+
 use Cache;
 use Cms\Classes\Theme;
 use Cms\Classes\Page as CmsPage;
 
 class Helpers
 {
-    /**
-     * Send email using one method globally
-     * @param  array $options options to send email
-     * @return void
-     */
-    public static function sendMail($options)
-    {
-        //TODO: Validation?
-        //$options needs to have: recipient_name (optional), recipient_email, subject, template + other variables
-        $recipient_name = (isset($options['recipient_name'])) ? $options['recipient_name']: $options['recipient_email'];
-        $recipient_email = $options['recipient_email'];
-        $subject = $options['subject'];
-
-        Mail::send($options['template'], $options, function ($message) use ($recipient_email, $recipient_name, $subject) {
-            $message->to($recipient_email, $recipient_name);
-            $message->subject($subject);
-        });
-    }
-
     /**
      * Get newsletter management page url with injected email and token
      * @param  string $email subscriber's email
@@ -52,10 +34,10 @@ class Helpers
         }
 
         $managementPageUrl = $pageUrl;
-        $managementPageUrl = preg_replace('/'.$emailVariable.'/', $email, $managementPageUrl);
-        $managementPageUrl = preg_replace('/'.$tokenVariable.'/', $token, $managementPageUrl);
+        $managementPageUrl = preg_replace('/' . $emailVariable . '/', $email, $managementPageUrl);
+        $managementPageUrl = preg_replace('/' . $tokenVariable . '/', $token, $managementPageUrl);
 
-        return url('/').$managementPageUrl;
+        return url('/') . $managementPageUrl;
     }
 
 
@@ -104,7 +86,7 @@ class Helpers
         $pieces = [];
         $max = mb_strlen($keyspace, '8bit') - 1;
         for ($i = 0; $i < $length; ++$i) {
-            $pieces []= $keyspace[random_int(0, $max)];
+            $pieces[] = $keyspace[random_int(0, $max)];
         }
         return implode('', $pieces);
     }
@@ -113,6 +95,4 @@ class Helpers
     {
         return self::random_str(40);
     }
-
-
 }

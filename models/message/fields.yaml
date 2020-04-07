@@ -11,6 +11,11 @@ fields:
         required: true
         type: richeditor
         size: large
+    email_template:
+        label: "initbiz.newsletter::lang.messages.email_template"
+        type: dropdown
+        span: left
+        default: 'initbiz.newsletter::mail.message'
     sent:
         label: initbiz.newsletter::lang.messages.send
         type: switch
@@ -30,12 +35,4 @@ fields:
             action: show
             field: send_to
             condition: value[customized]
-    email_template:
-        label: "initbiz.newsletter::lang.messages.email_template"
-        type: dropdown
-        span: left
-        default: 'initbiz.newsletter::mail.message'
-        trigger:
-            action: show
-            field: sent
-            condition: checked
+   

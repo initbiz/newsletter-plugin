@@ -1,4 +1,8 @@
-<?php namespace Initbiz\Newsletter\Models;
+<?php
+
+namespace Initbiz\Newsletter\Models;
+
+use Initbiz\Newsletter\Models\Subscriber;
 
 class SubscribersImport extends \Backend\Models\ImportModel
 {
@@ -17,11 +21,9 @@ class SubscribersImport extends \Backend\Models\ImportModel
                 $subscriber->save();
 
                 $this->logCreated();
-            }
-            catch (\Exception $ex) {
+            } catch (\Exception $ex) {
                 $this->logError($row, $ex->getMessage());
             }
-
         }
     }
 }

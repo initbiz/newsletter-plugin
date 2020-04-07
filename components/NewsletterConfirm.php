@@ -1,13 +1,13 @@
-<?php namespace Initbiz\Newsletter\Components;
+<?php
+
+namespace Initbiz\Newsletter\Components;
 
 use Db;
 use Lang;
-use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
-use Illuminate\Support\Facades\Input;
 use Initbiz\Newsletter\Models\Checkbox;
 use October\Rain\Exception\ApplicationException;
-use Initbiz\Newsletter\Classes\SubscribtionException;
+use Initbiz\Newsletter\Classes\SubscriptionException;
 use Initbiz\Newsletter\Models\Subscriber as Subscriber;
 use Initbiz\Newsletter\Classes\UpdateSubscriberException;
 
@@ -72,10 +72,12 @@ class NewsletterConfirm extends ComponentBase
         try {
             $data = post();
             $this->deleteSubscriber($data);
-            $result = ['content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.unsubscribe_success'),
-                        'redirectUrl' => url('/')];
+            $result = [
+                'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.unsubscribe_success'),
+                'redirectUrl' => url('/')
+            ];
         } catch (\Exception $e) {
-            throw new SubscribtionException(Lang::get('initbiz.newsletter::lang.ajaxFormResponse.unsubscribe_failed'));
+            throw new SubscriptionException(Lang::get('initbiz.newsletter::lang.ajaxFormResponse.unsubscribe_failed'));
         }
         return $result;
     }
@@ -96,16 +98,16 @@ class NewsletterConfirm extends ComponentBase
 
     protected function checkIfExist(Subscriber $subscriber)
     {
-        return (count($subscriber->get()))? true : false;
+        return (count($subscriber->get())) ? true : false;
     }
 
     protected function getSubscriberCheckboxesSlugs($subscriber)
     {
         $checkboxes = $subscriber->checkboxes()
-                                 ->notRequired()
-                                 ->get()
-                                 ->pluck('slug')
-                                 ->toArray();
+            ->notRequired()
+            ->get()
+            ->pluck('slug')
+            ->toArray();
 
         if ($checkboxes == null) {
             $result =  [];
@@ -149,7 +151,7 @@ class NewsletterConfirm extends ComponentBase
             try {
                 $data = post();
                 $this->updateSubscriberCheckboxes($data);
-                $result = [ 'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.update_success') ];
+                $result = ['content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.update_success')];
             } catch (\Exception $e) {
                 throw new UpdateSubscriberException(Lang::get('initbiz.newsletter::lang.ajaxFormResponse.update_failed'));
             }

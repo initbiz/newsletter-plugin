@@ -1,7 +1,9 @@
-<?php namespace Initbiz\Newsletter\Models;
+<?php
+
+namespace Initbiz\Newsletter\Models;
 
 use Backend\Models\ExportModel;
-use ApplicationException;
+use Initbiz\Newsletter\Models\Subscriber;
 
 /**
  * Post Export Model
@@ -15,10 +17,9 @@ class SubscribersExport extends ExportModel
     public function exportData($columns, $sessionKey = null)
     {
         $subscribers = Subscriber::all();
-        $subscribers->each(function($subscriber) use ($columns) {
+        $subscribers->each(function ($subscriber) use ($columns) {
             $subscriber->addVisible($columns);
         });
         return $subscribers->toArray();
     }
-
 }

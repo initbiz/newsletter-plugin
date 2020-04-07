@@ -1,4 +1,6 @@
-<?php namespace Initbiz\Newsletter\Models;
+<?php
+
+namespace Initbiz\Newsletter\Models;
 
 class CheckboxesImport extends \Backend\Models\ImportModel
 {
@@ -17,11 +19,9 @@ class CheckboxesImport extends \Backend\Models\ImportModel
                 $subscriber->save();
 
                 $this->logCreated();
-            }
-            catch (\Exception $ex) {
+            } catch (\Exception $ex) {
                 $this->logError($row, $ex->getMessage());
             }
-
         }
     }
 }

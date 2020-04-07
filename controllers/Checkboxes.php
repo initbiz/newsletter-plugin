@@ -1,24 +1,23 @@
 <?php
+
 namespace Initbiz\Newsletter\Controllers;
-use Backend\Classes\Controller;
-use BackendMenu;
-use DB;
-use Flash;
-use Initbiz\Newsletter\Models\Checkbox;
+
 use Lang;
+use Flash;
+use BackendMenu;
+use Backend\Classes\Controller;
+use Initbiz\Newsletter\Models\Checkbox;
 
 class Checkboxes extends Controller
 {
     public $implement = [
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController',
-        'Backend.Behaviors.RelationController',
         'Backend.Behaviors.ImportExportController'
     ];
 
     public $formConfig = 'config_form.yaml';
     public $listConfig = 'config_list.yaml';
-    public $relationConfig = 'config_relation.yaml';
     public $importExportConfig = 'config_import_export.yaml';
 
     public $requiredPermissions = ['initbiz.newsletter.checkboxes'];
@@ -30,24 +29,19 @@ class Checkboxes extends Controller
         BackendMenu::setContext('Initbiz.Newsletter', 'newsletter', 'checkboxes');
     }
 
-    public function listExtendQuery($query) {
-        $query->get();
-    }
-    
     public function onRemoveCheckboxes()
     {
         //TODO: Checkbox::beforeDelete do not run without two foreach
         if (($checkedId = post('checked')) && is_array($checkedId) && count($checkedId)) {
-             $checkboxes = Checkbox::get();
+            $checkboxes = Checkbox::get();
             foreach ($checkedId as $checkboxId) {
-                 foreach ($checkboxes as $checkbox) {
-                     if ($checkbox->id !== (int)$checkboxId)
-                         continue;
-                     $checkbox->delete();
-                     Flash::success(Lang::get('initbiz.newsletter::lang.flash.deleted'));
-                 }
+                foreach ($checkboxes as $checkbox) {
+                    if ($checkbox->id !== (int) $checkboxId)
+                        continue;
+                    $checkbox->delete();
+                    Flash::success(Lang::get('initbiz.newsletter::lang.flash.deleted'));
+                }
             }
-
         }
 
         return $this->listRefresh();

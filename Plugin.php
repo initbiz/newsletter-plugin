@@ -1,14 +1,15 @@
-<?php namespace Initbiz\Newsletter;
+<?php
 
-use System\Classes\PluginBase;
+namespace Initbiz\Newsletter;
+
 use Backend;
+use System\Classes\PluginBase;
 
 /**
- * newsletter Plugin Information File by InIT.biz Ltd. http://init.biz
+ * Newsletter plugin
  */
 class Plugin extends PluginBase
 {
-
     /**
      * Returns information about this plugin.
      *
@@ -28,32 +29,32 @@ class Plugin extends PluginBase
     {
         return [
             'newsletter' => [
-                    'label'         => 'initbiz.newsletter::lang.menu.newsletter',
-                    'url'           => Backend::url('initbiz/newsletter/messages'),
-                    'icon'          => 'icon-envelope-o',
-                    'permissions'   => ['initbiz.newsletter.*'],
-                    'order'         => 500,
+                'label'         => 'initbiz.newsletter::lang.menu.newsletter',
+                'url'           => Backend::url('initbiz/newsletter/messages'),
+                'icon'          => 'icon-envelope-o',
+                'permissions'   => ['initbiz.newsletter.*'],
+                'order'         => 500,
 
-                    'sideMenu'  => [
-                        'messages'  => [
-                            'label'         => 'initbiz.newsletter::lang.menu.messages',
-                            'url'           =>  Backend::url('initbiz/newsletter/messages'),
-                            'icon'          =>  'icon-envelope',
-                            'permissions'   => ['initbiz.newsletter.messages']
-                        ],
-                        'subscribers' => [
-                            'label'         => 'initbiz.newsletter::lang.menu.subscribers',
-                            'url'           =>  Backend::url('initbiz/newsletter/subscribers'),
-                            'icon'          =>  'icon-male',
-                            'permissions'   => ['initbiz.newsletter.subscribers']
-                        ],
-                        'checkboxes' => [
-                            'label'         => 'initbiz.newsletter::lang.menu.checkboxes',
-                            'url'           =>  Backend::url('initbiz/newsletter/checkboxes'),
-                            'icon'          =>  'oc-icon-cog',
-                            'permissions'   => ['initbiz.newsletter.checkboxes']
-                        ],
-                    ]
+                'sideMenu'  => [
+                    'messages'  => [
+                        'label'         => 'initbiz.newsletter::lang.menu.messages',
+                        'url'           =>  Backend::url('initbiz/newsletter/messages'),
+                        'icon'          =>  'icon-envelope',
+                        'permissions'   => ['initbiz.newsletter.messages']
+                    ],
+                    'subscribers' => [
+                        'label'         => 'initbiz.newsletter::lang.menu.subscribers',
+                        'url'           =>  Backend::url('initbiz/newsletter/subscribers'),
+                        'icon'          =>  'icon-male',
+                        'permissions'   => ['initbiz.newsletter.subscribers']
+                    ],
+                    'checkboxes' => [
+                        'label'         => 'initbiz.newsletter::lang.menu.checkboxes',
+                        'url'           =>  Backend::url('initbiz/newsletter/checkboxes'),
+                        'icon'          =>  'oc-icon-cog',
+                        'permissions'   => ['initbiz.newsletter.checkboxes']
+                    ],
+                ]
             ]
         ];
     }
