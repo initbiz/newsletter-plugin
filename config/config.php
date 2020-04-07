@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'useQueue' => true
+    'useQueue' => false
 ];
