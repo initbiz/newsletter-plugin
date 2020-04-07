@@ -35,3 +35,5 @@
     - 'TinyInt fix'
 1.0.14:
     - 'Add queue support, sending test e-mails and little cleanup'
+1.0.15:
+    - 'Disable queues by default to keep legacy working'
