@@ -1,4 +1,8 @@
-## Newsletter plugin
+Newsletter plugin
+===
+
+![Newsletter plugin](docs/newsletter.png)
+
 
 ### Introduction
 The plugin helps with sending newsletter.
