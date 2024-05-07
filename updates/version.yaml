@@ -37,3 +37,7 @@
     - 'Add queue support, sending test e-mails and little cleanup'
 1.0.15:
     - 'Disable queues by default to keep legacy working'
+1.1.0:
+    - Add tags
+    - create_tags_table.php
+    - create_subscriber_tag_table.php

@@ -65,12 +65,14 @@ return [
         'token' => 'Token',
         'confirmed' => 'Potwierdzony',
         'checkboxes' => 'Checkboxy',
+        'tags' => 'Tagi',
     ],
     'userColumns' => [
         'email' => 'E-mail',
         'agreement' => 'Zgoda',
         'joined' => 'Dołączył',
         'confirmed' => 'Potwierdzony',
+        'tags' => 'Tagi',
     ],
     'flash' => [
         'delete' => 'Czy jesteś pewny że chcesz usunąć zaznaczone elementy?',

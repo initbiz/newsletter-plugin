@@ -66,12 +66,14 @@ return [
         'token' => 'Token',
         'confirmed' => 'Confirmed',
         'checkboxes' => 'Checkboxes',
+        'tags' => 'Tags',
     ],
     'userColumns' => [
         'email' => 'E-mail',
         'agreement' => 'Agreement',
         'joined' => 'Joined',
         'confirmed' => 'Confirmed',
+        'tags' => 'Tags',
     ],
     'flash' => [
         'delete' => 'Are you sure you want to delete this checkbox?',

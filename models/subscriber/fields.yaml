@@ -3,17 +3,30 @@ fields:
         label: 'initbiz.newsletter::lang.columns.confirmed'
         span: full
         type: switch
+
     email:
         label: 'initbiz.newsletter::lang.columns.email'
         span: auto
         type: text
+
     token:
         label: 'initbiz.newsletter::lang.columns.token'
         span: auto
-        type: text
+        type: sensitive
+        allowCopy: false
+        hideOnTabChange: true
+
+
     checkboxes:
         label: 'initbiz.newsletter::lang.columns.checkboxes'
         nameFrom: name
         descriptionFrom: description
         span: auto
         type: relation
+
+    tags:
+        label: 'initbiz.newsletter::lang.columns.tags'
+        span: auto
+        type: taglist
+        mode: relation
+        nameFrom: name

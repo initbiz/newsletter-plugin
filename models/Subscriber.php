@@ -3,7 +3,9 @@
 namespace Initbiz\Newsletter\Models;
 
 use Model;
+use Initbiz\Newsletter\Models\Tag;
 use Initbiz\Newsletter\Classes\Helpers;
+use Initbiz\Newsletter\Models\Checkbox;
 
 class Subscriber extends Model
 {
@@ -19,8 +21,12 @@ class Subscriber extends Model
     ];
     public $belongsToMany = [
         'checkboxes' => [
-            'Initbiz\Newsletter\Models\Checkbox',
+            Checkbox::class,
             'table' => 'initbiz_newsletter_checkbox_subscriber',
+        ],
+        'tags' => [
+            Tag::class,
+            'table' => 'initbiz_newsletter_subscriber_tag',
         ]
     ];
 
