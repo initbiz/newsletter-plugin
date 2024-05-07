@@ -16,7 +16,6 @@ fields:
         allowCopy: false
         hideOnTabChange: true
 
-
     checkboxes:
         label: 'initbiz.newsletter::lang.columns.checkboxes'
         nameFrom: name
