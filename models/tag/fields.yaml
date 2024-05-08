@@ -1,0 +1,13 @@
+fields:
+    name:
+        label: initbiz.newsletter::lang.userColumns.tag
+        type: text
+        span: auto
+
+    slug:
+        label: initbiz.newsletter::lang.userColumns.slug
+        type: text
+        span: auto
+        preset:
+            field: name
+            type: slug

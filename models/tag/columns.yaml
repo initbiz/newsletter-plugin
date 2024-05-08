@@ -1,0 +1,8 @@
+columns:
+    name:
+        label: initbiz.newsletter::lang.userColumns.tag
+        searchable: true
+
+    slug:
+        label: initbiz.newsletter::lang.userColumns.slug
+        searchable: true

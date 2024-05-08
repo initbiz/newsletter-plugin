@@ -3,6 +3,7 @@
 namespace Initbiz\Newsletter\Models;
 
 use Model;
+use Event;
 
 /**
  * Tag Model
@@ -21,7 +22,10 @@ class Tag extends Model
     /**
      * @var array rules for validation
      */
-    public $rules = [];
+    public $rules = [
+        'name' => 'required',
+        'slug' => 'required',
+    ];
 
     /**
      * @var array nullable attribute names which should be set to null when empty.
@@ -42,4 +46,19 @@ class Tag extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function afterCreate()
+    {
+        Event::fire('initbiz.newsletter.tagCreate', [$this]);
+    }
+
+    public function afterSave()
+    {
+        Event::fire('initbiz.newsletter.tagSave', [$this]);
+    }
+
+    public function beforeDelete()
+    {
+        Event::fire('initbiz.newsletter.tagDelete', [$this]);
+    }
 }

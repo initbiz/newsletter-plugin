@@ -3,8 +3,8 @@ Newsletter plugin
 
 ![Newsletter plugin](docs/newsletter.png)
 
-
 ### Introduction
+
 The plugin helps with sending newsletter.
 
 The basic use case is as follows:
@@ -24,37 +24,30 @@ What is more:
 
 > **The plugin makes you GDPR ready and is fully translatable (see Documentation).**
 
-## Documentation
+## Tech documentation
 
 ### Usage
+
 1. Create page for managing newsletter options by subscribers so that it has `:email` and `:token` variables (for example `manage-newsletter` with `/manage-newsletter/:email/:token` URL). Of course those variables can be changed.
 1. Embed component `NewsletterConfirm` on exact one CMS page (Newsletter plugin will automatically look for page that has the component and cache it for 10 minutes)
 1. Go to backend Newsletter -> Checkboxes and add checkboxes as your business requires
 1. Embed component `NewsletterForm` on page that you want to have form rendered on (landing page or just footer partial)
 
+### Integrations
 
-> Do not forget to configure e-mail sending in your backend settings
+The plugin makes it easy to integrate with other sending e-mails services like MailChimp or MailerLite.
 
-### Translations
-Plugin supports translations for all elements (there is no hardcoded frontend contents) including AJAX responses and displayed errors.
+Out of the box only MailerLite is supported.
 
-Out of the box there are only two languages:
-* pl - Polski
-* en - English
+To integrate with other service, you can use one the the following events:
 
-But of course you can prepare your own translations.
-
-### E-mail templates
-Out of the box there are two e-mail templates you can to customize:
-
-* `inibiz.newsletter::mail.subscription` which is sent to those who want to became a subscriber
-* `initbiz.newsletter::mail.message` which is sent to subscribers
-
-In `subscription` e-mail template you can use `{{activationLink}}` variable.
-
-In `message` e-mail template you can use:
-* `{{title}}` - Title of message
-* `{{content}}` - Content of message
-* `{{ newsletterLink }}` - link for subscribers to sign out from newsletter
-
-If you want, you can create your own e-mail template. While sending you just have to choose which one you want to use. The `message` e-mail template is just default one.
+- `initbiz.newsletter.subscriberCreate ($subscriber)`
+- `initbiz.newsletter.subscriberSave ($subscriber)`
+- `initbiz.newsletter.subscriberDelete ($subscriber)`
+- `initbiz.newsletter.tagCreate ($tag)`
+- `initbiz.newsletter.tagSave ($tag)`
+- `initbiz.newsletter.tagDelete ($tag)`
+- `initbiz.newsletter.subscriberCheckboxesAttached ($subscriber, $checkboxes)`
+- `initbiz.newsletter.subscriberCheckboxesDetached ($subscriber, $checkboxes)`
+- `initbiz.newsletter.subscriberTagsAttached ($subscriber, $tags)`
+- `initbiz.newsletter.subscriberTagsDetached ($subscriber, $tags)`

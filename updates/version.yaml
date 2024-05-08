@@ -41,3 +41,6 @@
     - Add tags
     - create_tags_table.php
     - create_subscriber_tag_table.php
+1.2.0:
+    - Add extra fields to subscriber
+    - add_extra_columns_to_subscribers_table.php

@@ -30,29 +30,35 @@ class Plugin extends PluginBase
         return [
             'newsletter' => [
                 'label'         => 'initbiz.newsletter::lang.menu.newsletter',
-                'url'           => Backend::url('initbiz/newsletter/messages'),
+                'url'           => Backend::url('initbiz/newsletter/subscribers'),
                 'icon'          => 'icon-envelope-o',
                 'permissions'   => ['initbiz.newsletter.*'],
                 'order'         => 500,
 
                 'sideMenu'  => [
-                    'messages'  => [
-                        'label'         => 'initbiz.newsletter::lang.menu.messages',
-                        'url'           =>  Backend::url('initbiz/newsletter/messages'),
-                        'icon'          =>  'icon-envelope',
-                        'permissions'   => ['initbiz.newsletter.messages']
-                    ],
                     'subscribers' => [
                         'label'         => 'initbiz.newsletter::lang.menu.subscribers',
                         'url'           =>  Backend::url('initbiz/newsletter/subscribers'),
                         'icon'          =>  'icon-male',
                         'permissions'   => ['initbiz.newsletter.subscribers']
                     ],
+                    'tags' => [
+                        'label'         => 'initbiz.newsletter::lang.menu.tags',
+                        'url'           =>  Backend::url('initbiz/newsletter/tags'),
+                        'icon'          =>  'icon-tag',
+                        'permissions'   => ['initbiz.newsletter.tags']
+                    ],
                     'checkboxes' => [
                         'label'         => 'initbiz.newsletter::lang.menu.checkboxes',
                         'url'           =>  Backend::url('initbiz/newsletter/checkboxes'),
                         'icon'          =>  'oc-icon-cog',
                         'permissions'   => ['initbiz.newsletter.checkboxes']
+                    ],
+                    'messages'  => [
+                        'label'         => 'initbiz.newsletter::lang.menu.messages',
+                        'url'           =>  Backend::url('initbiz/newsletter/messages'),
+                        'icon'          =>  'icon-envelope',
+                        'permissions'   => ['initbiz.newsletter.messages']
                     ],
                 ]
             ]
@@ -83,6 +89,10 @@ class Plugin extends PluginBase
             'initbiz.newsletter.messages'   =>  [
                 'tab'   =>  'initbiz.newsletter::lang.menu.newsletter',
                 'label' =>  'initbiz.newsletter::lang.permission.messages'
+            ],
+            'initbiz.newsletter.tags'   =>  [
+                'tab'   =>  'initbiz.newsletter::lang.menu.newsletter',
+                'label' =>  'initbiz.newsletter::lang.permission.tags'
             ],
             'initbiz.newsletter.subscribers'   =>  [
                 'tab'   =>  'initbiz.newsletter::lang.menu.newsletter',

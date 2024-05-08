@@ -1,31 +1,120 @@
 fields:
     confirmed:
-        label: 'initbiz.newsletter::lang.columns.confirmed'
+        label: 'initbiz.newsletter::lang.subscriber.confirmed'
         span: full
         type: switch
 
     email:
-        label: 'initbiz.newsletter::lang.columns.email'
+        label: 'initbiz.newsletter::lang.subscriber.email'
         span: auto
         type: text
 
-    token:
-        label: 'initbiz.newsletter::lang.columns.token'
-        span: auto
-        type: sensitive
-        allowCopy: false
-        hideOnTabChange: true
-
-    checkboxes:
-        label: 'initbiz.newsletter::lang.columns.checkboxes'
-        nameFrom: name
-        descriptionFrom: description
-        span: auto
-        type: relation
-
     tags:
-        label: 'initbiz.newsletter::lang.columns.tags'
+        label: 'initbiz.newsletter::lang.subscriber.tags'
         span: auto
         type: taglist
         mode: relation
         nameFrom: name
+
+    first_name:
+        label: 'initbiz.newsletter::lang.subscriber.first_name'
+        span: auto
+        type: text
+
+    last_name:
+        label: 'initbiz.newsletter::lang.subscriber.last_name'
+        span: auto
+        type: text
+
+tabs:
+    fields:
+        sex:
+            label: 'initbiz.newsletter::lang.subscriber.sex'
+            tab: 'initbiz.newsletter::lang.subscriber.details_tab'
+            type: balloon-selector
+            span: auto
+            options:
+                male: 'initbiz.newsletter::lang.subscriber.sex_male'
+                female: 'initbiz.newsletter::lang.subscriber.sex_female'
+                other: 'initbiz.newsletter::lang.subscriber.sex_other'
+
+        address_line1:
+            label: 'initbiz.newsletter::lang.subscriber.address_line1'
+            tab: 'initbiz.newsletter::lang.subscriber.details_tab'
+            type: text
+            span: left
+
+        address_line2:
+            label: 'initbiz.newsletter::lang.subscriber.address_line2'
+            tab: 'initbiz.newsletter::lang.subscriber.details_tab'
+            type: text
+            span: auto
+
+        company:
+            label: 'initbiz.newsletter::lang.subscriber.company'
+            tab: 'initbiz.newsletter::lang.subscriber.details_tab'
+            type: text
+            span: auto
+
+        phone:
+            label: 'initbiz.newsletter::lang.subscriber.phone'
+            tab: 'initbiz.newsletter::lang.subscriber.details_tab'
+            type: text
+            span: auto
+
+        zip:
+            label: 'initbiz.newsletter::lang.subscriber.zip'
+            tab: 'initbiz.newsletter::lang.subscriber.details_tab'
+            type: text
+            span: auto
+
+        city:
+            label: 'initbiz.newsletter::lang.subscriber.city'
+            tab: 'initbiz.newsletter::lang.subscriber.details_tab'
+            type: text
+            span: auto
+
+        date_of_birth:
+            label: 'initbiz.newsletter::lang.subscriber.date_of_birth'
+            tab: 'initbiz.newsletter::lang.subscriber.details_tab'
+            type: datepicker
+            mode: date
+            span: auto
+
+        age:
+            label: 'initbiz.newsletter::lang.subscriber.age'
+            tab: 'initbiz.newsletter::lang.subscriber.details_tab'
+            type: number
+            min: 0
+            span: auto
+
+        token:
+            label: 'initbiz.newsletter::lang.subscriber.token'
+            tab: 'initbiz.newsletter::lang.subscriber.settings_tab'
+            span: auto
+            type: sensitive
+            context: update
+            allowCopy: true
+            hideOnTabChange: true
+
+        checkboxes:
+            label: 'initbiz.newsletter::lang.subscriber.checkboxes'
+            tab: 'initbiz.newsletter::lang.subscriber.settings_tab'
+            nameFrom: name
+            descriptionFrom: description
+            span: auto
+            type: relation
+
+        additional_fields:
+            label: 'initbiz.newsletter::lang.subscriber.additional_fields'
+            span: full
+            tab: 'initbiz.newsletter::lang.subscriber.additional_fields_tab'
+            type: repeater
+            form:
+                fields:
+                    key:
+                        type: text
+                        span: auto
+                    value:
+                        type: text
+                        span: auto
