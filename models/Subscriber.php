@@ -53,7 +53,7 @@ class Subscriber extends Model
     {
         parent::__construct();
 
-        $this->bindEvent('model.relation.afterAttach', function (string $relationName, array $ids) {
+        $this->bindEvent('model.relation.attach', function (string $relationName, array $ids) {
             if ($relationName === "checkboxes") {
                 $checkboxes = Checkbox::whereIn('id', $ids)->get();
                 Event::fire('initbiz.newsletter.subscriberCheckboxesAttached', [$this, $checkboxes]);
@@ -63,7 +63,12 @@ class Subscriber extends Model
             }
         });
 
-        $this->bindEvent('model.relation.afterDetach', function (string $relationName, array $ids) {
+        $this->bindEvent('model.relation.detach', function (string $relationName, ?array $ids) {
+            // When deleting the subscriber, the event is also dispatched
+            if (is_null($ids)) {
+                return;
+            }  
+
             if ($relationName === "checkboxes") {
                 $checkboxes = Checkbox::whereIn('id', $ids)->get();
                 Event::fire('initbiz.newsletter.subscriberCheckboxesDetached', [$this, $checkboxes]);
@@ -101,17 +106,31 @@ class Subscriber extends Model
         Event::fire('initbiz.newsletter.subscriberDelete', [$this]);
     }
 
-    public function attachCheckboxes(Collection $checkboxes): void
+    public function attachCheckboxes(Collection|Checkbox $checkboxes): void
     {
+        $checkboxesIds = [];
+        if ($checkboxes instanceof Collection) {
+            $checkboxesIds = $checkboxes->pluck('id')->toArray();
+        } else {
+            $checkboxesIds[] = $checkboxes->id;
+        }
+
         $alreadyCheckedByUser = $this->checkboxes->pluck('id')->toArray();
-        $yetUncheckedCheckboxesIds = array_diff($checkboxes->pluck('id')->toArray(), $alreadyCheckedByUser);
+        $yetUncheckedCheckboxesIds = array_diff($checkboxesIds, $alreadyCheckedByUser);
         $this->checkboxes()->attach($yetUncheckedCheckboxesIds);
     }
 
-    public function attachTags(Collection $tags): void
+    public function attachTags(Collection|Tag $tags): void
     {
+        $tagsIds = [];
+        if ($tags instanceof Collection) {
+            $tagsIds = $tags->pluck('id')->toArray();
+        } else {
+            $tagsIds[] = $tags->id;
+        }
+
         $alreadyInUser = $this->tags->pluck('id')->toArray();
-        $yetNotInUserIds = array_diff($tags->pluck('id')->toArray(), $alreadyInUser);
+        $yetNotInUserIds = array_diff($tagsIds, $alreadyInUser);
         $this->tags()->attach($yetNotInUserIds);
     }
 }

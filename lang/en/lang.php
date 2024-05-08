@@ -10,6 +10,11 @@ return [
         'message' => 'Message that is being sent to subscribers',
         'confirmation' => 'Mail with confirmation message'
     ],
+    'settings' => [
+        'label' => 'Newsletter settings',
+        'description' => 'Manage newsletter plugin',
+        'enable_mailerlite_integration' => 'Enable Mailer Lite integration',
+    ],
     'menu' => [
         'newsletter' => 'Newsletter',
         'messages' => 'Messages',
@@ -60,6 +65,7 @@ return [
         'messages' => 'Messages managing',
         'subscribers' => 'Subscribers managing',
         'tags' => 'Newsletter tags managing',
+        'settings' => 'Access to newsletter settings',
     ],
     'new' => [
         'messages' => 'New message',

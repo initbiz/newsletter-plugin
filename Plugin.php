@@ -2,8 +2,10 @@
 
 namespace Initbiz\Newsletter;
 
+use Event;
 use Backend;
 use System\Classes\PluginBase;
+use Initbiz\Newsletter\Models\Settings;
 
 /**
  * Newsletter plugin
@@ -23,6 +25,11 @@ class Plugin extends PluginBase
             'author'      => 'initbiz.newsletter::lang.plugin.author',
             'icon'        => 'icon-envelope-o'
         ];
+    }
+
+    public function boot()
+    {
+        Event::subscribe(\Initbiz\Newsletter\EventHandlers\MailerLiteHandler::class);
     }
 
     public function registerNavigation()
@@ -82,10 +89,28 @@ class Plugin extends PluginBase
         ];
     }
 
+    public function registerSettings()
+    {
+        return [
+            'settings' => [
+                'label'       => 'initbiz.newsletter::lang.settings.label',
+                'description' => 'initbiz.newsletter::lang.settings.description',
+                'icon'        => 'icon-envelope',
+                'class'       => Settings::class,
+                'order'       => 100,
+                'permissions' => ['initbiz.newsletter.settings'],
+            ],
+        ];
+    }
+
 
     public function registerPermissions()
     {
         return [
+            'initbiz.newsletter.settings'   =>  [
+                'tab'   =>  'initbiz.newsletter::lang.menu.newsletter',
+                'label' =>  'initbiz.newsletter::lang.permission.settings'
+            ],
             'initbiz.newsletter.messages'   =>  [
                 'tab'   =>  'initbiz.newsletter::lang.menu.newsletter',
                 'label' =>  'initbiz.newsletter::lang.permission.messages'

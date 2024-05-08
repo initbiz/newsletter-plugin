@@ -47,6 +47,13 @@ class Tag extends Model
         'updated_at'
     ];
 
+    public $belongsToMany = [
+        'subscribers' => [
+            Subscriber::class,
+            'table' => 'initbiz_newsletter_subscriber_tag',
+        ],
+    ];
+
     public function afterCreate()
     {
         Event::fire('initbiz.newsletter.tagCreate', [$this]);
