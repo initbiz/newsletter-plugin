@@ -13,7 +13,8 @@ return [
     'settings' => [
         'label' => 'Newsletter settings',
         'description' => 'Manage newsletter plugin',
-        'enable_mailerlite_integration' => 'Enable Mailer Lite integration',
+        'enable_mailerlite_integration' => 'Enable MailerLite integration',
+        'mailerlite_api_key' => 'MailerLite API key',
     ],
     'menu' => [
         'newsletter' => 'Newsletter',
@@ -117,14 +118,14 @@ return [
         'delete' => 'Are you sure you want to delete this checkbox?',
     ],
     'flash_checkboxes' => [
-        'deleted' => 'Checkbox succesfully deleted',
-        'saved' => 'Checkbox succesfully saved',
-        'updated' => 'Checkbox succesfully updated',
+        'deleted' => 'Checkbox successfully deleted',
+        'saved' => 'Checkbox successfully saved',
+        'updated' => 'Checkbox successfully updated',
     ],
     'flash_checkboxes' => [
-        'deleted' => 'Subscriber succesfully deleted',
-        'saved' => 'Subscriber succesfully saved',
-        'updated' => 'Subscriber succesfully updated',
+        'deleted' => 'Subscriber successfully deleted',
+        'saved' => 'Subscriber successfully saved',
+        'updated' => 'Subscriber successfully updated',
     ],
     'token' => [
         'title' => 'Subscriber unique code',

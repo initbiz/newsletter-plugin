@@ -18,5 +18,6 @@ class Settings extends Model
     public function initSettingsData()
     {
         $this->enable_mailerlite_integration = false;
+        $this->mailerlite_api_key = env('MAILERLITE_API_KEY');
     }
 }

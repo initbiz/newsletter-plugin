@@ -1,7 +1,18 @@
 fields:
+
     enable_mailerlite_integration:
         label: initbiz.newsletter::lang.settings.enable_mailerlite_integration
         tab: initbiz.seostorm::lang.form.settings.integrations_tab
         span: auto
         type: switch
         default: false
+
+    mailerlite_api_key:
+        label: initbiz.newsletter::lang.settings.mailerlite_api_key
+        tab: initbiz.seostorm::lang.form.settings.integrations_tab
+        span: left
+        type: sensitive
+        trigger:
+            action: show
+            condition: checked
+            field: enable_mailerlite_integration
