@@ -10,6 +10,7 @@ use Initbiz\Newsletter\Models\Tag;
 use Initbiz\Newsletter\Classes\Helpers;
 use Initbiz\Newsletter\Models\Checkbox;
 use Initbiz\Newsletter\Classes\SendEmail;
+use Initbiz\Newsletter\Models\Settings;
 use Initbiz\Newsletter\Models\Subscriber;
 
 class Form extends ComponentBase
@@ -96,12 +97,15 @@ class Form extends ComponentBase
      */
     protected function sendActivationEmail($subscriber)
     {
+        $settings = Settings::instance();
+
         $options = [
             'recipient_email' => $subscriber->email,
             'recipient_name' => (empty($subscriber->full_name))? $subscriber->email: $subscriber->full_name,
             'subject' => Lang::get('initbiz.newsletter::lang.mail.activation_subject'),
             'template' => 'initbiz.newsletter::mail.subscription',
-            'activationLink' => Helpers::getNewsletterManagementUrl($subscriber->email, $subscriber->token)
+            'token' => $subscriber->token,
+            'activationLink' => $settings->getNewsletterManagementUrl($subscriber->email, $subscriber->token)
         ];
 
         Mail::queue($options['template'], $options, function ($message) use ($options) {

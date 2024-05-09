@@ -13,6 +13,10 @@ return [
     'settings' => [
         'label' => 'Newsletter settings',
         'description' => 'Manage newsletter plugin',
+        'general_tab' => 'General',
+        'subscription_manage_page' => 'Subscription manage page',
+        'subscription_manage_token_param' => 'Token parameter',
+        'integrations_tab' => 'Integrations',
         'enable_mailerlite_integration' => 'Enable MailerLite integration',
         'mailerlite_api_key' => 'MailerLite API key',
     ],

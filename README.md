@@ -33,6 +33,8 @@ What is more:
 1. Go to backend Newsletter -> Checkboxes and add checkboxes as your business requires
 1. Embed component `NewsletterForm` on page that you want to have form rendered on (landing page or just footer partial)
 
+> As of version 1.1.0, `:email` parameter is optional in the newsletter management page.
+
 ### Integrations
 
 The plugin makes it easy to integrate with other sending e-mails services like MailChimp or MailerLite.

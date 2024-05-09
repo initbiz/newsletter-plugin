@@ -42,28 +42,33 @@ class NewsletterConfirm extends ComponentBase
         ];
     }
 
-    protected function prepareVars()
-    {
-        $this->page['confirmed'] = true;
-        $this->token = $this->page['token'] = $this->property('token');
-        $this->email = $this->page['email'] = $this->property('email');
-
-        $this->subscriber = Subscriber::where('email', $this->email)
-            ->where('token', $this->token)
-            ->firstOrFail();
-    }
-
     public function onRun()
     {
-        try {
-            $this->prepareVars();
-            $userCheckboxes = $this->getSubscriberCheckboxesSlugs($this->subscriber);
-            $notRequiredCheckboxes = $this->getAllNotRequiredCheckboxes()->toArray();
-            $checkedNotRequiredCheckboxes = $this->addToCheckboxesIfChecked($notRequiredCheckboxes, $userCheckboxes);
-            $this->page['checkboxes'] = $checkedNotRequiredCheckboxes;
-            $this->activateSubscriber();
-        } catch (\Exception $e) {
-            throw new ApplicationException(Lang::get('initbiz.newsletter::lang.ajaxFormResponse.error'));
+        $this->token = $this->page['token'] = $this->property('token');
+        
+        $subscriber = Subscriber::where('token', $this->token)->first();
+        if (!$subscriber) {
+            $this->setStatusCode(404);
+            return $this->controller->run('404');
+        }
+
+        $this->page['confirmed'] = true;
+        $this->subscriber = $subscriber;
+
+        $this->email = $this->page['email'] = $subscriber->email;
+
+        $userCheckboxes = $this->getSubscriberCheckboxesSlugs($subscriber);
+        $notRequiredCheckboxes = $this->getAllNotRequiredCheckboxes()->toArray();
+        $checkedNotRequiredCheckboxes = $this->addToCheckboxesIfChecked($notRequiredCheckboxes, $userCheckboxes);
+        $this->page['checkboxes'] = $checkedNotRequiredCheckboxes;
+
+        if (!empty($this->subscriber)) {
+            if ($this->page['subscriberExist'] = $this->checkIfExist($this->subscriber)) {
+                if (!$this->subscriber->confirmed) {
+                    $this->activate($this->subscriber);
+                    $this->page['confirmed'] = false; //to display "Thank you for registering" message only once
+                }
+            }
         }
     }
 
@@ -135,14 +140,6 @@ class NewsletterConfirm extends ComponentBase
 
     protected function activateSubscriber()
     {
-        if (!empty($this->subscriber)) {
-            if ($this->page['subscriberExist'] = $this->checkIfExist($this->subscriber)) {
-                if (!$this->subscriber->confirmed) {
-                    $this->activate($this->subscriber);
-                    $this->page['confirmed'] = false; //to display "Thank you for registering" message only once
-                }
-            }
-        }
     }
     public function onUpdate()
     {
