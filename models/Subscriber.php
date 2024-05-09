@@ -37,6 +37,11 @@ class Subscriber extends Model
         'email' => 'required|email|between:6,255|unique:initbiz_newsletter_subscribers'
     ];
 
+    protected $jsonable = [
+        'additional_fields',
+        'additional_data',
+    ];
+
     public $belongsToMany = [
         'checkboxes' => [
             Checkbox::class,

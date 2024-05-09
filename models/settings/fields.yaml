@@ -1,9 +1,16 @@
 tabs:
     fields:
+        send_activation_email:
+            label: initbiz.newsletter::lang.settings.send_activation_email
+            tab: initbiz.newsletter::lang.settings.general_tab
+            span: auto
+            type: switch
+            default: true
+
         subscription_manage_page:
             label: initbiz.newsletter::lang.settings.subscription_manage_page
             tab: initbiz.newsletter::lang.settings.general_tab
-            span: auto
+            span: left
             type: dropdown
 
         subscription_manage_token_param:

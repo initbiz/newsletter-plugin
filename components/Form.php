@@ -26,10 +26,15 @@ class Form extends ComponentBase
     public function defineProperties()
     {
         return [
+            'confirmAutomatically' => [
+                'title' => 'initbiz.newsletter::lang.form_component.confirm_automatically',
+                'type' => 'checkbox',
+                'default' => 0,
+            ],
             'tags' => [
-                'title' => 'initbiz.newsletter::lang.formComponent.tags',
+                'title' => 'initbiz.newsletter::lang.form_component.tags',
                 'type' => 'set',
-            ]
+            ],
         ];
     }
 
@@ -75,6 +80,11 @@ class Form extends ComponentBase
         }
 
         $subscriber->fill($data);
+
+        if ($this->property('confirmAutomatically', false)) {
+            $subscriber->confirmed = true;
+        }
+
         $subscriber->save();
 
         $subscriber->attachCheckboxes($checkedCheckboxes);
@@ -82,7 +92,10 @@ class Form extends ComponentBase
         $tagsToGive = Tag::whereIn('slug', $this->property('tags'))->get();
         $subscriber->attachTags($tagsToGive);
 
-        $this->sendActivationEmail($subscriber);
+        $settings = Settings::instance();
+        if ($settings->send_activation_email) {
+            $this->sendActivationEmail($subscriber);
+        }
 
         $result = [
             'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_success')

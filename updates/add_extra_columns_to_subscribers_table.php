@@ -21,8 +21,10 @@ class AddExtraColumnsToSubscribersTable extends Migration
             $table->string('phone')->nullable();
             $table->string('city')->nullable();
             $table->string('zip')->nullable();
+            $table->string('status')->nullable();
             $table->dateTime('date_of_birth')->nullable();
             $table->mediumText('additional_fields')->nullable();
+            $table->mediumText('additional_data')->nullable();
         });
     }
 

@@ -126,8 +126,6 @@ class Message extends Model
                 $message->to($options['recipient_email'], $options['recipient_name']);
                 $message->subject($options['subject']);
             });
-
         }
-
     }
 }

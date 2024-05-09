@@ -19,6 +19,7 @@ class Settings extends Model
 
     public function initSettingsData()
     {
+        $this->send_activation_email = 1;
         $this->enable_mailerlite_integration = false;
         $this->mailerlite_api_key = env('MAILERLITE_API_KEY');
         $this->subscription_manage_page = $this->getSubscriptionManagePage();

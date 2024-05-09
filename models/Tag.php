@@ -47,6 +47,8 @@ class Tag extends Model
         'updated_at'
     ];
 
+    protected $jsonable = ['additional_data'];
+
     public $belongsToMany = [
         'subscribers' => [
             Subscriber::class,

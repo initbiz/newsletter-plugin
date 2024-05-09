@@ -14,9 +14,10 @@ return [
         'label' => 'Newsletter settings',
         'description' => 'Manage newsletter plugin',
         'general_tab' => 'General',
+        'integrations_tab' => 'Integrations',
+        'send_activation_email' => 'Send activation email on sign up',
         'subscription_manage_page' => 'Subscription manage page',
         'subscription_manage_token_param' => 'Token parameter',
-        'integrations_tab' => 'Integrations',
         'enable_mailerlite_integration' => 'Enable MailerLite integration',
         'mailerlite_api_key' => 'MailerLite API key',
     ],
@@ -58,8 +59,9 @@ return [
         'subscribers' => 'Subscribers',
         'checkboxes' => 'Checkboxes',
     ],
-    'formComponent' => [
+    'form_component' => [
         'tags' => 'Tags to add the subscriber',
+        'confirm_automatically' => 'Confirm automatically',
     ],
     'subscribers' => [
         'import_subscribers' => 'Import subscribers',
