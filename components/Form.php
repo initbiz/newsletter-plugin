@@ -89,8 +89,14 @@ class Form extends ComponentBase
 
         $subscriber->attachCheckboxes($checkedCheckboxes);
 
-        $tagsToGive = Tag::whereIn('slug', $this->property('tags'))->get();
-        $subscriber->attachTags($tagsToGive);
+
+        $tagsSlugs = $this->property('tags');
+        if (!empty($tagsSlugs)) {
+            $tagsToGive = Tag::whereIn('slug', $tagsSlugs)->get();
+            if (!$tagsToGive->isEmpty()) {
+                $subscriber->attachTags($tagsToGive);
+            }
+        }
 
         $settings = Settings::instance();
         if ($settings->send_activation_email) {
@@ -114,7 +120,7 @@ class Form extends ComponentBase
 
         $options = [
             'recipient_email' => $subscriber->email,
-            'recipient_name' => (empty($subscriber->full_name))? $subscriber->email: $subscriber->full_name,
+            'recipient_name' => (empty($subscriber->full_name)) ? $subscriber->email : $subscriber->full_name,
             'subject' => Lang::get('initbiz.newsletter::lang.mail.activation_subject'),
             'template' => 'initbiz.newsletter::mail.subscription',
             'token' => $subscriber->token,

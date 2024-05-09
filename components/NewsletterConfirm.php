@@ -6,16 +6,16 @@ use Db;
 use Lang;
 use Cms\Classes\ComponentBase;
 use Initbiz\Newsletter\Models\Checkbox;
-use October\Rain\Exception\ApplicationException;
 use Initbiz\Newsletter\Classes\SubscriptionException;
 use Initbiz\Newsletter\Models\Subscriber as Subscriber;
 use Initbiz\Newsletter\Classes\UpdateSubscriberException;
 
 class NewsletterConfirm extends ComponentBase
 {
-    protected $subscriber;
+    public $subscriber;
     protected $email;
     protected $token;
+
     public function componentDetails()
     {
         return [
@@ -45,7 +45,7 @@ class NewsletterConfirm extends ComponentBase
     public function onRun()
     {
         $this->token = $this->page['token'] = $this->property('token');
-        
+
         $subscriber = Subscriber::where('token', $this->token)->first();
         if (!$subscriber) {
             $this->setStatusCode(404);
@@ -62,48 +62,28 @@ class NewsletterConfirm extends ComponentBase
         $checkedNotRequiredCheckboxes = $this->addToCheckboxesIfChecked($notRequiredCheckboxes, $userCheckboxes);
         $this->page['checkboxes'] = $checkedNotRequiredCheckboxes;
 
-        if (!empty($this->subscriber)) {
-            if ($this->page['subscriberExist'] = $this->checkIfExist($this->subscriber)) {
-                if (!$this->subscriber->confirmed) {
-                    $this->activate($this->subscriber);
-                    $this->page['confirmed'] = false; //to display "Thank you for registering" message only once
-                }
-            }
+        if (!$subscriber->confirmed) {
+            $subscriber->activate();
         }
     }
 
-    public function onUnsubscribe()
+    public function onUnsubscribe(array $data = [])
     {
-        try {
+        if (empty($data)) {
             $data = post();
-            $this->deleteSubscriber($data);
-            $result = [
-                'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.unsubscribe_success'),
-                'redirectUrl' => url('/')
-            ];
-        } catch (\Exception $e) {
-            throw new SubscriptionException(Lang::get('initbiz.newsletter::lang.ajaxFormResponse.unsubscribe_failed'));
         }
-        return $result;
-    }
 
-    protected function deleteSubscriber($data)
-    {
-        $subscriber = Subscriber::where('token', $data['token'])
-            ->where('email', $data['email'])->first();
-        $subscriber->checkboxes()->detach();
+        $subscriber = Subscriber::where('token', $data['token'])->first();
+        if (!$subscriber) {
+            return;
+        }
+
         $subscriber->delete();
-    }
 
-    protected function activate(Subscriber $subscriber)
-    {
-        $subscriber->update(['confirmed' => true]);
-        $this->page['confirmedBox'] = "initbiz.newsletter::lang.confirmedBox.message";
-    }
-
-    protected function checkIfExist(Subscriber $subscriber)
-    {
-        return (count($subscriber->get())) ? true : false;
+        return [
+            'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.unsubscribe_success'),
+            'redirectUrl' => url('/')
+        ];
     }
 
     protected function getSubscriberCheckboxesSlugs($subscriber)
@@ -138,9 +118,6 @@ class NewsletterConfirm extends ComponentBase
         return Checkbox::notRequired()->get();
     }
 
-    protected function activateSubscriber()
-    {
-    }
     public function onUpdate()
     {
         $result = [];

@@ -138,4 +138,10 @@ class Subscriber extends Model
         $yetNotInUserIds = array_diff($tagsIds, $alreadyInUser);
         $this->tags()->attach($yetNotInUserIds);
     }
+
+    public function activate(): void
+    {
+        $this->confirmed = true;
+        $this->save();
+    }
 }
