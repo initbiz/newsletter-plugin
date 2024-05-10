@@ -85,6 +85,10 @@ class Form extends ComponentBase
             $subscriber->confirmed = true;
         }
 
+        foreach ($data['additional_fields'] as $key => $value) {
+            $subscriber->setAdditionalData($key, $value);
+        }
+
         $subscriber->save();
 
         $subscriber->attachCheckboxes($checkedCheckboxes);

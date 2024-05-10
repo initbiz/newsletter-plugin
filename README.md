@@ -44,10 +44,10 @@ Out of the box only MailerLite is supported.
 To integrate with other service, you can use one the the following events:
 
 - `initbiz.newsletter.subscriberCreate ($subscriber)`
-- `initbiz.newsletter.subscriberSave ($subscriber)`
+- `initbiz.newsletter.subscriberUpdate ($subscriber)`
 - `initbiz.newsletter.subscriberDelete ($subscriber)`
 - `initbiz.newsletter.tagCreate ($tag)`
-- `initbiz.newsletter.tagSave ($tag)`
+- `initbiz.newsletter.tagUpdate ($tag)`
 - `initbiz.newsletter.tagDelete ($tag)`
 - `initbiz.newsletter.subscriberCheckboxesAttached ($subscriber, $checkboxes)`
 - `initbiz.newsletter.subscriberCheckboxesDetached ($subscriber, $checkboxes)`

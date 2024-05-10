@@ -16,18 +16,21 @@ fields:
         mode: relation
         nameFrom: name
 
-    first_name:
-        label: 'initbiz.newsletter::lang.subscriber.first_name'
-        span: auto
-        type: text
-
-    last_name:
-        label: 'initbiz.newsletter::lang.subscriber.last_name'
-        span: auto
-        type: text
-
 tabs:
     fields:
+
+        first_name:
+            label: 'initbiz.newsletter::lang.subscriber.first_name'
+            tab: 'initbiz.newsletter::lang.subscriber.details_tab'
+            span: auto
+            type: text
+
+        last_name:
+            label: 'initbiz.newsletter::lang.subscriber.last_name'
+            tab: 'initbiz.newsletter::lang.subscriber.details_tab'
+            span: auto
+            type: text
+
         sex:
             label: 'initbiz.newsletter::lang.subscriber.sex'
             tab: 'initbiz.newsletter::lang.subscriber.details_tab'
@@ -106,9 +109,24 @@ tabs:
             type: relation
 
         additional_fields:
-            label: 'initbiz.newsletter::lang.subscriber.additional_fields'
+            label: ''
+            commentAbove: 'initbiz.newsletter::lang.subscriber.additional_fields_comment'
             span: full
             tab: 'initbiz.newsletter::lang.subscriber.additional_fields_tab'
+            type: repeater
+            form:
+                fields:
+                    key:
+                        type: text
+                        span: auto
+                    value:
+                        type: text
+                        span: auto
+
+        additional_data:
+            label: ''
+            span: full
+            tab: 'initbiz.newsletter::lang.subscriber.additional_data_tab'
             type: repeater
             form:
                 fields:

@@ -1,13 +1,29 @@
 fields:
     name:
-        label: initbiz.newsletter::lang.userColumns.tag
+        label: initbiz.newsletter::lang.tag.name
         type: text
         span: auto
 
     slug:
-        label: initbiz.newsletter::lang.userColumns.slug
+        label: initbiz.newsletter::lang.tag.slug
         type: text
         span: auto
         preset:
             field: name
             type: slug
+
+tabs:
+    fields:
+        additional_data:
+            label: ''
+            span: full
+            tab: 'initbiz.newsletter::lang.subscriber.additional_data_tab'
+            type: repeater
+            form:
+                fields:
+                    key:
+                        type: text
+                        span: auto
+                    value:
+                        type: text
+                        span: auto

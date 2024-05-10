@@ -25,6 +25,8 @@ class Tag extends Model
     public $rules = [
         'name' => 'required',
         'slug' => 'required',
+        'additional_data.*.key' => 'nullable|alpha_dash:ascii|max:250',
+        'additional_data.*.value' => 'nullable|max:250',
     ];
 
     /**
@@ -61,13 +63,56 @@ class Tag extends Model
         Event::fire('initbiz.newsletter.tagCreate', [$this]);
     }
 
-    public function afterSave()
+    public function afterUpdate()
     {
-        Event::fire('initbiz.newsletter.tagSave', [$this]);
+        Event::fire('initbiz.newsletter.tagUpdate', [$this]);
     }
 
     public function beforeDelete()
     {
         Event::fire('initbiz.newsletter.tagDelete', [$this]);
+    }
+    
+    public function setAdditionalData(string $key, string $value): void
+    {
+        $additionalData = $this->additional_data;
+        if (!is_array($additionalData)) {
+            $additionalData = [];
+        }  
+
+        $found = false;
+        $newAdditionalData = [];
+        foreach ($additionalData as $additionalDataEntry) {
+            if ($additionalDataEntry['key'] === $key) {
+                $additionalDataEntry['value'] = $value;
+                $found = true;
+            }
+            $newAdditionalData[] = $additionalDataEntry;
+        }
+
+        if (!$found) {
+            $newAdditionalData[] = [
+                'key' => $key,
+                'value' => $value,
+            ];
+        }  
+
+        $this->additional_data = $newAdditionalData;
+    }
+
+    public function getAdditionalData(string $key): ?string
+    {
+        $additionalData = $this->additional_data;
+        if (!is_array($additionalData)) {
+            $additionalData = [];
+        }  
+
+        foreach ($additionalData as $additionalDataEntry) {
+            if ($additionalDataEntry['key'] === $key) {
+                return $additionalDataEntry['value'];
+            }   
+        }
+
+        return null;
     }
 }

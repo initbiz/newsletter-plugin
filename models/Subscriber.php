@@ -26,7 +26,6 @@ class Subscriber extends Model
         'city',
         'zip',
         'date_of_birth',
-        'additional_fields',
     ];
 
     public $attributes = [
@@ -34,7 +33,20 @@ class Subscriber extends Model
     ];
 
     public $rules = [
-        'email' => 'required|email|between:6,255|unique:initbiz_newsletter_subscribers'
+        'email' => 'required|email|between:6,255|unique:initbiz_newsletter_subscribers',
+        'address_line1' => 'nullable|max:250',
+        'address_line2' => 'nullable|max:250',
+        'company' => 'nullable|max:250',
+        'sex' => 'nullable|in:male,female,other',
+        'age' => 'nullable|integer',
+        'phone' => 'nullable|max:250',
+        'city' => 'nullable|max:250',
+        'zip' => 'nullable|max:250',
+        'date_of_birth' => 'nullable|date|before:tomorrow',
+        'additional_fields.*.key' => 'nullable|alpha_dash:ascii|max:250',
+        'additional_data.*.key' => 'nullable|alpha_dash:ascii|max:250',
+        'additional_fields.*.value' => 'nullable|max:250',
+        'additional_data.*.value' => 'nullable|max:250',
     ];
 
     protected $jsonable = [
@@ -72,7 +84,7 @@ class Subscriber extends Model
             // When deleting the subscriber, the event is also dispatched
             if (is_null($ids)) {
                 return;
-            }  
+            }
 
             if ($relationName === "checkboxes") {
                 $checkboxes = Checkbox::whereIn('id', $ids)->get();
@@ -101,9 +113,9 @@ class Subscriber extends Model
         Event::fire('initbiz.newsletter.subscriberCreate', [$this]);
     }
 
-    public function afterSave()
+    public function afterUpdate()
     {
-        Event::fire('initbiz.newsletter.subscriberSave', [$this]);
+        Event::fire('initbiz.newsletter.subscriberUpdate', [$this]);
     }
 
     public function beforeDelete()
@@ -143,5 +155,107 @@ class Subscriber extends Model
     {
         $this->confirmed = true;
         $this->save();
+    }
+
+    public function setAdditionalField(string $key, string $value): void
+    {
+        $additionalFields = $this->additional_fields;
+        if (!is_array($additionalFields)) {
+            $additionalFields = [];
+        }
+
+        $found = false;
+        $newAdditionalFields = [];
+        foreach ($additionalFields as $additionalField) {
+            if ($additionalField['key'] === $key) {
+                $additionalField['value'] = $value;
+                $found = true;
+            }
+            $newAdditionalFields[] = $additionalField;
+        }
+
+        if (!$found) {
+            $newAdditionalFields[] = [
+                'key' => $key,
+                'value' => $value,
+            ];
+        }
+
+        $this->additional_fields = $newAdditionalFields;
+    }
+
+    public function getAdditionalField(string $key): ?string
+    {
+        $additionalFields = $this->additional_fields;
+        if (!is_array($additionalFields)) {
+            $additionalFields = [];
+        }
+
+        foreach ($additionalFields as $additionalField) {
+            if ($additionalField['key'] === $key) {
+                return $additionalField['value'];
+            }
+        }
+
+        return null;
+    }
+
+    public function setAdditionalData(string $key, string $value): void
+    {
+        $additionalData = $this->additional_data;
+        if (!is_array($additionalData)) {
+            $additionalData = [];
+        }
+
+        $found = false;
+        $newAdditionalData = [];
+        foreach ($additionalData as $additionalDataEntry) {
+            if ($additionalDataEntry['key'] === $key) {
+                $additionalDataEntry['value'] = $value;
+                $found = true;
+            }
+            $newAdditionalData[] = $additionalDataEntry;
+        }
+
+        if (!$found) {
+            $newAdditionalData[] = [
+                'key' => $key,
+                'value' => $value,
+            ];
+        }
+
+        $this->additional_data = $newAdditionalData;
+    }
+
+    public function getAdditionalData(string $key): ?string
+    {
+        $additionalData = $this->additional_data;
+        if (!is_array($additionalData)) {
+            $additionalData = [];
+        }
+
+        foreach ($additionalData as $additionalDataEntry) {
+            if ($additionalDataEntry['key'] === $key) {
+                return $additionalDataEntry['value'];
+            }
+        }
+
+        return null;
+    }
+
+    public function getAdditionalDataKeyValue(): array
+    {
+        $additionalData = $this->additional_data;
+        if (!is_array($additionalData)) {
+            $additionalData = [];
+        }
+
+        $parsed = [];
+
+        foreach ($additionalData as $additionalDataEntry) {
+            $parsed[$additionalDataEntry['key']] = $additionalDataEntry['value'];
+        }
+
+        return $parsed;
     }
 }

@@ -28,11 +28,18 @@ return [
         'checkboxes' => 'Checkboxes',
         'tags' => 'Tags',
     ],
+    'tag' => [
+        'name' => 'Name',
+        'slug' => 'Slug',
+        'additional_data_tab' => 'Additional data',
+    ],
     'subscriber' => [
         'confirmed' => 'Confirmed',
         'settings_tab' => 'Settings',
         'details_tab' => 'Details',
         'additional_fields_tab' => 'Additional fields',
+        'additional_data_tab' => 'Additional data',
+        'additional_fields_comment' => 'These fields will be sent to integrations',
         'email' => 'E-mail',
         'first_name' => 'First name',
         'last_name' => 'Last name',
@@ -51,7 +58,6 @@ return [
         'city' => 'City',
         'zip' => 'ZIP',
         'date_of_birth' => 'Date of birth',
-        'additional_fields' => 'Additional fields',
     ],
     'title' => [
         'newsletter' => 'Newsletter',

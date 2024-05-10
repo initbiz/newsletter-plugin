@@ -18,7 +18,7 @@ class MailerLiteHandler
             $this->mailerLiteClient = new MailerLite(['api_key' => $apiKey]);
 
             $this->subscriberCreate($event);
-            $this->subscriberSave($event);
+            $this->subscriberUpdate($event);
             $this->subscriberDelete($event);
             $this->tagCreate($event);
             $this->tagDelete($event);
@@ -34,16 +34,14 @@ class MailerLiteHandler
 
             $response = $this->mailerLiteClient->subscribers->create($data);
 
-            $additionalData = $subscriber->additional_data;
-            $additionalData['mailerlite_id'] = $response['body']['data']['id'];
-            $subscriber->additional_data = $additionalData;
+            $subscriber->setAdditionalData('mailerlite_id', $response['body']['data']['id']);
             $subscriber->save();
         });
     }
 
-    protected function subscriberSave($event)
+    protected function subscriberUpdate($event)
     {
-        $event->listen('initbiz.newsletter.subscriberSave', function ($subscriber) {
+        $event->listen('initbiz.newsletter.subscriberUpdate', function ($subscriber) {
             $data = $this->subscriberToMailerLiteSyntax($subscriber);
             $this->mailerLiteClient->subscribers->create($data);
         });
@@ -67,9 +65,7 @@ class MailerLiteHandler
 
             $response = $this->mailerLiteClient->groups->create($data);
 
-            $additionalData = $tag->additional_data;
-            $additionalData['mailerlite_id'] = $response['body']['data']['id'];
-            $tag->additional_data = $additionalData;
+            $tag->setAdditionalData('mailerlite_id', $response['body']['data']['id']);
             $tag->save();
         });
     }
@@ -131,6 +127,8 @@ class MailerLiteHandler
             $fields['city'] = $subscriber->city;
         }
 
+        $fields = array_merge($fields, $subscriber->getAdditionalDataKeyValue());
+
         $data = [
             'email' => $subscriber->email,
             'subscribed_at' => $subscriber->created_at->format('Y-m-d H:i:s'),
@@ -138,7 +136,7 @@ class MailerLiteHandler
             'groups' => $groups,
         ];
 
-        $mailerliteId = $subscriber->additional_data['mailerlite_id'] ?? null;
+        $mailerliteId = $subscriber->getAdditionalData('mailerlite_id');
 
         if (!is_null($mailerliteId)) {
             $data['id'] = $mailerliteId;
@@ -149,7 +147,7 @@ class MailerLiteHandler
 
     public function tagToMailerLiteSyntax(Tag $tag): array
     {
-        $mailerliteId = $tag->additional_data['mailerlite_id'] ?? null;
+        $mailerliteId = $tag->getAdditionalData('mailerlite_id');
 
         $data = [
             'name' => $tag->name,
