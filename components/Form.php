@@ -85,8 +85,10 @@ class Form extends ComponentBase
             $subscriber->confirmed = true;
         }
 
-        foreach ($data['additional_fields'] as $key => $value) {
-            $subscriber->setAdditionalData($key, $value);
+        if (isset($data['additional_fields']) && is_array($data['additional_fields'])) {
+            foreach ($data['additional_fields'] as $key => $value) {
+                $subscriber->setAdditionalData($key, $value);
+            }
         }
 
         $subscriber->save();

@@ -128,6 +128,7 @@ return [
     ],
     'flash' => [
         'delete' => 'Are you sure you want to delete this checkbox?',
+        'delete_subscriber' => 'Are you sure you want to delete this subscriber?',
     ],
     'flash_checkboxes' => [
         'deleted' => 'Checkbox successfully deleted',
@@ -164,7 +165,7 @@ return [
         'update_button_text' => 'Update'
     ],
     'ajaxFormResponse' => [
-        'sign_up_success' => 'Thank you for signing up to our newsletter! Please confirm your email',
+        'sign_up_success' => 'Thank you for signing up!',
         'sign_up_error' => 'Error. Something went wrong.',
         'email_validation_failed' => 'E-mail must be valid',
         'email_cannot_be_empty' => 'E-mail address field cannot be empty',

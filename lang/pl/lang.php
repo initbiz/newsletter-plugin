@@ -113,7 +113,7 @@ return [
         'update_button_text' => 'Aktualizuj',
     ],
     'ajaxFormResponse' => [
-        'sign_up_success' => 'Dziękujemy za zapisanie się do naszego newslettera! Proszę potwierdź email',
+        'sign_up_success' => 'Dziękujemy za zapisanie się!',
         'sign_up_error' => 'Coś poszło nie tak',
         'email_validation_failed' => 'E-mail musi być poprawny',
         'email_cannot_be_empty' => 'Pole E-mail nie może być puste',

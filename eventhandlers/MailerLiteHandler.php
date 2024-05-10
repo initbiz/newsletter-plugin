@@ -50,10 +50,9 @@ class MailerLiteHandler
     protected function subscriberDelete($event)
     {
         $event->listen('initbiz.newsletter.subscriberDelete', function ($subscriber) {
-            $data = $this->subscriberToMailerLiteSyntax($subscriber);
-            $mailerliteId = $data['id'] ?? null;
+            $mailerliteId = $subscriber->getAdditionalData('mailerlite_id');
             if (!is_null($mailerliteId)) {
-                $this->mailerLiteClient->subscribers->delete($data['id']);
+                $this->mailerLiteClient->subscribers->delete($mailerliteId);
             }
         });
     }
@@ -74,19 +73,37 @@ class MailerLiteHandler
     {
         $event->listen('initbiz.newsletter.tagDelete', function ($tag) {
             $data = $this->tagToMailerLiteSyntax($tag);
-            $mailerliteId = $data['id'] ?? null;
+            $mailerliteId = $tag->getAdditionalData('mailerlite_id');
             if (!is_null($mailerliteId)) {
-                $this->mailerLiteClient->groups->delete($data['id']);
+                $this->mailerLiteClient->groups->delete($mailerliteId);
             }
         });
     }
 
     protected function subscriberTagsAttached($event)
     {
+        $event->listen('initbiz.newsletter.subscriberTagsAttached', function ($subscriber, $tags) {
+            $data = $this->subscriberToMailerLiteSyntax($subscriber);
+
+            $newGroups = [];
+            foreach ($tags as $tag) {
+                $newGroups[] = $tag->getAdditionalData('mailerlite_id');
+            }
+            $data['groups'] = array_merge($newGroups, $data['groups']);
+
+            $this->mailerLiteClient->subscribers->create($data);
+        });
     }
 
     protected function subscriberTagsDetached($event)
     {
+        $event->listen('initbiz.newsletter.subscriberTagsAttached', function ($subscriber, $tags) {
+            // TODO: Enable when webhooks ready
+            // $data = $this->subscriberToMailerLiteSyntax($subscriber);
+            // $mailerliteId = $subscriber->getAdditionalData('mailerlite_id');
+            // $groups = $data['groups'];
+            // $this->mailerLiteClient->subscribers->update($mailerliteId, ['groups' => $groups]);
+        });
     }
 
     protected function subscriberToMailerLiteSyntax(Subscriber $subscriber): array
@@ -139,26 +156,14 @@ class MailerLiteHandler
             'groups' => $groups,
         ];
 
-        $mailerliteId = $subscriber->getAdditionalData('mailerlite_id');
-
-        if (!is_null($mailerliteId)) {
-            $data['id'] = $mailerliteId;
-        }
-
         return $data;
     }
 
     public function tagToMailerLiteSyntax(Tag $tag): array
     {
-        $mailerliteId = $tag->getAdditionalData('mailerlite_id');
-
         $data = [
             'name' => $tag->name,
         ];
-
-        if (!is_null($mailerliteId)) {
-            $data['id'] = $mailerliteId;
-        }
 
         return $data;
     }
