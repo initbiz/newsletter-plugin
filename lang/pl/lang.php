@@ -1,4 +1,5 @@
 <?php
+
 return [
     'plugin' => [
         'name' => 'Newsletter',
@@ -9,17 +10,65 @@ return [
         'message' => 'Wiadomość, która jest wysyłana do subskrybentów',
         'confirmation' => 'Wiadomość potwierdzająca zapisanie do newslettera',
     ],
+    ],
+    'settings' => [
+        'label' => 'Ustawienia newslettera',
+        'description' => 'Zarządzaj pluginem newsletter',
+        'general_tab' => 'Ogólne',
+        'integrations_tab' => 'Integracje',
+        'send_activation_email' => 'Wyślij maila aktywacyjnego',
+        'subscription_manage_page' => 'Strona zarządzania subskrypcją',
+        'subscription_manage_token_param' => 'Parametr token',
+        'enable_mailerlite_integration' => 'Włącz integrację z MailerLite',
+        'mailerlite_api_key' => 'Klucz API MailerLite',
+    ],
     'menu' => [
         'newsletter' => 'Newsletter',
         'messages' => 'Wiadomości',
         'subscribers' => 'Subskrybenci',
         'checkboxes' => 'Checkboxy',
+        'tags' => 'Tagi',
+    ],
+    'tag' => [
+        'name' => 'Nazwa',
+        'slug' => 'Slug',
+        'additional_data_tab' => 'Dodatkowe dane',
+    ],
+    'subscriber' => [
+        'confirmed' => 'Potwierdzony',
+        'settings_tab' => 'Ustawienia',
+        'details_tab' => 'Szczegóły',
+        'additional_fields_tab' => 'Dodatkowe pola',
+        'additional_data_tab' => 'Dodatkowe dane',
+        'additional_fields_comment' => 'Te pola zostaną wysłane do integracji',
+        'email' => 'E-mail',
+        'first_name' => 'Imię',
+        'last_name' => 'Nazwisko',
+        'checkboxes' => 'Checkboxy',
+        'tags' => 'Tagi',
+        'token' => 'Token',
+        'address_line1' => 'Linia adresu 1',
+        'address_line2' => 'Linia adresu 2',
+        'company' => 'Firma',
+        'sex' => 'Płeć',
+        'sex_male' => 'Mężczyzna',
+        'sex_female' => 'Kobieta',
+        'sex_other' => 'inna',
+        'age' => 'Wiek',
+        'phone' => 'Numer telefonu',
+        'city' => 'Miejscowość',
+        'zip' => 'Kod pocztowy',
+        'date_of_birth' => 'Data urodzenia',
     ],
     'title' => [
         'newsletter' => 'Newsletter',
         'messages' => 'Wiadomości',
         'subscribers' => 'Subskrybenci',
         'checkboxes' => 'Checkboxy',
+    ],
+    'form_component' => [
+        'tags' => 'Tagi dodane subskrybentom',
+        'confirm_automatically' => 'Automatycznie potwierdź',
     ],
     'subscribers' => [
         'import_subscribers' => 'Import subskrybentów',
@@ -29,6 +78,8 @@ return [
     'permission' => [
         'messages' => 'Zarządzanie wiadomościami',
         'subscribers' => 'Zarządzanie subskrybentami',
+        'tags' => 'Zarządzanie tagami newslettera',
+        'settings' => 'Dostęp do ustawień pluginu Newsletter',
     ],
     'new' => [
         'messages' => 'Nowa wiadomość',

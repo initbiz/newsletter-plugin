@@ -73,6 +73,13 @@ class Tag extends Model
         Event::fire('initbiz.newsletter.tagDelete', [$this]);
     }
     
+    /**
+     * Shorthand to set values to additional_data
+     *
+     * @param string $key
+     * @param string $value
+     * @return void
+     */
     public function setAdditionalData(string $key, string $value): void
     {
         $additionalData = $this->additional_data;
@@ -100,6 +107,12 @@ class Tag extends Model
         $this->additional_data = $newAdditionalData;
     }
 
+    /**
+     * Shorthand to get values from additional_data
+     *
+     * @param string $key
+     * @return string|null
+     */
     public function getAdditionalData(string $key): ?string
     {
         $additionalData = $this->additional_data;

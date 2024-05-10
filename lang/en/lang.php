@@ -123,8 +123,6 @@ return [
         'joined' => 'Joined',
         'confirmed' => 'Confirmed',
         'tags' => 'Tags',
-        'tag' => 'Tag',
-        'slug' => 'Slug',
     ],
     'flash' => [
         'delete' => 'Are you sure you want to delete this checkbox?',

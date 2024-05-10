@@ -95,13 +95,10 @@ class Form extends ComponentBase
 
         $subscriber->attachCheckboxes($checkedCheckboxes);
 
-
         $tagsSlugs = $this->property('tags');
         if (!empty($tagsSlugs)) {
             $tagsToGive = Tag::whereIn('slug', $tagsSlugs)->get();
-            if (!$tagsToGive->isEmpty()) {
-                $subscriber->attachTags($tagsToGive);
-            }
+            $subscriber->attachTags($tagsToGive);
         }
 
         $settings = Settings::instance();
@@ -117,7 +114,7 @@ class Form extends ComponentBase
     }
 
     /**
-     * Send activation email to $this->subscriber
+     * Send activation email to $subscriber
      * @return void
      */
     protected function sendActivationEmail($subscriber)

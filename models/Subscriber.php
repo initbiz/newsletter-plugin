@@ -5,9 +5,9 @@ namespace Initbiz\Newsletter\Models;
 use Model;
 use Event;
 use Initbiz\Newsletter\Models\Tag;
+use October\Rain\Database\Collection;
 use Initbiz\Newsletter\Classes\Helpers;
 use Initbiz\Newsletter\Models\Checkbox;
-use October\Rain\Database\Collection;
 
 class Subscriber extends Model
 {
@@ -70,6 +70,9 @@ class Subscriber extends Model
     {
         parent::__construct();
 
+        /**
+         * Binding to relation.attach to fire our own events for easier extension
+         */
         $this->bindEvent('model.relation.attach', function (string $relationName, array $ids) {
             if ($relationName === "checkboxes") {
                 $checkboxes = Checkbox::whereIn('id', $ids)->get();
@@ -80,8 +83,11 @@ class Subscriber extends Model
             }
         });
 
+        /**
+         * Binding to relation.detach to fire our own events for easier extension
+         */
         $this->bindEvent('model.relation.detach', function (string $relationName, ?array $ids) {
-            // When deleting the subscriber, the event is also dispatched
+            // When deleting the subscriber, the event is dispatched, we want to prevent that
             if (is_null($ids)) {
                 return;
             }
@@ -123,8 +129,18 @@ class Subscriber extends Model
         Event::fire('initbiz.newsletter.subscriberDelete', [$this]);
     }
 
+    /**
+     * Attach checkboxes to the subscriber
+     *
+     * @param Collection|Checkbox $checkboxes
+     * @return void
+     */
     public function attachCheckboxes(Collection|Checkbox $checkboxes): void
     {
+        if ($checkboxes instanceof Collection && $checkboxes->isEmpty()) {
+            return;
+        }
+
         $checkboxesIds = [];
         if ($checkboxes instanceof Collection) {
             $checkboxesIds = $checkboxes->pluck('id')->toArray();
@@ -137,8 +153,18 @@ class Subscriber extends Model
         $this->checkboxes()->attach($yetUncheckedCheckboxesIds);
     }
 
+    /**
+     * Attach tags to the subscriber
+     *
+     * @param Collection|Tag $tags
+     * @return void
+     */
     public function attachTags(Collection|Tag $tags): void
     {
+        if ($tags instanceof Collection && $tags->isEmpty()) {
+            return;
+        }
+
         $tagsIds = [];
         if ($tags instanceof Collection) {
             $tagsIds = $tags->pluck('id')->toArray();
@@ -151,12 +177,24 @@ class Subscriber extends Model
         $this->tags()->attach($yetNotInUserIds);
     }
 
+    /**
+     * Activate subscriber
+     *
+     * @return void
+     */
     public function activate(): void
     {
         $this->confirmed = true;
         $this->save();
     }
 
+    /**
+     * Shorthand to set value to additional_fields
+     *
+     * @param string $key
+     * @param string $value
+     * @return void
+     */
     public function setAdditionalField(string $key, string $value): void
     {
         $additionalFields = $this->additional_fields;
@@ -184,6 +222,12 @@ class Subscriber extends Model
         $this->additional_fields = $newAdditionalFields;
     }
 
+    /**
+     * Shorthand to get value from additional_fields
+     *
+     * @param string $key
+     * @return string|null
+     */
     public function getAdditionalField(string $key): ?string
     {
         $additionalFields = $this->additional_fields;
@@ -200,6 +244,13 @@ class Subscriber extends Model
         return null;
     }
 
+    /**
+     * Shorthand to set values in additional_data
+     *
+     * @param string $key
+     * @param string $value
+     * @return void
+     */
     public function setAdditionalData(string $key, string $value): void
     {
         $additionalData = $this->additional_data;
@@ -227,6 +278,12 @@ class Subscriber extends Model
         $this->additional_data = $newAdditionalData;
     }
 
+    /**
+     * Shorthand to get values from additional_data
+     *
+     * @param string $key
+     * @return string|null
+     */
     public function getAdditionalData(string $key): ?string
     {
         $additionalData = $this->additional_data;
@@ -243,6 +300,11 @@ class Subscriber extends Model
         return null;
     }
 
+    /**
+     * Getting additional_data in key=>value format
+     *
+     * @return array
+     */
     public function getAdditionalDataKeyValue(): array
     {
         $additionalData = $this->additional_data;

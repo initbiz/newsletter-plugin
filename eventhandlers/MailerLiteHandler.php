@@ -7,6 +7,9 @@ use Initbiz\Newsletter\Models\Tag;
 use Initbiz\Newsletter\Models\Settings;
 use Initbiz\Newsletter\Models\Subscriber;
 
+/**
+ * Integration with MailerLite basing on internal events
+ */
 class MailerLiteHandler
 {
     protected MailerLite $mailerLiteClient;
@@ -106,6 +109,12 @@ class MailerLiteHandler
         });
     }
 
+    /**
+     * Convert subscriber to syntax accepted by MailerLite
+     *
+     * @param Subscriber $subscriber
+     * @return array
+     */
     protected function subscriberToMailerLiteSyntax(Subscriber $subscriber): array
     {
         $groups = [];
@@ -159,7 +168,13 @@ class MailerLiteHandler
         return $data;
     }
 
-    public function tagToMailerLiteSyntax(Tag $tag): array
+    /**
+     * Convert tag to MailerLite syntax
+     *
+     * @param Tag $tag
+     * @return array
+     */
+    protected function tagToMailerLiteSyntax(Tag $tag): array
     {
         $data = [
             'name' => $tag->name,
