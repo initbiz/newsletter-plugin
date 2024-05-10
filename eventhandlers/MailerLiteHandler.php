@@ -129,8 +129,11 @@ class MailerLiteHandler
 
         $fields = array_merge($fields, $subscriber->getAdditionalDataKeyValue());
 
+        $status = ($subscriber->confirmed) ? 'active' : 'unconfirmed';
+
         $data = [
             'email' => $subscriber->email,
+            'status' => $status,
             'subscribed_at' => $subscriber->created_at->format('Y-m-d H:i:s'),
             'fields' => $fields,
             'groups' => $groups,
