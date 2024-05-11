@@ -123,7 +123,7 @@ class Form extends ComponentBase
 
         $options = [
             'recipient_email' => $subscriber->email,
-            'recipient_name' => (empty($subscriber->full_name)) ? $subscriber->email : $subscriber->full_name,
+            'recipient_name' => empty($subscriber->full_name) ? $subscriber->email : $subscriber->full_name,
             'subject' => Lang::get('initbiz.newsletter::lang.mail.activation_subject'),
             'template' => 'initbiz.newsletter::mail.subscription',
             'token' => $subscriber->token,
