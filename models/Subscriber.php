@@ -3,33 +3,321 @@
 namespace Initbiz\Newsletter\Models;
 
 use Model;
+use Event;
+use Initbiz\Newsletter\Models\Tag;
+use October\Rain\Database\Collection;
 use Initbiz\Newsletter\Classes\Helpers;
+use Initbiz\Newsletter\Models\Checkbox;
 
 class Subscriber extends Model
 {
-
     use \October\Rain\Database\Traits\Validation;
 
     public $table = 'initbiz_newsletter_subscribers';
 
-    protected $fillable = ['confirmed', 'email', 'token'];
+    protected $fillable = [
+        'email',
+        'address_line1',
+        'address_line2',
+        'company',
+        'sex',
+        'age',
+        'phone',
+        'city',
+        'zip',
+        'date_of_birth',
+    ];
+
+    public $attributes = [
+        'confirmed' => false,
+    ];
 
     public $rules = [
-        'email'   => 'required|email',
+        'email' => 'required|email|between:6,255|unique:initbiz_newsletter_subscribers',
+        'address_line1' => 'nullable|max:250',
+        'address_line2' => 'nullable|max:250',
+        'company' => 'nullable|max:250',
+        'sex' => 'nullable|in:male,female,other',
+        'age' => 'nullable|integer',
+        'phone' => 'nullable|max:250',
+        'city' => 'nullable|max:250',
+        'zip' => 'nullable|max:250',
+        'date_of_birth' => 'nullable|date|before:tomorrow',
+        'additional_fields.*.key' => 'nullable|alpha_dash:ascii|max:250',
+        'additional_data.*.key' => 'nullable|alpha_dash:ascii|max:250',
+        'additional_fields.*.value' => 'nullable|max:250',
+        'additional_data.*.value' => 'nullable|max:250',
     ];
+
+    protected $jsonable = [
+        'additional_fields',
+        'additional_data',
+    ];
+
     public $belongsToMany = [
         'checkboxes' => [
-            'Initbiz\Newsletter\Models\Checkbox',
+            Checkbox::class,
             'table' => 'initbiz_newsletter_checkbox_subscriber',
+        ],
+
+        'tags' => [
+            Tag::class,
+            'table' => 'initbiz_newsletter_subscriber_tag',
         ]
     ];
 
-    public function getTokenAttribute()
+    public function __construct(array $attributes = [])
     {
-        if ($this->exists && $this->attributes['token']) {
-            return $this->attributes['token'];
+        parent::__construct();
+
+        /**
+         * Binding to relation.attach to fire our own events for easier extension
+         */
+        $this->bindEvent('model.relation.attach', function (string $relationName, array $ids) {
+            if ($relationName === "checkboxes") {
+                $checkboxes = Checkbox::whereIn('id', $ids)->get();
+                Event::fire('initbiz.newsletter.subscriberCheckboxesAttached', [$this, $checkboxes]);
+            } elseif ($relationName === "tags") {
+                $tags = Tag::whereIn('id', $ids)->get();
+                Event::fire('initbiz.newsletter.subscriberTagsAttached', [$this, $tags]);
+            }
+        });
+
+        /**
+         * Binding to relation.detach to fire our own events for easier extension
+         */
+        $this->bindEvent('model.relation.detach', function (string $relationName, ?array $ids) {
+            // When deleting the subscriber, the event is dispatched, we want to prevent that
+            if (is_null($ids)) {
+                return;
+            }
+
+            if ($relationName === "checkboxes") {
+                $checkboxes = Checkbox::whereIn('id', $ids)->get();
+                Event::fire('initbiz.newsletter.subscriberCheckboxesDetached', [$this, $checkboxes]);
+            } elseif ($relationName === "tags") {
+                $tags = Tag::whereIn('id', $ids)->get();
+                Event::fire('initbiz.newsletter.subscriberTagsDetached', [$this, $tags]);
+            }
+        });
+    }
+
+    public function getFullNameAttribute(): string
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function beforeCreate()
+    {
+        if (empty($this->token)) {
+            $this->token = Helpers::generateToken();
+        }
+    }
+
+    public function afterCreate()
+    {
+        Event::fire('initbiz.newsletter.subscriberCreate', [$this]);
+    }
+
+    public function afterUpdate()
+    {
+        Event::fire('initbiz.newsletter.subscriberUpdate', [$this]);
+    }
+
+    public function beforeDelete()
+    {
+        Event::fire('initbiz.newsletter.subscriberDelete', [$this]);
+    }
+
+    /**
+     * Attach checkboxes to the subscriber
+     *
+     * @param Collection|Checkbox $checkboxes
+     * @return void
+     */
+    public function attachCheckboxes(Collection|Checkbox $checkboxes): void
+    {
+        if ($checkboxes instanceof Collection && $checkboxes->isEmpty()) {
+            return;
         }
 
-        return Helpers::generateToken();
+        $checkboxesIds = [];
+        if ($checkboxes instanceof Collection) {
+            $checkboxesIds = $checkboxes->pluck('id')->toArray();
+        } else {
+            $checkboxesIds[] = $checkboxes->id;
+        }
+
+        $alreadyCheckedByUser = $this->checkboxes->pluck('id')->toArray();
+        $yetUncheckedCheckboxesIds = array_diff($checkboxesIds, $alreadyCheckedByUser);
+        $this->checkboxes()->attach($yetUncheckedCheckboxesIds);
+    }
+
+    /**
+     * Attach tags to the subscriber
+     *
+     * @param Collection|Tag $tags
+     * @return void
+     */
+    public function attachTags(Collection|Tag $tags): void
+    {
+        if ($tags instanceof Collection && $tags->isEmpty()) {
+            return;
+        }
+
+        $tagsIds = [];
+        if ($tags instanceof Collection) {
+            $tagsIds = $tags->pluck('id')->toArray();
+        } else {
+            $tagsIds[] = $tags->id;
+        }
+
+        $alreadyInUser = $this->tags->pluck('id')->toArray();
+        $yetNotInUserIds = array_diff($tagsIds, $alreadyInUser);
+        $this->tags()->attach($yetNotInUserIds);
+    }
+
+    /**
+     * Activate subscriber
+     *
+     * @return void
+     */
+    public function activate(): void
+    {
+        $this->confirmed = true;
+        $this->save();
+    }
+
+    /**
+     * Shorthand to set value to additional_fields
+     *
+     * @param string $key
+     * @param string $value
+     * @return void
+     */
+    public function setAdditionalField(string $key, string $value): void
+    {
+        $additionalFields = $this->additional_fields;
+        if (!is_array($additionalFields)) {
+            $additionalFields = [];
+        }
+
+        $found = false;
+        $newAdditionalFields = [];
+        foreach ($additionalFields as $additionalField) {
+            if ($additionalField['key'] === $key) {
+                $additionalField['value'] = $value;
+                $found = true;
+            }
+            $newAdditionalFields[] = $additionalField;
+        }
+
+        if (!$found) {
+            $newAdditionalFields[] = [
+                'key' => $key,
+                'value' => $value,
+            ];
+        }
+
+        $this->additional_fields = $newAdditionalFields;
+    }
+
+    /**
+     * Shorthand to get value from additional_fields
+     *
+     * @param string $key
+     * @return string|null
+     */
+    public function getAdditionalField(string $key): ?string
+    {
+        $additionalFields = $this->additional_fields;
+        if (!is_array($additionalFields)) {
+            $additionalFields = [];
+        }
+
+        foreach ($additionalFields as $additionalField) {
+            if ($additionalField['key'] === $key) {
+                return $additionalField['value'];
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Shorthand to set values in additional_data
+     *
+     * @param string $key
+     * @param string $value
+     * @return void
+     */
+    public function setAdditionalData(string $key, string $value): void
+    {
+        $additionalData = $this->additional_data;
+        if (!is_array($additionalData)) {
+            $additionalData = [];
+        }
+
+        $found = false;
+        $newAdditionalData = [];
+        foreach ($additionalData as $additionalDataEntry) {
+            if ($additionalDataEntry['key'] === $key) {
+                $additionalDataEntry['value'] = $value;
+                $found = true;
+            }
+            $newAdditionalData[] = $additionalDataEntry;
+        }
+
+        if (!$found) {
+            $newAdditionalData[] = [
+                'key' => $key,
+                'value' => $value,
+            ];
+        }
+
+        $this->additional_data = $newAdditionalData;
+    }
+
+    /**
+     * Shorthand to get values from additional_data
+     *
+     * @param string $key
+     * @return string|null
+     */
+    public function getAdditionalData(string $key): ?string
+    {
+        $additionalData = $this->additional_data;
+        if (!is_array($additionalData)) {
+            $additionalData = [];
+        }
+
+        foreach ($additionalData as $additionalDataEntry) {
+            if ($additionalDataEntry['key'] === $key) {
+                return $additionalDataEntry['value'];
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Getting additional_data in key=>value format
+     *
+     * @return array
+     */
+    public function getAdditionalDataKeyValue(): array
+    {
+        $additionalData = $this->additional_data;
+        if (!is_array($additionalData)) {
+            $additionalData = [];
+        }
+
+        $parsed = [];
+
+        foreach ($additionalData as $additionalDataEntry) {
+            $parsed[$additionalDataEntry['key']] = $additionalDataEntry['value'];
+        }
+
+        return $parsed;
     }
 }

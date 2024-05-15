@@ -2,12 +2,13 @@
 
 namespace Initbiz\Newsletter\Models;
 
+use Mail;
 use Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Input;
 use Initbiz\Newsletter\Classes\Helpers;
-use Initbiz\Newsletter\Classes\SendEmail;
+use Initbiz\Newsletter\Models\Settings;
 
 class Message extends Model
 {
@@ -108,17 +109,23 @@ class Message extends Model
      */
     public function sendMessageToRecipients($recipientsList, $template = 'initbiz.newsletter::mail.message')
     {
-        //TODO: Create a worker or other non blocking code
+        $settings = Settings::instance();
+
         foreach ($recipientsList->unique('email') as $subscriber) {
             $options = [
                 'recipient_email' => $subscriber->email,
+                'recipient_name' => (empty($subscriber->full_name))? $subscriber->email: $subscriber->full_name,
                 'subject' => $this->title,
                 'template' => $template,
                 'content' => $this->content,
-                'newsletterLink' => Helpers::getNewsletterManagementUrl($subscriber->email, $subscriber->token)
+                'token' => $subscriber->token,
+                'newsletterLink' => $settings->getNewsletterManagementUrl($subscriber->email, $subscriber->token)
             ];
 
-            SendEmail::send($options);
+            Mail::queue($options['template'], $options, function ($message) use ($options) {
+                $message->to($options['recipient_email'], $options['recipient_name']);
+                $message->subject($options['subject']);
+            });
         }
     }
 }

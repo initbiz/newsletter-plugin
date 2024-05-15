@@ -81,7 +81,7 @@ class Helpers
      *                         to select from
      * @return string
      */
-    public static function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+    public static function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyz')
     {
         $pieces = [];
         $max = mb_strlen($keyspace, '8bit') - 1;

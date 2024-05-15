@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Tag
+
+# Model Form Field configuration
+form: $/initbiz/newsletter/models/tag/fields.yaml
+
+# Model Class name
+modelClass: Initbiz\Newsletter\Models\Tag
+
+# Default redirect location
+defaultRedirect: initbiz/newsletter/tags
+
+# Create page
+create:
+    title: backend::lang.form.create_title
+    redirect: initbiz/newsletter/tags/update/:id
+    redirectClose: initbiz/newsletter/tags
+
+# Update page
+update:
+    title: backend::lang.form.update_title
+    redirect: initbiz/newsletter/tags
+    redirectClose: initbiz/newsletter/tags
+
+# Preview page
+preview:
+    title: backend::lang.form.preview_title

@@ -1,0 +1,37 @@
+tabs:
+    fields:
+        send_activation_email:
+            label: initbiz.newsletter::lang.settings.send_activation_email
+            tab: initbiz.newsletter::lang.settings.general_tab
+            span: auto
+            type: switch
+            default: true
+
+        subscription_manage_page:
+            label: initbiz.newsletter::lang.settings.subscription_manage_page
+            tab: initbiz.newsletter::lang.settings.general_tab
+            span: left
+            type: dropdown
+
+        subscription_manage_token_param:
+            label: initbiz.newsletter::lang.settings.subscription_manage_token_param
+            tab: initbiz.newsletter::lang.settings.general_tab
+            span: auto
+            type: text
+
+        enable_mailerlite_integration:
+            label: initbiz.newsletter::lang.settings.enable_mailerlite_integration
+            tab: initbiz.newsletter::lang.settings.integrations_tab
+            span: auto
+            type: switch
+            default: false
+
+        mailerlite_api_key:
+            label: initbiz.newsletter::lang.settings.mailerlite_api_key
+            tab: initbiz.newsletter::lang.settings.integrations_tab
+            span: left
+            type: sensitive
+            trigger:
+                action: show
+                condition: checked
+                field: enable_mailerlite_integration

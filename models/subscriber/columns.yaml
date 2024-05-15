@@ -15,3 +15,9 @@ columns:
 
     created_at:
         label: initbiz.newsletter::lang.userColumns.joined
+
+    tags_list:
+        label: initbiz.newsletter::lang.userColumns.tags
+        searchable: true
+        relation: tags
+        select: name

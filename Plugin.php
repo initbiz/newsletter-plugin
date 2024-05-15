@@ -2,8 +2,10 @@
 
 namespace Initbiz\Newsletter;
 
+use Event;
 use Backend;
 use System\Classes\PluginBase;
+use Initbiz\Newsletter\Models\Settings;
 
 /**
  * Newsletter plugin
@@ -25,34 +27,45 @@ class Plugin extends PluginBase
         ];
     }
 
+    public function boot()
+    {
+        Event::subscribe(\Initbiz\Newsletter\EventHandlers\MailerLiteHandler::class);
+    }
+
     public function registerNavigation()
     {
         return [
             'newsletter' => [
                 'label'         => 'initbiz.newsletter::lang.menu.newsletter',
-                'url'           => Backend::url('initbiz/newsletter/messages'),
+                'url'           => Backend::url('initbiz/newsletter/subscribers'),
                 'icon'          => 'icon-envelope-o',
                 'permissions'   => ['initbiz.newsletter.*'],
                 'order'         => 500,
 
                 'sideMenu'  => [
-                    'messages'  => [
-                        'label'         => 'initbiz.newsletter::lang.menu.messages',
-                        'url'           =>  Backend::url('initbiz/newsletter/messages'),
-                        'icon'          =>  'icon-envelope',
-                        'permissions'   => ['initbiz.newsletter.messages']
-                    ],
                     'subscribers' => [
                         'label'         => 'initbiz.newsletter::lang.menu.subscribers',
                         'url'           =>  Backend::url('initbiz/newsletter/subscribers'),
                         'icon'          =>  'icon-male',
                         'permissions'   => ['initbiz.newsletter.subscribers']
                     ],
+                    'tags' => [
+                        'label'         => 'initbiz.newsletter::lang.menu.tags',
+                        'url'           =>  Backend::url('initbiz/newsletter/tags'),
+                        'icon'          =>  'icon-tag',
+                        'permissions'   => ['initbiz.newsletter.tags']
+                    ],
                     'checkboxes' => [
                         'label'         => 'initbiz.newsletter::lang.menu.checkboxes',
                         'url'           =>  Backend::url('initbiz/newsletter/checkboxes'),
                         'icon'          =>  'oc-icon-cog',
                         'permissions'   => ['initbiz.newsletter.checkboxes']
+                    ],
+                    'messages'  => [
+                        'label'         => 'initbiz.newsletter::lang.menu.messages',
+                        'url'           =>  Backend::url('initbiz/newsletter/messages'),
+                        'icon'          =>  'icon-envelope',
+                        'permissions'   => ['initbiz.newsletter.messages']
                     ],
                 ]
             ]
@@ -76,13 +89,35 @@ class Plugin extends PluginBase
         ];
     }
 
+    public function registerSettings()
+    {
+        return [
+            'settings' => [
+                'label'       => 'initbiz.newsletter::lang.settings.label',
+                'description' => 'initbiz.newsletter::lang.settings.description',
+                'icon'        => 'icon-envelope',
+                'class'       => Settings::class,
+                'order'       => 100,
+                'permissions' => ['initbiz.newsletter.settings'],
+            ],
+        ];
+    }
+
 
     public function registerPermissions()
     {
         return [
+            'initbiz.newsletter.settings'   =>  [
+                'tab'   =>  'initbiz.newsletter::lang.menu.newsletter',
+                'label' =>  'initbiz.newsletter::lang.permission.settings'
+            ],
             'initbiz.newsletter.messages'   =>  [
                 'tab'   =>  'initbiz.newsletter::lang.menu.newsletter',
                 'label' =>  'initbiz.newsletter::lang.permission.messages'
+            ],
+            'initbiz.newsletter.tags'   =>  [
+                'tab'   =>  'initbiz.newsletter::lang.menu.newsletter',
+                'label' =>  'initbiz.newsletter::lang.permission.tags'
             ],
             'initbiz.newsletter.subscribers'   =>  [
                 'tab'   =>  'initbiz.newsletter::lang.menu.newsletter',
