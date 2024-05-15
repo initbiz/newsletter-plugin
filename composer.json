@@ -1,17 +1,16 @@
 {
     "name": "initbiz/newsletter-plugin",
     "type": "october-plugin",
-    "description": "GDPR compliant subscriber and message management ",
+    "description": "GDPR compliant subscriber and message management",
     "homepage": "https://init.biz",
     "keywords": [
         "october",
-        "octobercms",
-        "cumulus",
-        "saas"
+        "octobercms"
     ],
     "license": "proprietary",
     "require": {
-        "php": ">=7.0",
-        "composer/installers": "~1.0"
+        "php": ">=8.0",
+        "composer/installers": "~1.0",
+        "mailerlite/mailerlite-php": "^1.0"
     }
 }

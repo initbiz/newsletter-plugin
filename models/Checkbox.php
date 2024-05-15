@@ -6,20 +6,27 @@ use Model;
 
 class Checkbox extends Model
 {
-    use \October\Rain\Database\Traits\Validation;
     use \October\Rain\Database\Traits\Sluggable;
+    use \October\Rain\Database\Traits\Validation;
 
     public $table = 'initbiz_newsletter_checkboxes';
 
-    protected $fillable = ['required', 'name', 'slug', 'text'];
+    protected $fillable = [
+        'required',
+        'name',
+        'slug',
+        'text'
+    ];
 
-    protected $slugs = ['slug' => 'name'];
+    protected $slugs = [
+        'slug' => 'name'
+    ];
 
     public $rules = [
-        'required'   => 'boolean',
-        'name' => 'string',
-        'text' => 'string',
-        'slug' => 'string'
+        'required' => 'required|boolean',
+        'name'     => 'required|string',
+        'text'     => 'required|string',
+        'slug'     => 'required|string|not_in:required,name,text,slug,email'
     ];
 
     public $belongsToMany = [
