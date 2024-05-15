@@ -10,7 +10,6 @@ return [
         'message' => 'Wiadomość, która jest wysyłana do subskrybentów',
         'confirmation' => 'Wiadomość potwierdzająca zapisanie do newslettera',
     ],
-    ],
     'settings' => [
         'label' => 'Ustawienia newslettera',
         'description' => 'Zarządzaj pluginem newsletter',
