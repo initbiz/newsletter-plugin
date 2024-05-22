@@ -16,6 +16,8 @@ class Subscriber extends Model
     public $table = 'initbiz_newsletter_subscribers';
 
     protected $fillable = [
+        'first_name',
+        'last_name',
         'email',
         'address_line1',
         'address_line2',

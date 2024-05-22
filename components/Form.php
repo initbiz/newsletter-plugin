@@ -87,7 +87,7 @@ class Form extends ComponentBase
 
         if (isset($data['additional_fields']) && is_array($data['additional_fields'])) {
             foreach ($data['additional_fields'] as $key => $value) {
-                $subscriber->setAdditionalData($key, $value);
+                $subscriber->setAdditionalField($key, $value);
             }
         }
 
