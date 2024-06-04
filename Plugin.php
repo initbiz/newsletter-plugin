@@ -84,8 +84,8 @@ class Plugin extends PluginBase
     public function registerMailTemplates()
     {
         return [
-            'initbiz.newsletter::mail.message' => 'initbiz.newsletter::lang.mailTemplates.message',
-            'initbiz.newsletter::mail.subscription' => 'initbiz.newsletter::lang.mailTemplates.confirmation',
+            'initbiz.newsletter::mail.message',
+            'initbiz.newsletter::mail.subscription',
         ];
     }
 
