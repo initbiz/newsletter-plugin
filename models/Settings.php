@@ -40,7 +40,7 @@ class Settings extends Model
 
         $subscriptionPage = $this->subscription_manage_page ?? '';
         if (empty($subscriptionPage)) {
-            return '';
+            return url('/');
         }
 
         return Cms::pageUrl($subscriptionPage, $params);
