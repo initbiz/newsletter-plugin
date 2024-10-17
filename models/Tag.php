@@ -72,7 +72,7 @@ class Tag extends Model
     {
         Event::fire('initbiz.newsletter.tagDelete', [$this]);
     }
-    
+
     /**
      * Shorthand to set values to additional_data
      *
@@ -85,7 +85,7 @@ class Tag extends Model
         $additionalData = $this->additional_data;
         if (!is_array($additionalData)) {
             $additionalData = [];
-        }  
+        }
 
         $found = false;
         $newAdditionalData = [];
@@ -102,7 +102,7 @@ class Tag extends Model
                 'key' => $key,
                 'value' => $value,
             ];
-        }  
+        }
 
         $this->additional_data = $newAdditionalData;
     }
@@ -118,12 +118,12 @@ class Tag extends Model
         $additionalData = $this->additional_data;
         if (!is_array($additionalData)) {
             $additionalData = [];
-        }  
+        }
 
         foreach ($additionalData as $additionalDataEntry) {
             if ($additionalDataEntry['key'] === $key) {
                 return $additionalDataEntry['value'];
-            }   
+            }
         }
 
         return null;

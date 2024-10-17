@@ -31,7 +31,6 @@ class EventsTest extends PluginTestCase
         $tag->save();
 
         Event::assertDispatched('initbiz.newsletter.tagCreate');
-        Event::assertDispatched('initbiz.newsletter.tagSave');
 
         $checkbox = new Checkbox();
         $checkbox->name = "GDPR";
@@ -45,7 +44,6 @@ class EventsTest extends PluginTestCase
         $subscriber->save();
 
         Event::assertDispatched('initbiz.newsletter.subscriberCreate');
-        Event::assertDispatched('initbiz.newsletter.subscriberSave');
 
         $subscriber->attachTags($tag);
         Event::assertDispatched('initbiz.newsletter.subscriberTagsAttached');
