@@ -13,6 +13,19 @@ use Initbiz\Newsletter\Models\Settings;
 class Plugin extends PluginBase
 {
     /**
+     * @var array Plugin dependencies
+     */
+    public $require = [];
+
+    public function __construct($app)
+    {
+        if (app()->runningUnitTests()) {
+            $this->require = array_merge($this->require, ['RainLab.Translate']);
+        }
+
+        return parent::__construct($app);
+    }
+    /**
      * Returns information about this plugin.
      *
      * @return array
