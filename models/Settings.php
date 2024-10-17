@@ -2,6 +2,7 @@
 
 namespace Initbiz\Newsletter\Models;
 
+use Cms;
 use Model;
 use Cms\Classes\Page;
 use Initbiz\Newsletter\Classes\Helpers;
@@ -37,7 +38,12 @@ class Settings extends Model
             $this->subscription_manage_token_param => $token
         ];
 
-        return Page::url($this->subscription_manage_page, $params);
+        $subscriptionPage = $this->subscription_manage_page ?? '';
+        if (empty($subscriptionPage)) {
+            return '';
+        }
+
+        return Cms::pageUrl($subscriptionPage, $params);
     }
 
     protected function getSubscriptionManagePage(): ?string
@@ -45,7 +51,7 @@ class Settings extends Model
         $page = Helpers::getPageWithComponent('newsletterConfirm');
         if ($page instanceof Page) {
             return $page->getBaseFileName();
-        }  
+        }
 
         return null;
     }
@@ -57,7 +63,7 @@ class Settings extends Model
             $properties = Helpers::getComponentPropertiesFromPage($page, 'newsletterConfirm');
             $tokenVariable = preg_replace('/[^a-zA-Z]|\s/', "", $properties['token']);
             return $tokenVariable;
-        }  
+        }
 
         return null;
     }
