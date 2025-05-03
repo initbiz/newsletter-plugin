@@ -86,6 +86,7 @@ return [
         'tags' => 'Tags to add the subscriber',
         'confirm_automatically' => 'Confirm automatically',
         'inputs' => 'Inputs',
+        'button_text' => 'Text on button',
     ],
 
     'subscribers' => [
@@ -183,8 +184,19 @@ return [
 
     'form' => [
         'button_text' => 'Sign up',
-        'placeholder_email' => 'Email',
-        'label_email' => 'Email',
+        'placeholder_email' => 'E-mail',
+        'label_email' => 'E-mail address',
+        'placeholder_first_name' => 'Name',
+        'placeholder_last_name' => 'Surname',
+        'placeholder_address_line1' => 'Address',
+        'placeholder_address_line2' => 'Address 2',
+        'placeholder_company' => 'Company',
+        'placeholder_sex' => 'Sex',
+        'placeholder_age' => 'Age',
+        'placeholder_phone' => 'Phone',
+        'placeholder_city' => 'City',
+        'placeholder_zip' => 'Zip code',
+        'placeholder_date_of_birth' => 'Date of birth',
         'sign_up_thanks' => 'Thank you for subscribing our newsletter',
         'sign_up_error' => 'Oops, something went wrong.',
     ],

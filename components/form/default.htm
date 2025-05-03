@@ -10,7 +10,7 @@
         </div>
     {% endfor %}
 
-      <button type="submit" class="btn btn-primary">{{ 'initbiz.newsletter::lang.form.button_text'|trans }}</button>
+    <button type="submit" class="btn btn-primary">{{ __SELF__.buttonText|trans }}</button>
 </form>
 
 <div class="col-md-12 input-group" id="{{ __SELF__ }}-notifications">
@@ -26,14 +26,12 @@
 
 {% put scripts %}
     <script>
-        var subscribeForm = $('#{{ __SELF__ }}-subscribe');
-
-        subscribeForm.on('ajaxSuccess', function(event, context, data) {
+        $('#{{ __SELF__ }}-subscribe').on('ajaxSuccess', function(event, context, data) {
             $('#{{ __SELF__}}-successMsg').text(data.content);
             $('#{{ __SELF__}}-successMsg').parent().show().delay(2000).fadeOut(500);
         })
 
-        subscribeForm.on('ajaxError', function(event, context, error) {
+        $('#{{ __SELF__ }}-subscribe').on('ajaxError', function(event, context, error) {
             $('#{{ __SELF__ }}-errorMsg').text(error);
             $('#{{ __SELF__ }}-errorMsg').parent().show().delay(2000).fadeOut(500);
             event.preventDefault();

@@ -39,6 +39,8 @@ class Subscriber extends Model
 
     public $rules = [
         'email' => 'required|email|between:6,255|unique:initbiz_newsletter_subscribers',
+        'first_name' => 'nullable|max:250',
+        'last_name' => 'nullable|max:250',
         'address_line1' => 'nullable|max:250',
         'address_line2' => 'nullable|max:250',
         'company' => 'nullable|max:250',
@@ -368,56 +370,67 @@ class Subscriber extends Model
                 'label' => 'initbiz.newsletter::lang.subscriber.first_name',
                 'type' => 'text',
                 'rules' => $rules['first_name'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_first_name',
             ],
             'last_name' => [
                 'label' => 'initbiz.newsletter::lang.subscriber.last_name',
                 'type' => 'text',
                 'rules' => $rules['last_name'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_last_name',
             ],
             'sex' => [
                 'label' => 'initbiz.newsletter::lang.subscriber.sex',
                 'type' => 'text',
                 'rules' => $rules['sex'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_sex',
             ],
             'address_line1' => [
                 'label' => 'initbiz.newsletter::lang.subscriber.address_line1',
                 'type' => 'text',
                 'rules' => $rules['address_line1'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_address_line1',
             ],
             'address_line2' => [
                 'label' => 'initbiz.newsletter::lang.subscriber.address_line2',
                 'type' => 'text',
                 'rules' => $rules['address_line2'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_address_line2',
             ],
             'company' => [
                 'label' => 'initbiz.newsletter::lang.subscriber.company',
                 'type' => 'text',
                 'rules' => $rules['company'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_company',
             ],
             'phone' => [
                 'label' => 'initbiz.newsletter::lang.subscriber.phone',
                 'type' => 'text',
                 'rules' => $rules['phone'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_phone',
             ],
             'zip' => [
                 'label' => 'initbiz.newsletter::lang.subscriber.zip',
                 'type' => 'text',
                 'rules' => $rules['zip'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_zip',
             ],
             'city' => [
                 'label' => 'initbiz.newsletter::lang.subscriber.city',
                 'type' => 'text',
                 'rules' => $rules['city'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_city',
             ],
             'date_of_birth' => [
                 'label' => 'initbiz.newsletter::lang.subscriber.date_of_birth',
                 'type' => 'text',
                 'rules' => $rules['date_of_birth'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_date_of_birth',
             ],
             'age' => [
                 'label' => 'initbiz.newsletter::lang.subscriber.age',
                 'type' => 'text',
                 'rules' => $rules['age'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_age',
             ],
         ];
 

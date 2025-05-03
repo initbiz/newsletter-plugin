@@ -17,6 +17,8 @@ class Form extends ComponentBase
 
     public $selectedInputs;
 
+    public $buttonText;
+
     public function componentDetails()
     {
         return [
@@ -37,13 +39,17 @@ class Form extends ComponentBase
                 'title' => 'initbiz.newsletter::lang.form_component.tags',
                 'type' => 'set',
             ],
-            'input' => [
-                'title' => 'initbiz.newsletter::lang.form_component.inputs',
-                'type' => 'set',
+            'buttonText' => [
+                'title' => 'initbiz.newsletter::lang.form_component.button_text',
+                'type' => 'string',
+                'default' => 'initbiz.newsletter::lang.form.button_text'
             ],
-            'inputOrder' => [
+            'inputs' => [
                 'title' => 'initbiz.newsletter::lang.form_component.inputs',
                 'type' => 'set',
+                'default' => [
+                    'email',
+                ],
             ],
         ];
     }
@@ -66,17 +72,22 @@ class Form extends ComponentBase
     {
         $this->checkboxes = $this->page['checkboxes'] = Checkbox::all();
         $this->selectedInputs = $this->getSelectedInputs();
+        $this->buttonText = $this->property('buttonText');
     }
 
-    public function onRender()
-    {
-        // Use the default template from the theme, otherwise fallback to default behavior
-        try {
-            return $this->renderPartial('newsletterform/default', ['__SELF__' => $this]);
-        } catch (\Cms\Classes\CmsException $th) {
-            return null;
-        }
-    }
+    // public function onRender()
+    // {
+    //     /*
+    //      * Make it possible to overwrite the view for all aliases with newsletterform directory
+    //      * It's handy when placing many forms on a single page, e.g. with snippets
+    //      * But keep in mind that making it alias will break rendering partials from partials
+    //      */
+    //     try {
+    //         return $this->renderPartial('newsletterform/default', ['__SELF__' => $this]);
+    //     } catch (\Cms\Classes\CmsException $th) {
+    //         return null;
+    //     }
+    // }
 
     public function getSelectedInputs(): array
     {
