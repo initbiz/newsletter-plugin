@@ -4,10 +4,13 @@ namespace Initbiz\Newsletter\Models;
 
 use Model;
 use Event;
+use Validator;
 use Initbiz\Newsletter\Models\Tag;
 use October\Rain\Database\Collection;
 use Initbiz\Newsletter\Classes\Helpers;
 use Initbiz\Newsletter\Models\Checkbox;
+use Initbiz\Newsletter\Models\Settings;
+use October\Rain\Exception\ValidationException;
 
 class Subscriber extends Model
 {
@@ -204,11 +207,33 @@ class Subscriber extends Model
             $additionalFields = [];
         }
 
+        /**
+         * @var Settings
+         */
+        $settings = Settings::instance();
+        $additionalFields = $settings->additional_fields;
+        $validationRule = '';
+        if (!empty($additionalFields)) {
+            foreach ($additionalFields as $additionalFieldDef) {
+                if ($additionalFieldDef['attribute'] === $key) {
+                    $validationRule = $additionalFieldDef['rules'];
+                    break;
+                }
+            }
+        }
+
+        // Backwards compatibility will let it save even if the rule is not defined
+        if (!empty($validationRule)) {
+            $validator = Validator::make([$key => $value], [$key => $validationRule]);
+            if ($validator->fails()) {
+                throw new ValidationException($validator);
+            }
+        }
+
         $found = false;
         $newAdditionalFields = [];
         foreach ($additionalFields as $additionalField) {
             if ($additionalField['key'] === $key) {
-                $additionalField['value'] = $value;
                 $found = true;
             }
             $newAdditionalFields[] = $additionalField;
@@ -321,5 +346,100 @@ class Subscriber extends Model
         }
 
         return $parsed;
+    }
+
+    /**
+     * Get all attributes of the subscriber that can be set from frontend form
+     *
+     * @return array
+     */
+    public static function getFillableAttributes(): array
+    {
+        $rules = (new self())->rules;
+
+        $fillableAttributes = [
+            'email' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.email',
+                'type' => 'email',
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_email',
+                'rules' => $rules['email'],
+            ],
+            'first_name' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.first_name',
+                'type' => 'text',
+                'rules' => $rules['first_name'],
+            ],
+            'last_name' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.last_name',
+                'type' => 'text',
+                'rules' => $rules['last_name'],
+            ],
+            'sex' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.sex',
+                'type' => 'text',
+                'rules' => $rules['sex'],
+            ],
+            'address_line1' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.address_line1',
+                'type' => 'text',
+                'rules' => $rules['address_line1'],
+            ],
+            'address_line2' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.address_line2',
+                'type' => 'text',
+                'rules' => $rules['address_line2'],
+            ],
+            'company' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.company',
+                'type' => 'text',
+                'rules' => $rules['company'],
+            ],
+            'phone' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.phone',
+                'type' => 'text',
+                'rules' => $rules['phone'],
+            ],
+            'zip' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.zip',
+                'type' => 'text',
+                'rules' => $rules['zip'],
+            ],
+            'city' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.city',
+                'type' => 'text',
+                'rules' => $rules['city'],
+            ],
+            'date_of_birth' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.date_of_birth',
+                'type' => 'text',
+                'rules' => $rules['date_of_birth'],
+            ],
+            'age' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.age',
+                'type' => 'text',
+                'rules' => $rules['age'],
+            ],
+        ];
+
+        /**
+         * @var Settings
+         */
+        $settings = Settings::instance();
+        $additionalFields = $settings->additional_fields;
+        if (!empty($additionalFields)) {
+            foreach ($additionalFields as $additionalFieldDef) {
+                $attribute = 'additional_fields[' . $additionalFieldDef['attribute'] . ']';
+                $fillableAttributes[$attribute] = [
+                    'label' => $additionalFieldDef['label'],
+                    'type' => $additionalFieldDef['type'],
+                    'rules' => $additionalFieldDef['rules'],
+                    'input_placeholder' => $additionalFieldDef['input_placeholder'],
+                ];
+            }
+        }
+
+        Event::fire('initbiz.newsletter.extendFillableAttributes', [&$fillableAttributes]);
+
+        return $fillableAttributes;
     }
 }

@@ -6,21 +6,34 @@ return [
         'description' => 'Plugin do zarządzania newsletterem.',
         'author' => 'InIT.biz Ltd.',
     ],
+
     'mailTemplates' => [
         'message' => 'Wiadomość, która jest wysyłana do subskrybentów',
         'confirmation' => 'Wiadomość potwierdzająca zapisanie do newslettera',
     ],
+
     'settings' => [
         'label' => 'Ustawienia newslettera',
         'description' => 'Zarządzaj pluginem newsletter',
         'general_tab' => 'Ogólne',
+        'additional_fields_tab' => 'Dodatkowe pola',
         'integrations_tab' => 'Integracje',
         'send_activation_email' => 'Wyślij maila aktywacyjnego',
         'subscription_manage_page' => 'Strona zarządzania subskrypcją',
         'subscription_manage_token_param' => 'Parametr token',
+        'additional_fields_attribute' => 'Atrybut',
+        'additional_fields_label' => 'Nazwa',
+        'additional_fields_type' => 'Typ',
+        'additional_fields_type_text' => 'Text',
+        'additional_fields_type_email' => 'E-mail',
+        'additional_fields_type_number' => 'Liczba',
+        'additional_fields_input_placeholder' => 'Placeholder',
+        'additional_fields_rules' => 'Zasady walidacji',
+        'additional_fields_rules_comment' => 'Zobacz <a href="https://docs.octobercms.com/3.x/extend/services/validation.html" target="_blank">walidację w OctoberCMS</a>',
         'enable_mailerlite_integration' => 'Włącz integrację z MailerLite',
         'mailerlite_api_key' => 'Klucz API MailerLite',
     ],
+
     'menu' => [
         'newsletter' => 'Newsletter',
         'messages' => 'Wiadomości',
@@ -28,11 +41,13 @@ return [
         'checkboxes' => 'Checkboxy',
         'tags' => 'Tagi',
     ],
+
     'tag' => [
         'name' => 'Nazwa',
         'slug' => 'Slug',
         'additional_data_tab' => 'Dodatkowe dane',
     ],
+
     'subscriber' => [
         'confirmed' => 'Potwierdzony',
         'settings_tab' => 'Ustawienia',
@@ -59,32 +74,39 @@ return [
         'zip' => 'Kod pocztowy',
         'date_of_birth' => 'Data urodzenia',
     ],
+
     'title' => [
         'newsletter' => 'Newsletter',
         'messages' => 'Wiadomości',
         'subscribers' => 'Subskrybenci',
         'checkboxes' => 'Checkboxy',
     ],
+
     'form_component' => [
         'tags' => 'Tagi dodane subskrybentom',
         'confirm_automatically' => 'Automatycznie potwierdź',
+        'inputs' => 'Pola',
     ],
+
     'subscribers' => [
         'import_subscribers' => 'Import subskrybentów',
         'export_subscribers' => 'Eksport subskrybentów',
         'email' => 'E-mail',
     ],
+
     'permission' => [
         'messages' => 'Zarządzanie wiadomościami',
         'subscribers' => 'Zarządzanie subskrybentami',
         'tags' => 'Zarządzanie tagami newslettera',
         'settings' => 'Dostęp do ustawień pluginu Newsletter',
     ],
+
     'new' => [
         'messages' => 'Nowa wiadomość',
         'checkbox' => 'Nowy checkbox',
         'subscriber' => 'Nowy subskrybent',
     ],
+
     'checkboxes' => [
         'export' => 'Wyeksportuj Checkboxy',
         'import' => 'Zaimportuj Checkboxy',
@@ -92,6 +114,7 @@ return [
         'text' => 'Tekst pojawiający sie przy checkboxie',
         'required' => 'Wymagany',
     ],
+
     'messages' => [
         'title' => 'Tytuł wiadomości',
         'content' => 'Treść wiadomości',
@@ -102,6 +125,7 @@ return [
         'send_to_agreed' => 'Wyślij wiadomość tylko to osób, które zgodziły się z treścią opcjonalną',
         'email_template' => 'Wybierz szablon wiadomości e-mail',
     ],
+
     'columns' => [
         'title' => 'Tytuł',
         'slug' => 'Slug',
@@ -117,6 +141,7 @@ return [
         'checkboxes' => 'Checkboxy',
         'tags' => 'Tagi',
     ],
+
     'userColumns' => [
         'email' => 'E-mail',
         'agreement' => 'Zgoda',
@@ -124,31 +149,38 @@ return [
         'confirmed' => 'Potwierdzony',
         'tags' => 'Tagi',
     ],
+
     'flash' => [
         'delete' => 'Czy jesteś pewny że chcesz usunąć zaznaczone elementy?',
         'deleted' => 'Usunięto wybrane elementy',
     ],
+
     'flash_checkboxes' => [
         'deleted' => 'Checkbox pomyślnie usunięty',
         'saved' => 'Checkbox pomyślnie zapisany',
         'updated' => 'Checkbox pomyślnie zaktualizowany',
     ],
+
     'flash_checkboxes' => [
         'deleted' => 'Subskrybent pomyślnie usunięty',
         'saved' => 'Subskrybent pomyślnie zapisany',
         'updated' => 'Subskrybent pomyślnie zaktualizowany ',
     ],
+
     'token' => [
         'title' => 'Kod subskrybenta',
         'description' => 'Kod, który otrzyma subskrybent do uwierzytelniania',
     ],
+
     'email' => [
         'title' => 'Email subskrybenta',
         'description' => 'Email subskrybenta',
     ],
+
     'confirmedbox' => [
         'message' => 'Dziękujemy za zapisanie się do newslettera',
     ],
+
     'form' => [
         'button_text' => 'Zapisz się',
         'placeholder_email' => 'E-mail',
@@ -156,12 +188,14 @@ return [
         'sign_up_thanks' => 'Dziękujemy za zapisanie się do newslettera!',
         'sign_up_error' => 'Błąd. Coś poszło nie tak.',
     ],
+
     'manage' => [
         'thank_you_message' => 'Dziękujemy za zapisanie się do naszego newslettera',
         'config_heading' => 'Zmień ustawienia newslettera',
         'sign_out_button_text' => 'Wypisz się z naszego newslettera',
         'update_button_text' => 'Aktualizuj',
     ],
+
     'ajaxFormResponse' => [
         'sign_up_success' => 'Dziękujemy za zapisanie się!',
         'sign_up_error' => 'Coś poszło nie tak',
@@ -178,6 +212,7 @@ return [
         'unsubscribe' => 'Wypisz',
         'error' => 'Coś poszło nie tak',
     ],
+
     'mail' => [
         'activation_subject' => 'Potwierdź swój adres e-mail',
     ],

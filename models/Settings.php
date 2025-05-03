@@ -45,7 +45,7 @@ class Settings extends Model
         $page = Helpers::getPageWithComponent('newsletterConfirm');
         if ($page instanceof Page) {
             return $page->getBaseFileName();
-        }  
+        }
 
         return null;
     }
@@ -57,7 +57,7 @@ class Settings extends Model
             $properties = Helpers::getComponentPropertiesFromPage($page, 'newsletterConfirm');
             $tokenVariable = preg_replace('/[^a-zA-Z]|\s/', "", $properties['token']);
             return $tokenVariable;
-        }  
+        }
 
         return null;
     }

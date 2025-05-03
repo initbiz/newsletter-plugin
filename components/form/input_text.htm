@@ -1,0 +1,4 @@
+<div class="form-group">
+    <label for="{{ __SELF__ }}-{{ attribute }}">{{ label|trans }}</label>
+    <input type="name" name="{{ attribute }}" id="{{ __SELF__ }}-{{ attribute }}" class="form-control"{% if input_placeholder %} placeholder="{{ input_placeholder|trans }}"{% endif %}>
+</div>

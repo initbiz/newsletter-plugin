@@ -7,14 +7,16 @@ use Mail;
 use ValidationException;
 use Cms\Classes\ComponentBase;
 use Initbiz\Newsletter\Models\Tag;
-use Initbiz\Newsletter\Classes\Helpers;
 use Initbiz\Newsletter\Models\Checkbox;
-use Initbiz\Newsletter\Classes\SendEmail;
 use Initbiz\Newsletter\Models\Settings;
 use Initbiz\Newsletter\Models\Subscriber;
 
 class Form extends ComponentBase
 {
+    public $checkboxes;
+
+    public $selectedInputs;
+
     public function componentDetails()
     {
         return [
@@ -35,6 +37,14 @@ class Form extends ComponentBase
                 'title' => 'initbiz.newsletter::lang.form_component.tags',
                 'type' => 'set',
             ],
+            'input' => [
+                'title' => 'initbiz.newsletter::lang.form_component.inputs',
+                'type' => 'set',
+            ],
+            'inputOrder' => [
+                'title' => 'initbiz.newsletter::lang.form_component.inputs',
+                'type' => 'set',
+            ],
         ];
     }
 
@@ -43,9 +53,43 @@ class Form extends ComponentBase
         return Tag::all()->pluck('name', 'slug')->toArray();
     }
 
+    public function getInputsOptions(): array
+    {
+        $inputs = [];
+        foreach (Subscriber::getFillableAttributes() as $fillableAttribute => $def) {
+            $inputs[$fillableAttribute] = $def['label'];
+        }
+        return $inputs;
+    }
+
     public function onRun()
     {
-        $this->page['checkboxes'] = Checkbox::all();
+        $this->checkboxes = $this->page['checkboxes'] = Checkbox::all();
+        $this->selectedInputs = $this->getSelectedInputs();
+    }
+
+    public function onRender()
+    {
+        // Use the default template from the theme, otherwise fallback to default behavior
+        try {
+            return $this->renderPartial('newsletterform/default', ['__SELF__' => $this]);
+        } catch (\Cms\Classes\CmsException $th) {
+            return null;
+        }
+    }
+
+    public function getSelectedInputs(): array
+    {
+        $selectedInputs = (array) $this->property('inputs');
+
+        $selectedInputsDefs = [];
+        foreach (Subscriber::getFillableAttributes() as $fillableAttribute => $def) {
+            if (in_array($fillableAttribute, $selectedInputs)) {
+                $selectedInputsDefs[$fillableAttribute] = $def;
+            }
+        }
+
+        return $selectedInputsDefs;
     }
 
     // AJAX handlers
@@ -73,6 +117,7 @@ class Form extends ComponentBase
             }
         }
 
+        /** @var Subscriber */
         $subscriber = Subscriber::where('email', $data['email'])->first();
 
         if (!$subscriber) {

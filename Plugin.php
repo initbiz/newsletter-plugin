@@ -75,11 +75,17 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            'Initbiz\Newsletter\Components\NewsletterConfirm' => 'newsletterConfirm',
-            'Initbiz\Newsletter\Components\Form' => 'newsletterForm'
+            \Initbiz\Newsletter\Components\NewsletterConfirm::class => 'newsletterConfirm',
+            \Initbiz\Newsletter\Components\Form::class => 'newsletterForm'
         ];
     }
 
+    public function registerPageSnippets()
+    {
+        return [
+            \Initbiz\Newsletter\Components\Form::class => 'newsletterForm'
+        ];
+    }
 
     public function registerMailTemplates()
     {
