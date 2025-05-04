@@ -153,7 +153,7 @@ class MailerLiteHandler
             $fields['city'] = $subscriber->city;
         }
 
-        $fields = array_merge($fields, $subscriber->getAdditionalDataKeyValue());
+        $fields = array_merge($fields, $subscriber->getAdditionalFieldsKeyValue());
 
         $status = ($subscriber->confirmed) ? 'active' : 'unconfirmed';
 

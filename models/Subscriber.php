@@ -331,23 +331,21 @@ class Subscriber extends Model
     }
 
     /**
-     * Getting additional_data in key=>value format
+     * Getting additional_fields in key=>value format
      *
      * @return array
      */
-    public function getAdditionalDataKeyValue(): array
+    public function getAdditionalFieldsKeyValue(): array
     {
-        $additionalData = $this->additional_data;
-        if (!is_array($additionalData)) {
-            $additionalData = [];
+        $additionalFields = $this->additional_fields;
+        if (!is_array($additionalFields)) {
+            $additionalFields = [];
         }
 
         $parsed = [];
-
-        foreach ($additionalData as $additionalDataEntry) {
-            $parsed[$additionalDataEntry['key']] = $additionalDataEntry['value'];
+        foreach ($additionalFields as $additionalFieldsEntry) {
+            $parsed[$additionalFieldsEntry['key']] = $additionalFieldsEntry['value'];
         }
-
         return $parsed;
     }
 
