@@ -213,10 +213,10 @@ class Subscriber extends Model
          * @var Settings
          */
         $settings = Settings::instance();
-        $additionalFields = $settings->additional_fields;
+        $additionalFieldsDefs = $settings->additional_fields;
         $validationRule = '';
-        if (!empty($additionalFields)) {
-            foreach ($additionalFields as $additionalFieldDef) {
+        if (!empty($additionalFieldsDefs)) {
+            foreach ($additionalFieldsDefs as $additionalFieldDef) {
                 if ($additionalFieldDef['attribute'] === $key) {
                     $validationRule = $additionalFieldDef['rules'];
                     break;
@@ -236,6 +236,7 @@ class Subscriber extends Model
         $newAdditionalFields = [];
         foreach ($additionalFields as $additionalField) {
             if ($additionalField['key'] === $key) {
+                $additionalField['value'] = $value;
                 $found = true;
             }
             $newAdditionalFields[] = $additionalField;
