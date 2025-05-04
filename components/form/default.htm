@@ -32,7 +32,11 @@
         })
 
         $('#{{ __SELF__ }}-subscribe').on('ajaxError', function(event, context, error) {
-            $('#{{ __SELF__ }}-errorMsg').text(error);
+            let errorMessage = error.X_OCTOBER_ERROR_MESSAGE;
+            if (!errorMessage) {
+                errorMessage = error;
+            }
+            $('#{{ __SELF__ }}-errorMsg').text(errorMessage);
             $('#{{ __SELF__ }}-errorMsg').parent().show().delay(2000).fadeOut(500);
             event.preventDefault();
         })

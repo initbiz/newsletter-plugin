@@ -23,7 +23,8 @@ class Form extends ComponentBase
     {
         return [
             'name'        => 'NewsletterForm',
-            'description' => 'Newsletter Form component'
+            'description' => 'Newsletter Form component',
+            'snippetAjax' => true,
         ];
     }
 
@@ -75,19 +76,19 @@ class Form extends ComponentBase
         $this->buttonText = $this->property('buttonText');
     }
 
-    // public function onRender()
-    // {
-    //     /*
-    //      * Make it possible to overwrite the view for all aliases with newsletterform directory
-    //      * It's handy when placing many forms on a single page, e.g. with snippets
-    //      * But keep in mind that making it alias will break rendering partials from partials
-    //      */
-    //     try {
-    //         return $this->renderPartial('newsletterform/default', ['__SELF__' => $this]);
-    //     } catch (\Cms\Classes\CmsException $th) {
-    //         return null;
-    //     }
-    // }
+    public function onRender()
+    {
+        /*
+         * Make it possible to overwrite the view for all aliases with newsletterform directory
+         * It's handy when placing many forms on a single page, e.g. with snippets
+         * But keep in mind that making it alias will break rendering partials from partials
+         */
+        try {
+            return $this->renderPartial('newsletterform/default', ['__SELF__' => $this]);
+        } catch (\Cms\Classes\CmsException $th) {
+            return null;
+        }
+    }
 
     public function getSelectedInputs(): array
     {
