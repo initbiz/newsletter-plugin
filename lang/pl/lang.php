@@ -143,12 +143,13 @@ return [
         'tags' => 'Tagi',
     ],
 
-    'userColumns' => [
+    'user_columns' => [
         'email' => 'E-mail',
         'agreement' => 'Zgoda',
         'joined' => 'Dołączył',
         'confirmed' => 'Potwierdzony',
         'tags' => 'Tagi',
+        'slug' => 'Slug',
     ],
 
     'flash' => [

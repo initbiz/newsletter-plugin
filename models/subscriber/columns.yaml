@@ -5,19 +5,19 @@
 columns:
 
     email:
-        label: initbiz.newsletter::lang.userColumns.email
+        label: initbiz.newsletter::lang.user_columns.email
         searchable: true
 
     confirmed:
-        label: initbiz.newsletter::lang.userColumns.confirmed
+        label: initbiz.newsletter::lang.user_columns.confirmed
         type: switch
         searchable: true
 
     created_at:
-        label: initbiz.newsletter::lang.userColumns.joined
+        label: initbiz.newsletter::lang.user_columns.joined
 
     tags_list:
-        label: initbiz.newsletter::lang.userColumns.tags
+        label: initbiz.newsletter::lang.user_columns.tags
         searchable: true
         relation: tags
         select: name
