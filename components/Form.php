@@ -112,8 +112,8 @@ class Form extends ComponentBase
         }
 
         /*
-         * Make it possible to overwrite the view for all aliases with
-         * It's handy when placing many forms on a single page using snippets, but keep in mind
+         * Make it possible to overwrite the view no matter what alias we're in
+         * It's handy when placing many forms on a single page using snippets
          */
         try {
             return $this->renderPartial($this->customViewPath . '/default', ['__SELF__' => $this]);
