@@ -13,6 +13,19 @@ use Initbiz\Newsletter\Models\Settings;
 class Plugin extends PluginBase
 {
     /**
+     * @var array Plugin dependencies
+     */
+    public $require = [];
+
+    public function __construct($app)
+    {
+        if (app()->runningUnitTests()) {
+            $this->require = array_merge($this->require, ['RainLab.Translate']);
+        }
+
+        return parent::__construct($app);
+    }
+    /**
      * Returns information about this plugin.
      *
      * @return array
@@ -90,8 +103,8 @@ class Plugin extends PluginBase
     public function registerMailTemplates()
     {
         return [
-            'initbiz.newsletter::mail.message' => 'initbiz.newsletter::lang.mailTemplates.message',
-            'initbiz.newsletter::mail.subscription' => 'initbiz.newsletter::lang.mailTemplates.confirmation',
+            'initbiz.newsletter::mail.message',
+            'initbiz.newsletter::mail.subscription',
         ];
     }
 

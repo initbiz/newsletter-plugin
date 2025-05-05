@@ -2,6 +2,7 @@
 
 namespace Initbiz\Newsletter\Models;
 
+use Cms;
 use Model;
 use Cms\Classes\Page;
 use Initbiz\Newsletter\Classes\Helpers;
@@ -37,7 +38,12 @@ class Settings extends Model
             $this->subscription_manage_token_param => $token
         ];
 
-        return Page::url($this->subscription_manage_page, $params);
+        $subscriptionPage = $this->subscription_manage_page ?? '';
+        if (empty($subscriptionPage)) {
+            return url('/');
+        }
+
+        return Cms::pageUrl($subscriptionPage, $params);
     }
 
     protected function getSubscriptionManagePage(): ?string
