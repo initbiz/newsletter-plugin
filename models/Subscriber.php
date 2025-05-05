@@ -351,6 +351,8 @@ class Subscriber extends Model
 
     /**
      * Get all attributes of the subscriber that can be set from frontend form
+     * It returns an array with all the necessary details to render nice form with validation rules,
+     * labels, and input placeholders
      *
      * @return array
      */

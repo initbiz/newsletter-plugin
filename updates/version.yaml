@@ -47,3 +47,7 @@
     - Hot fix, typo in lang
 1.1.2:
     - Fix additional data and fillable
+1.2.0:
+    - Fix MailerLite integration
+    - Make form component configurable and usable as a snippet
+    - Add custom fields definition in the settings

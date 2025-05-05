@@ -6,7 +6,6 @@ use Event;
 use Backend;
 use System\Classes\PluginBase;
 use Initbiz\Newsletter\Models\Settings;
-use Cms\Classes\Snippet;
 
 /**
  * Newsletter plugin
@@ -31,16 +30,6 @@ class Plugin extends PluginBase
     public function boot()
     {
         Event::subscribe(\Initbiz\Newsletter\EventHandlers\MailerLiteHandler::class);
-
-        /**
-         * To be removed if https://github.com/octobercms/october-private/issues/697
-         * is fixed
-         */
-        // Event::listen('pages.snippets.listSnippets', function($manager) {
-        //     $snippet = new Snippet();
-        //     $snippet->initFromComponentInfo(\Initbiz\Newsletter\Components\Form::class, 'newsletterForm');
-        //     $manager->addSnippet($snippet);
-        // });
     }
 
     public function registerNavigation()

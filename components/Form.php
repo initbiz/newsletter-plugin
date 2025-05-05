@@ -80,8 +80,8 @@ class Form extends ComponentBase
     {
         /*
          * Make it possible to overwrite the view for all aliases with newsletterform directory
-         * It's handy when placing many forms on a single page, e.g. with snippets
-         * But keep in mind that making it alias will break rendering partials from partials
+         * It's handy when placing many forms on a single page using snippets, but keep in mind
+         * that doing so will break rendering partials from partials using @ syntax
          */
         try {
             return $this->renderPartial('newsletterform/default', ['__SELF__' => $this]);
@@ -90,6 +90,11 @@ class Form extends ComponentBase
         }
     }
 
+    /**
+     * Get inputs with their definitions using inputs property
+     *
+     * @return array
+     */
     public function getSelectedInputs(): array
     {
         $selectedInputs = (array) $this->property('inputs');
