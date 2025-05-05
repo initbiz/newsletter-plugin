@@ -87,6 +87,8 @@ return [
         'confirm_automatically' => 'Automatycznie potwierdź',
         'inputs' => 'Pola',
         'button_text' => 'Napis na przycisku',
+        'custom_view_path' => 'Nadpisany widok',
+        'custom_view_path_description' => 'Ustaw tę wartość na nazwę katalogu z theme/partials, żeby napisać widok',
     ],
 
     'subscribers' => [

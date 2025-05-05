@@ -1,7 +1,10 @@
-
+{% set viewPath = __SELF__ ~ "::" %}
+{% if __SELF__.customViewPath %}
+    {% set viewPath = __SELF__.customViewPath ~ "/" %}
+{% endif %}
 <form data-request="{{ __SELF__ }}::onSubscription" id="{{ __SELF__ }}-subscribe">
     {% for attribute,inputDef in __SELF__.selectedInputs %}
-        {% partial __SELF__ ~ '::input_' ~ inputDef.type attribute=attribute label=inputDef.label input_placeholder=inputDef.input_placeholder %}
+        {% partial viewPath ~ 'input_' ~ inputDef.type attribute=attribute label=inputDef.label input_placeholder=inputDef.input_placeholder %}
     {% endfor %}
     {% for checkbox in __SELF__.checkboxes %}
         <div class="form-group">

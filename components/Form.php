@@ -13,11 +13,33 @@ use Initbiz\Newsletter\Models\Subscriber;
 
 class Form extends ComponentBase
 {
+    /**
+     * List of checkboxes set in the backend
+     *
+     * @var null|array
+     */
     public $checkboxes;
 
+    /**
+     * List of inputs selected in the component to be rendered
+     *
+     * @var null|array
+     */
     public $selectedInputs;
 
+    /**
+     * Text displayed on the button
+     *
+     * @var null|string
+     */
     public $buttonText;
+
+    /**
+     * Directory to get view from (handy for snippets)
+     *
+     * @var null|string
+     */
+    public $customViewPath;
 
     public function componentDetails()
     {
@@ -40,17 +62,22 @@ class Form extends ComponentBase
                 'title' => 'initbiz.newsletter::lang.form_component.tags',
                 'type' => 'set',
             ],
-            'buttonText' => [
-                'title' => 'initbiz.newsletter::lang.form_component.button_text',
-                'type' => 'string',
-                'default' => 'initbiz.newsletter::lang.form.button_text'
-            ],
             'inputs' => [
                 'title' => 'initbiz.newsletter::lang.form_component.inputs',
                 'type' => 'set',
                 'default' => [
                     'email',
                 ],
+            ],
+            'buttonText' => [
+                'title' => 'initbiz.newsletter::lang.form_component.button_text',
+                'type' => 'string',
+                'default' => 'initbiz.newsletter::lang.form.button_text'
+            ],
+            'customViewPath' => [
+                'title' => 'initbiz.newsletter::lang.form_component.custom_view_path',
+                'description' => 'initbiz.newsletter::lang.form_component.custom_view_path_description',
+                'type' => 'string',
             ],
         ];
     }
@@ -74,19 +101,23 @@ class Form extends ComponentBase
         $this->checkboxes = $this->page['checkboxes'] = Checkbox::all();
         $this->selectedInputs = $this->getSelectedInputs();
         $this->buttonText = $this->property('buttonText');
+        $this->customViewPath = $this->property('customViewPath');
     }
 
     public function onRender()
     {
+        $this->customViewPath = $this->property('customViewPath');
+        if (empty($this->customViewPath)) {
+            return;
+        }
+
         /*
-         * Make it possible to overwrite the view for all aliases with newsletterform directory
+         * Make it possible to overwrite the view for all aliases with
          * It's handy when placing many forms on a single page using snippets, but keep in mind
-         * that doing so will break rendering partials from partials using @ syntax
          */
         try {
-            return $this->renderPartial('newsletterform/default', ['__SELF__' => $this]);
+            return $this->renderPartial($this->customViewPath . '/default', ['__SELF__' => $this]);
         } catch (\Cms\Classes\CmsException $th) {
-            return null;
         }
     }
 

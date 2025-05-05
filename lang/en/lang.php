@@ -87,6 +87,8 @@ return [
         'confirm_automatically' => 'Confirm automatically',
         'inputs' => 'Inputs',
         'button_text' => 'Text on button',
+        'custom_view_path' => 'Custom view directory',
+        'custom_view_path_description' => 'Set this to the name of directory in your theme/partials to overwrite the view',
     ],
 
     'subscribers' => [
