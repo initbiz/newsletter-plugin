@@ -14,10 +14,8 @@ class EventsTest extends PluginTestCase
     {
         Event::fake([
             "initbiz.newsletter.subscriberCreate",
-            "initbiz.newsletter.subscriberSave",
             "initbiz.newsletter.subscriberDelete",
             "initbiz.newsletter.tagCreate",
-            "initbiz.newsletter.tagSave",
             "initbiz.newsletter.tagDelete",
             "initbiz.newsletter.subscriberCheckboxesAttached",
             "initbiz.newsletter.subscriberCheckboxesDetached",

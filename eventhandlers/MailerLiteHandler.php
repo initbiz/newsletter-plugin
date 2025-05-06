@@ -90,7 +90,11 @@ class MailerLiteHandler
 
             $newGroups = [];
             foreach ($tags as $tag) {
-                $newGroups[] = $tag->getAdditionalData('mailerlite_id');
+                $mailerLiteId = $tag->getAdditionalData('mailerlite_id');
+                if (!$mailerLiteId) {
+                    continue;
+                }
+                $newGroups[] = $mailerLiteId;
             }
             $data['groups'] = array_merge($newGroups, $data['groups']);
 
@@ -153,7 +157,7 @@ class MailerLiteHandler
             $fields['city'] = $subscriber->city;
         }
 
-        $fields = array_merge($fields, $subscriber->getAdditionalDataKeyValue());
+        $fields = array_merge($fields, $subscriber->getAdditionalFieldsKeyValue());
 
         $status = ($subscriber->confirmed) ? 'active' : 'unconfirmed';
 
