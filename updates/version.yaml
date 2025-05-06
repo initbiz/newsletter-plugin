@@ -51,3 +51,7 @@
     - October 3.6 registerMailTemplates bugfix
 1.1.4:
     - "Update tests for newest RainLab plugins"
+1.2.0:
+    - Fix MailerLite integration
+    - Make form component configurable and usable as a snippet
+    - Add custom fields definition in the settings

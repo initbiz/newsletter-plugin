@@ -4,10 +4,13 @@ namespace Initbiz\Newsletter\Models;
 
 use Model;
 use Event;
+use Validator;
 use Initbiz\Newsletter\Models\Tag;
 use October\Rain\Database\Collection;
 use Initbiz\Newsletter\Classes\Helpers;
 use Initbiz\Newsletter\Models\Checkbox;
+use Initbiz\Newsletter\Models\Settings;
+use October\Rain\Exception\ValidationException;
 
 class Subscriber extends Model
 {
@@ -36,6 +39,8 @@ class Subscriber extends Model
 
     public $rules = [
         'email' => 'required|email|between:6,255|unique:initbiz_newsletter_subscribers',
+        'first_name' => 'nullable|max:250',
+        'last_name' => 'nullable|max:250',
         'address_line1' => 'nullable|max:250',
         'address_line2' => 'nullable|max:250',
         'company' => 'nullable|max:250',
@@ -204,6 +209,29 @@ class Subscriber extends Model
             $additionalFields = [];
         }
 
+        /**
+         * @var Settings
+         */
+        $settings = Settings::instance();
+        $additionalFieldsDefs = $settings->additional_fields;
+        $validationRule = '';
+        if (!empty($additionalFieldsDefs)) {
+            foreach ($additionalFieldsDefs as $additionalFieldDef) {
+                if ($additionalFieldDef['attribute'] === $key) {
+                    $validationRule = $additionalFieldDef['rules'];
+                    break;
+                }
+            }
+        }
+
+        // Backwards compatibility will let it save even if the rule is not defined
+        if (!empty($validationRule)) {
+            $validator = Validator::make([$key => $value], [$key => $validationRule]);
+            if ($validator->fails()) {
+                throw new ValidationException($validator);
+            }
+        }
+
         $found = false;
         $newAdditionalFields = [];
         foreach ($additionalFields as $additionalField) {
@@ -303,23 +331,129 @@ class Subscriber extends Model
     }
 
     /**
-     * Getting additional_data in key=>value format
+     * Getting additional_fields in key=>value format
      *
      * @return array
      */
-    public function getAdditionalDataKeyValue(): array
+    public function getAdditionalFieldsKeyValue(): array
     {
-        $additionalData = $this->additional_data;
-        if (!is_array($additionalData)) {
-            $additionalData = [];
+        $additionalFields = $this->additional_fields;
+        if (!is_array($additionalFields)) {
+            $additionalFields = [];
         }
 
         $parsed = [];
+        foreach ($additionalFields as $additionalFieldsEntry) {
+            $parsed[$additionalFieldsEntry['key']] = $additionalFieldsEntry['value'];
+        }
+        return $parsed;
+    }
 
-        foreach ($additionalData as $additionalDataEntry) {
-            $parsed[$additionalDataEntry['key']] = $additionalDataEntry['value'];
+    /**
+     * Get all attributes of the subscriber that can be set from frontend form
+     * It returns an array with all the necessary details to render nice form with validation rules,
+     * labels, and input placeholders
+     *
+     * @return array
+     */
+    public static function getFillableAttributes(): array
+    {
+        $rules = (new self())->rules;
+
+        $fillableAttributes = [
+            'email' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.email',
+                'type' => 'email',
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_email',
+                'rules' => $rules['email'],
+            ],
+            'first_name' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.first_name',
+                'type' => 'text',
+                'rules' => $rules['first_name'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_first_name',
+            ],
+            'last_name' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.last_name',
+                'type' => 'text',
+                'rules' => $rules['last_name'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_last_name',
+            ],
+            'sex' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.sex',
+                'type' => 'text',
+                'rules' => $rules['sex'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_sex',
+            ],
+            'address_line1' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.address_line1',
+                'type' => 'text',
+                'rules' => $rules['address_line1'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_address_line1',
+            ],
+            'address_line2' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.address_line2',
+                'type' => 'text',
+                'rules' => $rules['address_line2'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_address_line2',
+            ],
+            'company' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.company',
+                'type' => 'text',
+                'rules' => $rules['company'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_company',
+            ],
+            'phone' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.phone',
+                'type' => 'text',
+                'rules' => $rules['phone'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_phone',
+            ],
+            'zip' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.zip',
+                'type' => 'text',
+                'rules' => $rules['zip'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_zip',
+            ],
+            'city' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.city',
+                'type' => 'text',
+                'rules' => $rules['city'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_city',
+            ],
+            'date_of_birth' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.date_of_birth',
+                'type' => 'text',
+                'rules' => $rules['date_of_birth'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_date_of_birth',
+            ],
+            'age' => [
+                'label' => 'initbiz.newsletter::lang.subscriber.age',
+                'type' => 'text',
+                'rules' => $rules['age'],
+                'input_placeholder' => 'initbiz.newsletter::lang.form.placeholder_age',
+            ],
+        ];
+
+        /**
+         * @var Settings
+         */
+        $settings = Settings::instance();
+        $additionalFields = $settings->additional_fields;
+        if (!empty($additionalFields)) {
+            foreach ($additionalFields as $additionalFieldDef) {
+                $attribute = 'additional_fields[' . $additionalFieldDef['attribute'] . ']';
+                $fillableAttributes[$attribute] = [
+                    'label' => $additionalFieldDef['label'],
+                    'type' => $additionalFieldDef['type'],
+                    'rules' => $additionalFieldDef['rules'],
+                    'input_placeholder' => $additionalFieldDef['input_placeholder'],
+                ];
+            }
         }
 
-        return $parsed;
+        Event::fire('initbiz.newsletter.extendFillableAttributes', [&$fillableAttributes]);
+
+        return $fillableAttributes;
     }
 }

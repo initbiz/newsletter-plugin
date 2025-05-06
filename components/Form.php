@@ -7,19 +7,46 @@ use Mail;
 use ValidationException;
 use Cms\Classes\ComponentBase;
 use Initbiz\Newsletter\Models\Tag;
-use Initbiz\Newsletter\Classes\Helpers;
 use Initbiz\Newsletter\Models\Checkbox;
-use Initbiz\Newsletter\Classes\SendEmail;
 use Initbiz\Newsletter\Models\Settings;
 use Initbiz\Newsletter\Models\Subscriber;
 
 class Form extends ComponentBase
 {
+    /**
+     * List of checkboxes set in the backend
+     *
+     * @var null|array
+     */
+    public $checkboxes;
+
+    /**
+     * List of inputs selected in the component to be rendered
+     *
+     * @var null|array
+     */
+    public $selectedInputs;
+
+    /**
+     * Text displayed on the button
+     *
+     * @var null|string
+     */
+    public $buttonText;
+
+    /**
+     * Directory to get view from (handy for snippets)
+     *
+     * @var null|string
+     */
+    public $customViewPath;
+
     public function componentDetails()
     {
         return [
             'name'        => 'NewsletterForm',
-            'description' => 'Newsletter Form component'
+            'description' => 'Newsletter Form component',
+            'snippetAjax' => true,
         ];
     }
 
@@ -35,6 +62,23 @@ class Form extends ComponentBase
                 'title' => 'initbiz.newsletter::lang.form_component.tags',
                 'type' => 'set',
             ],
+            'inputs' => [
+                'title' => 'initbiz.newsletter::lang.form_component.inputs',
+                'type' => 'set',
+                'default' => [
+                    'email',
+                ],
+            ],
+            'buttonText' => [
+                'title' => 'initbiz.newsletter::lang.form_component.button_text',
+                'type' => 'string',
+                'default' => 'initbiz.newsletter::lang.form.button_text'
+            ],
+            'customViewPath' => [
+                'title' => 'initbiz.newsletter::lang.form_component.custom_view_path',
+                'description' => 'initbiz.newsletter::lang.form_component.custom_view_path_description',
+                'type' => 'string',
+            ],
         ];
     }
 
@@ -43,9 +87,57 @@ class Form extends ComponentBase
         return Tag::all()->pluck('name', 'slug')->toArray();
     }
 
+    public function getInputsOptions(): array
+    {
+        $inputs = [];
+        foreach (Subscriber::getFillableAttributes() as $fillableAttribute => $def) {
+            $inputs[$fillableAttribute] = $def['label'];
+        }
+        return $inputs;
+    }
+
     public function onRun()
     {
-        $this->page['checkboxes'] = Checkbox::all();
+        $this->checkboxes = $this->page['checkboxes'] = Checkbox::all();
+        $this->selectedInputs = $this->getSelectedInputs();
+        $this->buttonText = $this->property('buttonText');
+        $this->customViewPath = $this->property('customViewPath');
+    }
+
+    public function onRender()
+    {
+        $this->customViewPath = $this->property('customViewPath');
+        if (empty($this->customViewPath)) {
+            return;
+        }
+
+        /*
+         * Make it possible to overwrite the view no matter what alias we're in
+         * It's handy when placing many forms on a single page using snippets
+         */
+        try {
+            return $this->renderPartial($this->customViewPath . '/default', ['__SELF__' => $this]);
+        } catch (\Cms\Classes\CmsException $th) {
+        }
+    }
+
+    /**
+     * Get inputs with their definitions using inputs property
+     *
+     * @return array
+     */
+    public function getSelectedInputs(): array
+    {
+        $selectedInputs = (array) $this->property('inputs');
+
+        $selectedInputsDefs = [];
+        foreach (Subscriber::getFillableAttributes() as $fillableAttribute => $def) {
+            if (in_array($fillableAttribute, $selectedInputs)) {
+                $selectedInputsDefs[$fillableAttribute] = $def;
+            }
+        }
+
+        return $selectedInputsDefs;
     }
 
     // AJAX handlers
@@ -73,6 +165,7 @@ class Form extends ComponentBase
             }
         }
 
+        /** @var Subscriber */
         $subscriber = Subscriber::where('email', $data['email'])->first();
 
         if (!$subscriber) {
