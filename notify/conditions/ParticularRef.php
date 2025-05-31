@@ -32,6 +32,13 @@ class ParticularRef extends ConditionBase
 
     public function isTrue(&$params)
     {
-        return $params['ref'] === $this->host->ref;
+        $refs = $this->host->ref;
+        $refsArray = [];
+
+        foreach (explode(',', $refs) as $ref) {
+            $refsArray[] = trim($ref);
+        }
+
+        return in_array($params['ref'], $refsArray, true);
     }
 }

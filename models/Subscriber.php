@@ -1,15 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter\Models;
 
-use Model;
 use Event;
+use Model;
 use Validator;
-use Initbiz\Newsletter\Models\Tag;
 use October\Rain\Database\Collection;
 use Initbiz\Newsletter\Classes\Helpers;
-use Initbiz\Newsletter\Models\Checkbox;
-use Initbiz\Newsletter\Models\Settings;
 use October\Rain\Exception\ValidationException;
 
 class Subscriber extends Model

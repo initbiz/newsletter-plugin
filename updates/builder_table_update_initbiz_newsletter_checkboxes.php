@@ -1,4 +1,8 @@
-<?php namespace Initbiz\Newsletter\Updates;
+<?php
+
+declare(strict_types=1);
+
+namespace Initbiz\Newsletter\Updates;
 
 use Schema;
 use October\Rain\Database\Updates\Migration;

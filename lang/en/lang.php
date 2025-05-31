@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'plugin' => [
         'name' => 'Newsletter',
@@ -243,5 +245,6 @@ return [
         'name' => 'Trigger the event only when ref matches',
         'text' => 'Ref is :ref',
         'ref' => 'Reference of the form to compare',
+        'ref_comment' => 'You can type many refs comma separated',
     ],
 ];

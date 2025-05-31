@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'plugin' => [
         'name' => 'Newsletter',
@@ -243,5 +245,6 @@ return [
         'name' => 'Włącz kiedy nazwa punktu odniesienia pasuje',
         'text' => 'Gdy ref to :ref',
         'ref' => 'Ref do porównania',
+        'ref_comment' => 'Możesz wpisać wiele wartości po przecinkach',
     ],
 ];

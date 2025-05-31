@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter\EventHandlers;
 
 use MailerLite\MailerLite;

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter\Models;
 
-use Model;
 use Event;
+use Model;
 
 /**
  * Tag Model

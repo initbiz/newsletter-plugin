@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter;
 
 use Lang;
@@ -45,7 +47,6 @@ class Plugin extends PluginBase
     {
         Event::subscribe(\Initbiz\Newsletter\EventHandlers\MailerLiteHandler::class);
     }
-
 
     public function register()
     {
@@ -154,7 +155,6 @@ class Plugin extends PluginBase
             ],
         ];
     }
-
 
     public function registerPermissions()
     {
