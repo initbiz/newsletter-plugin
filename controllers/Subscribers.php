@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter\Controllers;
 
 use Lang;
@@ -20,7 +22,6 @@ class Subscribers extends Controller
     public $listConfig = 'config_list.yaml';
     public $importExportConfig = 'config_import_export.yaml';
 
-
     public $requiredPermissions = ['initbiz.newsletter.subscribers'];
 
     public function __construct()
@@ -36,8 +37,9 @@ class Subscribers extends Controller
             $subscribers = Subscriber::get();
             foreach ($checkedId as $subscriberId) {
                 foreach ($subscribers as $subscriber) {
-                    if ($subscriber->id !== (int) $subscriberId)
+                    if ($subscriber->id !== (int) $subscriberId) {
                         continue;
+                    }
                     $subscriber->delete();
                     Flash::success(Lang::get('initbiz.newsletter::lang.flash.deleted'));
                 }

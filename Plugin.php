@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter;
 
 use Event;
@@ -121,7 +123,6 @@ class Plugin extends PluginBase
             ],
         ];
     }
-
 
     public function registerPermissions()
     {

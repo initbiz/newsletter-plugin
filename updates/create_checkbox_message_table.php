@@ -1,8 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 namespace InITbiz\Newsletter\Updates;
 
-use October\Rain\Database\Updates\Migration;
 use Schema;
+use October\Rain\Database\Updates\Migration;
 
 class CreateCheckbox_MessageTable extends Migration
 {

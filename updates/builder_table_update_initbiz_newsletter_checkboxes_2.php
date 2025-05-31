@@ -1,7 +1,10 @@
-<?php namespace Initbiz\Newsletter\Updates;
+<?php
+
+declare(strict_types=1);
+
+namespace Initbiz\Newsletter\Updates;
 
 use Schema;
-use Initbiz\Newsletter\Models\Checkbox;
 use October\Rain\Database\Updates\Migration;
 
 class BuilderTableUpdateInitbizNewsletterCheckboxes2 extends Migration

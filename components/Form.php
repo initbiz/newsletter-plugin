@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter\Components;
 
 use Lang;
@@ -132,7 +134,7 @@ class Form extends ComponentBase
 
         $selectedInputsDefs = [];
         foreach (Subscriber::getFillableAttributes() as $fillableAttribute => $def) {
-            if (in_array($fillableAttribute, $selectedInputs)) {
+            if (in_array($fillableAttribute, $selectedInputs, true)) {
                 $selectedInputsDefs[$fillableAttribute] = $def;
             }
         }
@@ -158,7 +160,7 @@ class Form extends ComponentBase
         $checkedCheckboxesIds = $checkedCheckboxes->pluck('id')->toArray();
 
         foreach ($requiredCheckboxes as $requiredCheckbox) {
-            if (!in_array($requiredCheckbox->id, $checkedCheckboxesIds)) {
+            if (!in_array($requiredCheckbox->id, $checkedCheckboxesIds, true)) {
                 throw new ValidationException([
                     'requiredCheckboxes' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.checkbox_validation_failed')
                 ]);

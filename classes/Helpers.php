@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter\Classes;
 
 use Cache;
@@ -40,7 +42,6 @@ class Helpers
         return url('/') . $managementPageUrl;
     }
 
-
     /**
      * Find page with the specified component
      * @param  string $componentName component's name
@@ -66,7 +67,6 @@ class Helpers
             }
         }
     }
-
 
     /**
      * Generate a random string, using a cryptographically secure

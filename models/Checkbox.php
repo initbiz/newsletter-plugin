@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter\Models;
 
 use Model;
@@ -39,7 +41,6 @@ class Checkbox extends Model
             'table' => 'initbiz_newsletter_checkbox_message'
         ]
     ];
-
 
     public $implement = ['@RainLab.Translate.Behaviors.TranslatableModel'];
 
