@@ -44,8 +44,8 @@ class Form extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'NewsletterForm',
-            'description' => 'Newsletter Form component',
+            'name' => 'initbiz.newsletter::lang.form_component.name',
+            'description' => 'initbiz.newsletter::lang.form_component.description',
             'snippetAjax' => true,
         ];
     }
@@ -58,10 +58,12 @@ class Form extends ComponentBase
                 'type' => 'checkbox',
                 'default' => 0,
             ],
+
             'tags' => [
                 'title' => 'initbiz.newsletter::lang.form_component.tags',
                 'type' => 'set',
             ],
+
             'inputs' => [
                 'title' => 'initbiz.newsletter::lang.form_component.inputs',
                 'type' => 'set',
@@ -69,11 +71,13 @@ class Form extends ComponentBase
                     'email',
                 ],
             ],
+
             'buttonText' => [
                 'title' => 'initbiz.newsletter::lang.form_component.button_text',
                 'type' => 'string',
                 'default' => 'initbiz.newsletter::lang.form.button_text'
             ],
+
             'customViewPath' => [
                 'title' => 'initbiz.newsletter::lang.form_component.custom_view_path',
                 'description' => 'initbiz.newsletter::lang.form_component.custom_view_path_description',

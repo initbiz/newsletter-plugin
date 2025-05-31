@@ -7,11 +7,6 @@ return [
         'author' => 'InIT.biz Ltd.'
     ],
 
-    'mailTemplates' => [
-        'message' => 'Message that is being sent to subscribers',
-        'confirmation' => 'Mail with confirmation message'
-    ],
-
     'settings' => [
         'label' => 'Newsletter settings',
         'description' => 'Manage newsletter plugin',
@@ -83,6 +78,8 @@ return [
     ],
 
     'form_component' => [
+        'name' => 'Newsletter form',
+        'description' => 'Newsletter form component',
         'tags' => 'Tags to add the subscriber',
         'confirm_automatically' => 'Confirm automatically',
         'inputs' => 'Inputs',
@@ -94,7 +91,7 @@ return [
     'subscribers' => [
         'import_subscribers' => 'Import subscribers',
         'export_subscribers' => 'Export subscribers',
-        'email' => 'Email',
+        'email' => 'E-mail',
     ],
 
     'permission' => [
@@ -165,7 +162,7 @@ return [
         'updated' => 'Checkbox successfully updated',
     ],
 
-    'flash_checkboxes' => [
+    'flash_subscribers' => [
         'deleted' => 'Subscriber successfully deleted',
         'saved' => 'Subscriber successfully saved',
         'updated' => 'Subscriber successfully updated',
@@ -230,5 +227,21 @@ return [
 
     'mail' => [
         'activation_subject' => 'Confirm your e-mail address'
-    ]
+    ],
+
+    // Notify
+
+    'form_submitted_event' => [
+        'name' => 'Newsletter form submitted',
+        'description' => 'Triggers when somebody submits the newsletter form',
+        'ref' => 'Reference of the form that was submitted',
+        'post_data' => 'Data sent with the form',
+        'url' => 'URL that the form was submitted from',
+    ],
+
+    'particular_ref_condition' => [
+        'name' => 'Trigger the event only when ref matches',
+        'text' => 'Ref is :ref',
+        'ref' => 'Reference of the form to compare',
+    ],
 ];

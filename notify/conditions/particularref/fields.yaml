@@ -1,0 +1,4 @@
+fields:
+    ref:
+        label: initbiz.newsletter::lang.particular_ref_condition.ref
+        type: text

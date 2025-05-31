@@ -7,11 +7,6 @@ return [
         'author' => 'InIT.biz Ltd.',
     ],
 
-    'mailTemplates' => [
-        'message' => 'Wiadomość, która jest wysyłana do subskrybentów',
-        'confirmation' => 'Wiadomość potwierdzająca zapisanie do newslettera',
-    ],
-
     'settings' => [
         'label' => 'Ustawienia newslettera',
         'description' => 'Zarządzaj pluginem newsletter',
@@ -83,6 +78,8 @@ return [
     ],
 
     'form_component' => [
+        'name' => 'Formularz newslettera',
+        'description' => 'Komponent formularza newslettera',
         'tags' => 'Tagi dodane subskrybentom',
         'confirm_automatically' => 'Automatycznie potwierdź',
         'inputs' => 'Pola',
@@ -165,7 +162,7 @@ return [
         'updated' => 'Checkbox pomyślnie zaktualizowany',
     ],
 
-    'flash_checkboxes' => [
+    'flash_subscribers' => [
         'deleted' => 'Subskrybent pomyślnie usunięty',
         'saved' => 'Subskrybent pomyślnie zapisany',
         'updated' => 'Subskrybent pomyślnie zaktualizowany ',
@@ -230,5 +227,21 @@ return [
 
     'mail' => [
         'activation_subject' => 'Potwierdź swój adres e-mail',
+    ],
+
+    // Notify
+
+    'form_submitted_event' => [
+        'name' => 'Wysłano formularz newslettera',
+        'description' => 'Włączy się gdy ktoś wyśle formularz newslettera',
+        'ref' => 'Nazwa punktu odniesienia formularza',
+        'post_data' => 'Dane wysłane z formularzem',
+        'url' => 'Adres URL strony, z której wysłano formularz',
+    ],
+
+    'particular_ref_condition' => [
+        'name' => 'Włącz kiedy nazwa punktu odniesienia pasuje',
+        'text' => 'Gdy ref to :ref',
+        'ref' => 'Ref do porównania',
     ],
 ];

@@ -2,6 +2,7 @@
 
 namespace Initbiz\Newsletter;
 
+use Lang;
 use Event;
 use Backend;
 use System\Classes\PluginBase;
@@ -43,6 +44,38 @@ class Plugin extends PluginBase
     public function boot()
     {
         Event::subscribe(\Initbiz\Newsletter\EventHandlers\MailerLiteHandler::class);
+    }
+
+
+    public function register()
+    {
+        \RainLab\Notify\Classes\Notifier::bindEvents([
+            'initbiz.newsletter.formSubmitted' => \Initbiz\Newsletter\Notify\Events\FormSubmitted::class,
+        ]);
+    }
+
+    public function registerNotificationRules()
+    {
+        return [
+            'groups' => [
+                'newsletter' => [
+                    'label' => Lang::get('initbiz.newsletter::lang.events_group.name'),
+                    'icon' => 'icon-envelope'
+                ],
+            ],
+
+            'events' => [
+                \Initbiz\Newsletter\Notify\Events\FormSubmitted::class,
+            ],
+
+            'actions' => [],
+
+            'conditions' => [
+                \Initbiz\Newsletter\Notify\Conditions\ParticularRef::class,
+            ],
+
+            'presets' => [],
+        ];
     }
 
     public function registerNavigation()
