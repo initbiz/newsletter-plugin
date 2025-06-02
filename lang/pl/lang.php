@@ -29,6 +29,7 @@ return [
         'additional_fields_rules_comment' => 'Zobacz <a href="https://docs.octobercms.com/3.x/extend/services/validation.html" target="_blank">walidację w OctoberCMS</a>',
         'enable_mailerlite_integration' => 'Włącz integrację z MailerLite',
         'mailerlite_api_key' => 'Klucz API MailerLite',
+        'mailerlite_webhook_secret' => 'Klucz podpisu webhooka MailerLite (signing secret)',
     ],
 
     'menu' => [
@@ -86,6 +87,8 @@ return [
         'confirm_automatically' => 'Automatycznie potwierdź',
         'inputs' => 'Pola',
         'button_text' => 'Napis na przycisku',
+        'ref' => 'Ref - punkt odniesienia',
+        'ref_description' => 'Punkt odniesienia, żeby zidentyfikować ten formularz',
         'custom_view_path' => 'Nadpisany widok',
         'custom_view_path_description' => 'Ustaw tę wartość na nazwę katalogu z theme/partials, żeby napisać widok',
     ],
@@ -233,12 +236,19 @@ return [
 
     // Notify
 
+    'events_group' => [
+        'name' => 'Newsletter',
+    ],
+
     'form_submitted_event' => [
         'name' => 'Wysłano formularz newslettera',
         'description' => 'Włączy się gdy ktoś wyśle formularz newslettera',
         'ref' => 'Nazwa punktu odniesienia formularza',
         'post_data' => 'Dane wysłane z formularzem',
         'url' => 'Adres URL strony, z której wysłano formularz',
+        'subscriber' => 'Subskrybent',
+        'checked_checkboxes' => 'Lista zaznaczonych checkboxów',
+        'tags' => 'Lista tagów dodawanych z tego formularza',
     ],
 
     'particular_ref_condition' => [
@@ -246,5 +256,11 @@ return [
         'text' => 'Gdy ref to :ref',
         'ref' => 'Ref do porównania',
         'ref_comment' => 'Możesz wpisać wiele wartości po przecinkach',
+    ],
+
+    'particular_tag_condition' => [
+        'name' => 'Włącz kiedy tag jeden z wybranych',
+        'text' => 'Jeden z tagów: :tags',
+        'tags' => 'Tagi',
     ],
 ];

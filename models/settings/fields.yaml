@@ -69,3 +69,13 @@ tabs:
                 action: show
                 condition: checked
                 field: enable_mailerlite_integration
+
+        mailerlite_webhook_secret:
+            label: initbiz.newsletter::lang.settings.mailerlite_webhook_secret
+            tab: initbiz.newsletter::lang.settings.integrations_tab
+            span: left
+            type: sensitive
+            trigger:
+                action: show
+                condition: checked
+                field: enable_mailerlite_integration

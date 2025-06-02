@@ -23,7 +23,10 @@ class Plugin extends PluginBase
     public function __construct($app)
     {
         if (app()->runningUnitTests()) {
-            $this->require = array_merge($this->require, ['RainLab.Translate']);
+            $this->require = array_merge($this->require, [
+                'RainLab.Notify',
+                'RainLab.Translate',
+            ]);
         }
 
         return parent::__construct($app);
@@ -73,6 +76,7 @@ class Plugin extends PluginBase
 
             'conditions' => [
                 \Initbiz\Newsletter\Notify\Conditions\ParticularRef::class,
+                \Initbiz\Newsletter\Notify\Conditions\ParticularTag::class,
             ],
 
             'presets' => [],

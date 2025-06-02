@@ -30,6 +30,7 @@ class Subscriber extends Model
         'city',
         'zip',
         'date_of_birth',
+        'unsubscribed_at',
     ];
 
     public $attributes = [
@@ -60,6 +61,16 @@ class Subscriber extends Model
         'additional_data',
     ];
 
+    /**
+     * @var array dates attributes that should be mutated to dates
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'unsubscribed_at',
+        'date_of_birth',
+    ];
+
     public $belongsToMany = [
         'checkboxes' => [
             Checkbox::class,
@@ -71,6 +82,14 @@ class Subscriber extends Model
             'table' => 'initbiz_newsletter_subscriber_tag',
         ]
     ];
+
+    /**
+     * To prevent loop with integrations set this to true on your instance.
+     * Listeners should check for this value to be false
+     *
+     * @var boolean
+     */
+    public $changedUsingIntegration = false;
 
     public function __construct(array $attributes = [])
     {

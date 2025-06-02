@@ -29,6 +29,7 @@ return [
         'additional_fields_rules_comment' => 'See <a href="https://docs.octobercms.com/3.x/extend/services/validation.html" target="_blank">OctoberCMS validation rules</a>',
         'enable_mailerlite_integration' => 'Enable MailerLite integration',
         'mailerlite_api_key' => 'MailerLite API key',
+        'mailerlite_webhook_secret' => 'MailerLite webhook signing secret',
     ],
 
     'menu' => [
@@ -86,6 +87,8 @@ return [
         'confirm_automatically' => 'Confirm automatically',
         'inputs' => 'Inputs',
         'button_text' => 'Text on button',
+        'ref' => 'Ref',
+        'ref_description' => 'Reference string to identify this form',
         'custom_view_path' => 'Custom view directory',
         'custom_view_path_description' => 'Set this to the name of directory in your theme/partials to overwrite the view',
     ],
@@ -233,12 +236,19 @@ return [
 
     // Notify
 
+    'events_group' => [
+        'name' => 'Newsletter',
+    ],
+
     'form_submitted_event' => [
         'name' => 'Newsletter form submitted',
         'description' => 'Triggers when somebody submits the newsletter form',
         'ref' => 'Reference of the form that was submitted',
         'post_data' => 'Data sent with the form',
         'url' => 'URL that the form was submitted from',
+        'subscriber' => 'Subscriber instance',
+        'checked_checkboxes' => 'List of checked checkboxes',
+        'tags' => 'List of tags to attach using the form',
     ],
 
     'particular_ref_condition' => [
@@ -246,5 +256,11 @@ return [
         'text' => 'Ref is :ref',
         'ref' => 'Reference of the form to compare',
         'ref_comment' => 'You can type many refs comma separated',
+    ],
+
+    'particular_tag_condition' => [
+        'name' => 'Trigger the event only when tag matches',
+        'text' => 'Tag is one of: :tags',
+        'tags' => 'Tags',
     ],
 ];
