@@ -260,6 +260,11 @@ class Form extends ComponentBase
         });
     }
 
+    /**
+     * String identifying this form - reference, if not set - alias is the default ref
+     *
+     * @return string
+     */
     public function getRef(): string
     {
         $ref = $this->property('ref', $this->alias);
