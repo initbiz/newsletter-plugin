@@ -26,7 +26,6 @@ class Tag extends Model
      */
     public $rules = [
         'name' => 'required',
-        'slug' => 'required',
         'additional_data.*.key' => 'nullable|alpha_dash:ascii|max:250',
         'additional_data.*.value' => 'nullable|max:250',
     ];

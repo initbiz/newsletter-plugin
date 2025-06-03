@@ -30,6 +30,7 @@ return [
         'enable_mailerlite_integration' => 'Enable MailerLite integration',
         'mailerlite_api_key' => 'MailerLite API key',
         'mailerlite_webhook_secret' => 'MailerLite webhook signing secret',
+        'mailerlite_webhook_secret_comment' => 'Set [your-domain]/api/initbiz/newsletter/mailerlite <a target="_blank" href="https://dashboard.mailerlite.com/integrations/webhooks">here</a>',
     ],
 
     'menu' => [

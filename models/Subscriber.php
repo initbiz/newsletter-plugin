@@ -13,6 +13,10 @@ use October\Rain\Exception\ValidationException;
 
 class Subscriber extends Model
 {
+    public const STATUS_UNCONFIRMED = 'unconfirmed';
+    public const STATUS_ACTIVE = 'active';
+    public const STATUS_UNSUBSCRIBED = 'unsubscribed';
+
     use \October\Rain\Database\Traits\Validation;
 
     public $table = 'initbiz_newsletter_subscribers';
@@ -34,6 +38,7 @@ class Subscriber extends Model
     ];
 
     public $attributes = [
+        'status' => self::STATUS_UNCONFIRMED,
         'confirmed' => false,
     ];
 
@@ -142,6 +147,18 @@ class Subscriber extends Model
     public function afterCreate()
     {
         Event::fire('initbiz.newsletter.subscriberCreate', [$this]);
+    }
+
+    public function beforeSave()
+    {
+        // Fill status dynamically basing on current subscriber attributes
+        $this->status = self::STATUS_UNCONFIRMED;
+
+        if ($this->confirmed === true) {
+            $this->status = self::STATUS_ACTIVE;
+        } elseif (!empty($this->unsubscribed_at)) {
+            $this->status = self::STATUS_UNSUBSCRIBED;
+        }
     }
 
     public function afterUpdate()

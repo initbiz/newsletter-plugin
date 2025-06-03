@@ -71,8 +71,15 @@ class MailerLiteController extends Controller
         $subscriber = $this->subscriberFromMailerLiteSyntax($data);
 
         $tag = Tag::where('name', $data['group']['name'])->first();
+
         if (!$tag) {
             $tag = new Tag();
+            $tag->name = $data['group']['name'];
+            $tag->setAdditionalData('mailerlite_id', $data['group']['id']);
+            $tag->save();
+        }
+
+        if (empty($tag->getAdditionalData('mailerlite_id'))) {
             $tag->setAdditionalData('mailerlite_id', $data['group']['id']);
             $tag->save();
         }
@@ -87,11 +94,17 @@ class MailerLiteController extends Controller
         $tag = Tag::where('name', $data['group']['name'])->first();
         if (!$tag) {
             $tag = new Tag();
+            $tag->name = $data['group']['name'];
             $tag->setAdditionalData('mailerlite_id', $data['group']['id']);
             $tag->save();
         }
 
-        $subscriber->detach($tag->id);
+        if (empty($tag->getAdditionalData('mailerlite_id'))) {
+            $tag->setAdditionalData('mailerlite_id', $data['group']['id']);
+            $tag->save();
+        }
+
+        $subscriber->tags()->detach($tag->id);
     }
 
     public function subscriberUnsubscribed(array $data): void
@@ -160,7 +173,6 @@ class MailerLiteController extends Controller
             $subscriber->setAdditionalData('mailerlite_id', $data['id']);
             $subscriber->created_at = $data['created_at'];
             $subscriber->updated_at = $data['updated_at'];
-            $subscriber->unsubscribed_at = $data['unsubscribed_at'];
         }
 
         $subscriber->changedUsingIntegration = true;
@@ -193,8 +205,8 @@ class MailerLiteController extends Controller
 
         $subscriber->confirmed = $data['status'] === 'unconfirmed';
 
-        if ($subscriber->unsubscribed_at) {
-            $data['unsubscribed_at'] = $subscriber->unsubscribed_at->format('Y-m-d H:i:s');
+        if (!empty($data['unsubscribed_at'])) {
+            $subscriber->unsubscribed_at = $data['unsubscribed_at'];
         }
 
         return $subscriber;
