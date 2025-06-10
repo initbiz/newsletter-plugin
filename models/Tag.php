@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter\Models;
 
-use Model;
 use Event;
+use Model;
 
 /**
  * Tag Model
@@ -24,7 +26,6 @@ class Tag extends Model
      */
     public $rules = [
         'name' => 'required',
-        'slug' => 'required',
         'additional_data.*.key' => 'nullable|alpha_dash:ascii|max:250',
         'additional_data.*.value' => 'nullable|max:250',
     ];

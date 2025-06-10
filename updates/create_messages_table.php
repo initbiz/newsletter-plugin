@@ -1,7 +1,11 @@
-<?php namespace InITbiz\Newsletter\Updates;
+<?php
 
-use October\Rain\Database\Updates\Migration;
+declare(strict_types=1);
+
+namespace InITbiz\Newsletter\Updates;
+
 use Schema;
+use October\Rain\Database\Updates\Migration;
 
 class CreateMessagesTable extends Migration
 {

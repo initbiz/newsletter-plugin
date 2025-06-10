@@ -1,12 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter\Components;
 
 use Lang;
 use Mail;
+use Event;
+use Request;
 use ValidationException;
 use Cms\Classes\ComponentBase;
 use Initbiz\Newsletter\Models\Tag;
+use October\Rain\Database\Collection;
 use Initbiz\Newsletter\Models\Checkbox;
 use Initbiz\Newsletter\Models\Settings;
 use Initbiz\Newsletter\Models\Subscriber;
@@ -44,8 +49,8 @@ class Form extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'NewsletterForm',
-            'description' => 'Newsletter Form component',
+            'name' => 'initbiz.newsletter::lang.form_component.name',
+            'description' => 'initbiz.newsletter::lang.form_component.description',
             'snippetAjax' => true,
         ];
     }
@@ -58,10 +63,12 @@ class Form extends ComponentBase
                 'type' => 'checkbox',
                 'default' => 0,
             ],
+
             'tags' => [
                 'title' => 'initbiz.newsletter::lang.form_component.tags',
                 'type' => 'set',
             ],
+
             'inputs' => [
                 'title' => 'initbiz.newsletter::lang.form_component.inputs',
                 'type' => 'set',
@@ -69,11 +76,19 @@ class Form extends ComponentBase
                     'email',
                 ],
             ],
+
             'buttonText' => [
                 'title' => 'initbiz.newsletter::lang.form_component.button_text',
                 'type' => 'string',
                 'default' => 'initbiz.newsletter::lang.form.button_text'
             ],
+
+            'ref' => [
+                'title' => 'initbiz.newsletter::lang.form_component.ref',
+                'description' => 'initbiz.newsletter::lang.form_component.ref_description',
+                'type' => 'string',
+            ],
+
             'customViewPath' => [
                 'title' => 'initbiz.newsletter::lang.form_component.custom_view_path',
                 'description' => 'initbiz.newsletter::lang.form_component.custom_view_path_description',
@@ -132,7 +147,7 @@ class Form extends ComponentBase
 
         $selectedInputsDefs = [];
         foreach (Subscriber::getFillableAttributes() as $fillableAttribute => $def) {
-            if (in_array($fillableAttribute, $selectedInputs)) {
+            if (in_array($fillableAttribute, $selectedInputs, true)) {
                 $selectedInputsDefs[$fillableAttribute] = $def;
             }
         }
@@ -158,7 +173,7 @@ class Form extends ComponentBase
         $checkedCheckboxesIds = $checkedCheckboxes->pluck('id')->toArray();
 
         foreach ($requiredCheckboxes as $requiredCheckbox) {
-            if (!in_array($requiredCheckbox->id, $checkedCheckboxesIds)) {
+            if (!in_array($requiredCheckbox->id, $checkedCheckboxesIds, true)) {
                 throw new ValidationException([
                     'requiredCheckboxes' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.checkbox_validation_failed')
                 ]);
@@ -168,8 +183,11 @@ class Form extends ComponentBase
         /** @var Subscriber */
         $subscriber = Subscriber::where('email', $data['email'])->first();
 
+        $currentUrl = Request::url();
         if (!$subscriber) {
             $subscriber = new Subscriber();
+            $subscriber->setAdditionalField('registration_form_ref', $this->getRef());
+            $subscriber->setAdditionalField('registration_url', $currentUrl);
         }
 
         $subscriber->fill($data);
@@ -189,6 +207,7 @@ class Form extends ComponentBase
         $subscriber->attachCheckboxes($checkedCheckboxes);
 
         $tagsSlugs = $this->property('tags');
+        $tagsToGive = new Collection();
         if (!empty($tagsSlugs)) {
             $tagsToGive = Tag::whereIn('slug', $tagsSlugs)->get();
             $subscriber->attachTags($tagsToGive);
@@ -198,6 +217,18 @@ class Form extends ComponentBase
         if ($settings->send_activation_email) {
             $this->sendActivationEmail($subscriber);
         }
+
+        $eventParams = [
+            $this->getRef(),
+            $data,
+            $currentUrl,
+            $subscriber,
+            $checkedCheckboxes,
+            $tagsToGive,
+        ];
+
+        $this->fireEvent('form.submitted', $eventParams);
+        Event::fire('initbiz.newsletter.formSubmitted', array_merge([$this], $eventParams));
 
         $result = [
             'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_success')
@@ -227,5 +258,21 @@ class Form extends ComponentBase
             $message->to($options['recipient_email'], $options['recipient_name']);
             $message->subject($options['subject']);
         });
+    }
+
+    /**
+     * String identifying this form - reference, if not set - alias is the default ref
+     *
+     * @return string
+     */
+    public function getRef(): string
+    {
+        $ref = $this->property('ref', $this->alias);
+
+        if (empty($ref)) {
+            $ref = 'newsletter';
+        }
+
+        return $ref;
     }
 }

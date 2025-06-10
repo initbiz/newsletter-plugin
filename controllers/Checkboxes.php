@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter\Controllers;
 
 use Lang;
@@ -36,8 +38,9 @@ class Checkboxes extends Controller
             $checkboxes = Checkbox::get();
             foreach ($checkedId as $checkboxId) {
                 foreach ($checkboxes as $checkbox) {
-                    if ($checkbox->id !== (int) $checkboxId)
+                    if ($checkbox->id !== (int) $checkboxId) {
                         continue;
+                    }
                     $checkbox->delete();
                     Flash::success(Lang::get('initbiz.newsletter::lang.flash.deleted'));
                 }

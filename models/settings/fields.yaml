@@ -63,7 +63,19 @@ tabs:
         mailerlite_api_key:
             label: initbiz.newsletter::lang.settings.mailerlite_api_key
             tab: initbiz.newsletter::lang.settings.integrations_tab
-            span: left
+            span: full
+            type: sensitive
+            trigger:
+                action: show
+                condition: checked
+                field: enable_mailerlite_integration
+
+        mailerlite_webhook_secret:
+            label: initbiz.newsletter::lang.settings.mailerlite_webhook_secret
+            comment: initbiz.newsletter::lang.settings.mailerlite_webhook_secret_comment
+            commentHtml: true
+            tab: initbiz.newsletter::lang.settings.integrations_tab
+            span: full
             type: sensitive
             trigger:
                 action: show

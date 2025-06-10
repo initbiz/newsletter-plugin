@@ -1,19 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter\Models;
 
-use Model;
 use Event;
+use Model;
 use Validator;
-use Initbiz\Newsletter\Models\Tag;
 use October\Rain\Database\Collection;
 use Initbiz\Newsletter\Classes\Helpers;
-use Initbiz\Newsletter\Models\Checkbox;
-use Initbiz\Newsletter\Models\Settings;
 use October\Rain\Exception\ValidationException;
 
 class Subscriber extends Model
 {
+    public const STATUS_UNCONFIRMED = 'unconfirmed';
+    public const STATUS_ACTIVE = 'active';
+    public const STATUS_UNSUBSCRIBED = 'unsubscribed';
+
     use \October\Rain\Database\Traits\Validation;
 
     public $table = 'initbiz_newsletter_subscribers';
@@ -31,9 +34,11 @@ class Subscriber extends Model
         'city',
         'zip',
         'date_of_birth',
+        'unsubscribed_at',
     ];
 
     public $attributes = [
+        'status' => self::STATUS_UNCONFIRMED,
         'confirmed' => false,
     ];
 
@@ -61,6 +66,16 @@ class Subscriber extends Model
         'additional_data',
     ];
 
+    /**
+     * @var array dates attributes that should be mutated to dates
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'unsubscribed_at',
+        'date_of_birth',
+    ];
+
     public $belongsToMany = [
         'checkboxes' => [
             Checkbox::class,
@@ -72,6 +87,14 @@ class Subscriber extends Model
             'table' => 'initbiz_newsletter_subscriber_tag',
         ]
     ];
+
+    /**
+     * To prevent loop with integrations set this to true on your instance.
+     * Listeners should check for this value to be false
+     *
+     * @var boolean
+     */
+    public $changedUsingIntegration = false;
 
     public function __construct(array $attributes = [])
     {
@@ -124,6 +147,18 @@ class Subscriber extends Model
     public function afterCreate()
     {
         Event::fire('initbiz.newsletter.subscriberCreate', [$this]);
+    }
+
+    public function beforeSave()
+    {
+        // Fill status dynamically basing on current subscriber attributes
+        $this->status = self::STATUS_UNCONFIRMED;
+
+        if ($this->confirmed === true) {
+            $this->status = self::STATUS_ACTIVE;
+        } elseif (!empty($this->unsubscribed_at)) {
+            $this->status = self::STATUS_UNSUBSCRIBED;
+        }
     }
 
     public function afterUpdate()

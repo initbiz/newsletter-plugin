@@ -1,8 +1,8 @@
 <?php
 
-namespace Initbiz\Newsletter\Models;
+declare(strict_types=1);
 
-use Initbiz\Newsletter\Models\Subscriber;
+namespace Initbiz\Newsletter\Models;
 
 class SubscribersImport extends \Backend\Models\ImportModel
 {
