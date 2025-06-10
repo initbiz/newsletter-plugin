@@ -26,23 +26,26 @@ class Checkbox extends Model
 
     public $rules = [
         'required' => 'required|boolean',
-        'name'     => 'required|string',
-        'text'     => 'required|string',
-        'slug'     => 'required|string|not_in:required,name,text,slug,email'
+        'name' => 'required|string',
+        'text' => 'required|string',
+        'slug' => 'required|string|not_in:required,name,text,slug,email'
     ];
 
     public $belongsToMany = [
         'subscribers' => [
-            'Initbiz\Newsletter\Models\Subscriber',
+            \Initbiz\Newsletter\Models\Subscriber::class,
             'table' => 'initbiz_newsletter_checkbox_subscriber'
         ],
+
         'messages' => [
-            'Initbiz\Newsletter\Models\Message',
+            \Initbiz\Newsletter\Models\Message::class,
             'table' => 'initbiz_newsletter_checkbox_message'
         ]
     ];
 
-    public $implement = ['@RainLab.Translate.Behaviors.TranslatableModel'];
+    public $implement = [
+        '@RainLab.Translate.Behaviors.TranslatableModel',
+    ];
 
     public $translatable = ['text'];
 

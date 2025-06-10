@@ -18,23 +18,29 @@ class MailerLiteHandler
 
     public function subscribe($event)
     {
-        if (Settings::get('enable_mailerlite_integration', false)) {
-            $apiKey = Settings::get('mailerlite_api_key');
-            $this->mailerLiteClient = new MailerLite(['api_key' => $apiKey]);
-
-            $this->subscriberCreate($event);
-            $this->subscriberUpdate($event);
-            $this->subscriberDelete($event);
-            $this->tagCreate($event);
-            $this->tagDelete($event);
-            $this->subscriberTagsAttached($event);
-            $this->subscriberTagsDetached($event);
+        if (!Settings::get('enable_mailerlite_integration', false)) {
+            return;
         }
+
+        $apiKey = Settings::get('mailerlite_api_key');
+        $this->mailerLiteClient = new MailerLite(['api_key' => $apiKey]);
+
+        $this->subscriberCreate($event);
+        $this->subscriberUpdate($event);
+        $this->subscriberDelete($event);
+        $this->tagCreate($event);
+        $this->tagDelete($event);
+        $this->subscriberTagsAttached($event);
+        $this->subscriberTagsDetached($event);
     }
 
     protected function subscriberCreate($event)
     {
         $event->listen('initbiz.newsletter.subscriberCreate', function ($subscriber) {
+            if ($subscriber->changedUsingIntegration) {
+                return;
+            }
+
             $data = $this->subscriberToMailerLiteSyntax($subscriber);
 
             $response = $this->mailerLiteClient->subscribers->create($data);
@@ -47,6 +53,10 @@ class MailerLiteHandler
     protected function subscriberUpdate($event)
     {
         $event->listen('initbiz.newsletter.subscriberUpdate', function ($subscriber) {
+            if ($subscriber->changedUsingIntegration) {
+                return;
+            }
+
             $data = $this->subscriberToMailerLiteSyntax($subscriber);
             $this->mailerLiteClient->subscribers->create($data);
         });
@@ -55,6 +65,10 @@ class MailerLiteHandler
     protected function subscriberDelete($event)
     {
         $event->listen('initbiz.newsletter.subscriberDelete', function ($subscriber) {
+            if ($subscriber->changedUsingIntegration) {
+                return;
+            }
+
             $mailerliteId = $subscriber->getAdditionalData('mailerlite_id');
             if (!is_null($mailerliteId)) {
                 $this->mailerLiteClient->subscribers->delete($mailerliteId);
@@ -87,7 +101,11 @@ class MailerLiteHandler
 
     protected function subscriberTagsAttached($event)
     {
-        $event->listen('initbiz.newsletter.subscriberTagsAttached', function ($subscriber, $tags) {
+        $event->listen('initbiz.newsletter.subscriberTagsAttached', function (Subscriber $subscriber, $tags) {
+            if ($subscriber->changedUsingIntegration) {
+                return;
+            }
+
             $data = $this->subscriberToMailerLiteSyntax($subscriber);
 
             $newGroups = [];
@@ -106,12 +124,31 @@ class MailerLiteHandler
 
     protected function subscriberTagsDetached($event)
     {
-        $event->listen('initbiz.newsletter.subscriberTagsAttached', function ($subscriber, $tags) {
-            // TODO: Enable when webhooks ready
-            // $data = $this->subscriberToMailerLiteSyntax($subscriber);
-            // $mailerliteId = $subscriber->getAdditionalData('mailerlite_id');
-            // $groups = $data['groups'];
-            // $this->mailerLiteClient->subscribers->update($mailerliteId, ['groups' => $groups]);
+        $event->listen('initbiz.newsletter.subscriberTagsDetached', function (Subscriber $subscriber, $tags) {
+            if ($subscriber->changedUsingIntegration) {
+                return;
+            }
+
+            $data = $this->subscriberToMailerLiteSyntax($subscriber);
+            $removedTagsIds = $tags->pluck('id')->toArray();
+
+            $newGroups = [];
+            foreach ($subscriber->tags as $tag) {
+                if (in_array($tag->id, $removedTagsIds)) {
+                    continue;
+                }
+
+                $mailerLiteId = $tag->getAdditionalData('mailerlite_id');
+                if (!$mailerLiteId) {
+                    continue;
+                }
+
+                $newGroups[] = $mailerLiteId;
+            }
+
+            $data['groups'] = $newGroups;
+
+            $this->mailerLiteClient->subscribers->create($data);
         });
     }
 
@@ -170,6 +207,10 @@ class MailerLiteHandler
             'fields' => $fields,
             'groups' => $groups,
         ];
+
+        if ($subscriber->unsubscribed_at) {
+            $data['unsubscribed_at'] = $subscriber->unsubscribed_at->format('Y-m-d H:i:s');
+        }
 
         return $data;
     }

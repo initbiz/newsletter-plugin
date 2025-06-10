@@ -89,18 +89,12 @@ class NewsletterConfirm extends ComponentBase
 
     protected function getSubscriberCheckboxesSlugs($subscriber)
     {
-        $checkboxes = $subscriber->checkboxes()
-            ->notRequired()
+        return Checkbox::whereHas('subscribers', function ($q) use ($subscriber) {
+            return $q->where('id', $subscriber->id);
+        })->notRequired()
             ->get()
             ->pluck('slug')
             ->toArray();
-
-        if ($checkboxes === null) {
-            $result =  [];
-        } else {
-            $result = $checkboxes;
-        }
-        return $result;
     }
 
     protected function addToCheckboxesIfChecked($notRequiredCheckboxes, $userCheckboxes)

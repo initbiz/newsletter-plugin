@@ -13,7 +13,7 @@
         </div>
     {% endfor %}
 
-    <button type="submit" class="btn btn-primary">{{ __SELF__.buttonText|trans }}</button>
+    <button id="{{ __SELF__.getRef() }}-submit-button" type="submit" class="btn btn-primary">{{ __SELF__.buttonText|trans }}</button>
 </form>
 
 <div class="col-md-12 input-group" id="{{ __SELF__ }}-notifications">

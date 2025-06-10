@@ -9,11 +9,6 @@ return [
         'author' => 'InIT.biz Ltd.',
     ],
 
-    'mailTemplates' => [
-        'message' => 'Wiadomość, która jest wysyłana do subskrybentów',
-        'confirmation' => 'Wiadomość potwierdzająca zapisanie do newslettera',
-    ],
-
     'settings' => [
         'label' => 'Ustawienia newslettera',
         'description' => 'Zarządzaj pluginem newsletter',
@@ -34,6 +29,8 @@ return [
         'additional_fields_rules_comment' => 'Zobacz <a href="https://docs.octobercms.com/3.x/extend/services/validation.html" target="_blank">walidację w OctoberCMS</a>',
         'enable_mailerlite_integration' => 'Włącz integrację z MailerLite',
         'mailerlite_api_key' => 'Klucz API MailerLite',
+        'mailerlite_webhook_secret' => 'Klucz podpisu webhooka MailerLite (signing secret)',
+        'mailerlite_webhook_secret_comment' => 'Ustaw [twoja-domena]/api/initbiz/newsletter/mailerlite <a target="_blank" href="https://dashboard.mailerlite.com/integrations/webhooks">tutaj</a>',
     ],
 
     'menu' => [
@@ -85,10 +82,14 @@ return [
     ],
 
     'form_component' => [
+        'name' => 'Formularz newslettera',
+        'description' => 'Komponent formularza newslettera',
         'tags' => 'Tagi dodane subskrybentom',
         'confirm_automatically' => 'Automatycznie potwierdź',
         'inputs' => 'Pola',
         'button_text' => 'Napis na przycisku',
+        'ref' => 'Ref - punkt odniesienia',
+        'ref_description' => 'Punkt odniesienia, żeby zidentyfikować ten formularz',
         'custom_view_path' => 'Nadpisany widok',
         'custom_view_path_description' => 'Ustaw tę wartość na nazwę katalogu z theme/partials, żeby napisać widok',
     ],
@@ -167,7 +168,7 @@ return [
         'updated' => 'Checkbox pomyślnie zaktualizowany',
     ],
 
-    'flash_checkboxes' => [
+    'flash_subscribers' => [
         'deleted' => 'Subskrybent pomyślnie usunięty',
         'saved' => 'Subskrybent pomyślnie zapisany',
         'updated' => 'Subskrybent pomyślnie zaktualizowany ',
@@ -232,5 +233,35 @@ return [
 
     'mail' => [
         'activation_subject' => 'Potwierdź swój adres e-mail',
+    ],
+
+    // Notify
+
+    'events_group' => [
+        'name' => 'Newsletter',
+    ],
+
+    'form_submitted_event' => [
+        'name' => 'Wysłano formularz newslettera',
+        'description' => 'Włączy się gdy ktoś wyśle formularz newslettera',
+        'ref' => 'Nazwa punktu odniesienia formularza',
+        'post_data' => 'Dane wysłane z formularzem',
+        'url' => 'Adres URL strony, z której wysłano formularz',
+        'subscriber' => 'Subskrybent',
+        'checked_checkboxes' => 'Lista zaznaczonych checkboxów',
+        'tags' => 'Lista tagów dodawanych z tego formularza',
+    ],
+
+    'particular_ref_condition' => [
+        'name' => 'Włącz kiedy nazwa punktu odniesienia pasuje',
+        'text' => 'Gdy ref to :ref',
+        'ref' => 'Ref do porównania',
+        'ref_comment' => 'Możesz wpisać wiele wartości po przecinkach',
+    ],
+
+    'particular_tag_condition' => [
+        'name' => 'Włącz kiedy tag jeden z wybranych',
+        'text' => 'Jeden z tagów: :tags',
+        'tags' => 'Tagi',
     ],
 ];
