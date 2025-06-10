@@ -123,9 +123,8 @@ class MailerLiteController extends Controller
 
     public function validateRequest(Request $request, string $secret): void
     {
-        $data = $request->all();
         $signature = $request->header('signature');
-        if ($signature !== hash_hmac('sha256', json_encode($data), $secret)) {
+        if ($signature !== hash_hmac('sha256', $request->getContent(), $secret)) {
             throw new BadRequestHttpException("Invalid signature");
         }
     }
