@@ -27,9 +27,8 @@ class MailerLiteControllerTest extends PluginTestCase
         // Mock from real MailerLite webhook request
         $secret = 'oOUngq53Iy';
         $contents = file_get_contents(plugins_path('initbiz/newsletter/tests/fixtures/webhook-2.json'));
-        $mockRequest = Request::create('/path', 'POST');
+        $mockRequest = Request::create('/path', 'POST', [], [], [], [], $contents);
         $mockRequest->headers->set('signature', '97b447b4c12b16bb50653eb617565bb3032a887dd37d161381e277cbddacc5bc');
-        $mockRequest->request->add(json_decode($contents, true));
 
         $controller = new MailerLiteController();
         $this->expectNotToPerformAssertions();
@@ -41,9 +40,8 @@ class MailerLiteControllerTest extends PluginTestCase
         // Mock from real MailerLite webhook request
         $secret = 'oOUngq53Iy';
         $contents = file_get_contents(plugins_path('initbiz/newsletter/tests/fixtures/webhook-2.json'));
-        $mockRequest = Request::create('/path', 'POST');
+        $mockRequest = Request::create('/path', 'POST', [], [], [], [], $contents);
         $mockRequest->headers->set('signature', 'anything');
-        $mockRequest->request->add(json_decode($contents, true));
 
         $controller = new MailerLiteController();
         $this->expectException(BadRequestHttpException::class);
