@@ -16,6 +16,7 @@ class FormTest extends PluginTestCase
 {
     public function testOnSubscription()
     {
+        \Event::fake('initbiz.newsletter.formSubmitted');
         Mail::swap(app()->make(FakeMailer::class));
 
         $tag = new Tag();

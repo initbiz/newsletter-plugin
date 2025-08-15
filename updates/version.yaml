@@ -61,3 +61,5 @@
     - 1_3_0_add_unsubscribed_subscribers_table.php
 1.3.1:
     - Fix signature validation after tests in production env
+1.3.2:
+    - Fix tests being run from whole project
