@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter\Components;
 
 use Db;
 use Lang;
 use Cms\Classes\ComponentBase;
 use Initbiz\Newsletter\Models\Checkbox;
-use Initbiz\Newsletter\Classes\SubscriptionException;
 use Initbiz\Newsletter\Models\Subscriber as Subscriber;
 use Initbiz\Newsletter\Classes\UpdateSubscriberException;
 
@@ -88,24 +89,18 @@ class NewsletterConfirm extends ComponentBase
 
     protected function getSubscriberCheckboxesSlugs($subscriber)
     {
-        $checkboxes = $subscriber->checkboxes()
-            ->notRequired()
+        return Checkbox::whereHas('subscribers', function ($q) use ($subscriber) {
+            return $q->where('id', $subscriber->id);
+        })->notRequired()
             ->get()
             ->pluck('slug')
             ->toArray();
-
-        if ($checkboxes == null) {
-            $result =  [];
-        } else {
-            $result = $checkboxes;
-        }
-        return $result;
     }
 
     protected function addToCheckboxesIfChecked($notRequiredCheckboxes, $userCheckboxes)
     {
         foreach ($notRequiredCheckboxes as &$checkbox) {
-            if (in_array($checkbox['slug'], $userCheckboxes)) {
+            if (in_array($checkbox['slug'], $userCheckboxes, true)) {
                 $checkedArray = ['checked' => true];
                 $checkbox += $checkedArray;
             }
@@ -142,7 +137,7 @@ class NewsletterConfirm extends ComponentBase
 
         foreach ($checkboxes as $checkbox) {
             $checkbox = Checkbox::where('slug', $checkbox->slug)->firstOrFail();
-            if (post($checkbox->slug) != null) {
+            if (post($checkbox->slug) !== null) {
                 $subscriber->checkboxes()->save($checkbox);
             }
         }

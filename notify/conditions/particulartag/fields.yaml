@@ -1,0 +1,4 @@
+fields:
+    tags:
+        label: initbiz.newsletter::lang.particular_tag_condition.tags
+        type: checkboxlist
