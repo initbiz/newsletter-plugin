@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Initbiz\Newsletter\Components;
 
+use Http;
 use Lang;
 use Mail;
 use Event;
 use Request;
+use Exception;
 use ValidationException;
 use Cms\Classes\ComponentBase;
 use Initbiz\Newsletter\Models\Tag;
@@ -45,6 +47,10 @@ class Form extends ComponentBase
      * @var null|string
      */
     public $customViewPath;
+
+    public $recaptchaEnabled = false;
+
+    public $recaptchaSiteKey;
 
     public function componentDetails()
     {
@@ -117,6 +123,12 @@ class Form extends ComponentBase
         $this->selectedInputs = $this->getSelectedInputs();
         $this->buttonText = $this->property('buttonText');
         $this->customViewPath = $this->property('customViewPath');
+
+        $this->recaptchaEnabled = Settings::recaptchaEnable();
+
+        if ($this->recaptchaEnabled) {
+            $this->recaptchaSiteKey = Settings::get('recaptcha_site_key');
+        }
     }
 
     public function onRender()
@@ -166,6 +178,24 @@ class Form extends ComponentBase
     {
         if (empty($data)) {
             $data = post();
+        }
+
+        $this->recaptchaEnabled = Settings::recaptchaEnable();
+
+        if ($this->recaptchaEnabled)
+        {
+            $response = Http::get('https://www.google.com/recaptcha/api/siteverify', [
+                'secret' => Settings::get('recaptcha_secret_key'),
+                'response' => $data['g-recaptcha-response']
+            ])->json();
+
+            $successStatus = $response['success'];
+            $score = $response['score'];
+
+            if ($successStatus !== true || $score < Settings::get('recaptcha_score_threshold'))
+            {
+                throw new Exception('Invalid ReCaptcha. You might be a bot.');
+            }
         }
 
         $requiredCheckboxes = Checkbox::required()->get();

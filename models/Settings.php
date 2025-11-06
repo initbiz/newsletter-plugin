@@ -11,6 +11,9 @@ use Initbiz\Newsletter\Classes\Helpers;
 
 class Settings extends Model
 {
+
+    use \October\Rain\Database\Traits\Validation;
+
     public $implement = [
         'System.Behaviors.SettingsModel',
     ];
@@ -19,6 +22,10 @@ class Settings extends Model
 
     // Reference to field configuration
     public $settingsFields = 'fields.yaml';
+
+    public $rules = [
+        'recaptcha_score' => 'required|numeric|min:0|max:1',
+    ];
 
     public function initSettingsData()
     {
@@ -46,6 +53,17 @@ class Settings extends Model
         }
 
         return Cms::pageUrl($subscriptionPage, $params);
+    }
+
+    public static function recaptchaEnable()
+    {
+        $recaptchaStatus = (int) Settings::get('recaptcha_status');
+        $siteKey = Settings::get('recaptcha_site_key');
+        $secretKey = Settings::get('recaptcha_secret_key');
+
+        return ($recaptchaStatus === 1 &&
+            !empty($siteKey) &&
+            !empty($secretKey));
     }
 
     protected function getSubscriptionManagePage(): ?string
