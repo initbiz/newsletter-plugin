@@ -182,8 +182,7 @@ class Form extends ComponentBase
 
         $this->recaptchaEnabled = Settings::recaptchaEnable();
 
-        if ($this->recaptchaEnabled)
-        {
+        if ($this->recaptchaEnabled) {
             $response = Http::get('https://www.google.com/recaptcha/api/siteverify', [
                 'secret' => Settings::get('recaptcha_secret_key'),
                 'response' => $data['g-recaptcha-response']
@@ -192,8 +191,7 @@ class Form extends ComponentBase
             $successStatus = $response['success'];
             $score = $response['score'];
 
-            if ($successStatus !== true || $score < Settings::get('recaptcha_score_threshold'))
-            {
+            if ($successStatus !== true || $score < Settings::get('recaptcha_score_threshold')) {
                 throw new Exception('Invalid ReCaptcha. You might be a bot.');
             }
         }

@@ -11,7 +11,6 @@ use Initbiz\Newsletter\Classes\Helpers;
 
 class Settings extends Model
 {
-
     use \October\Rain\Database\Traits\Validation;
 
     public $implement = [
