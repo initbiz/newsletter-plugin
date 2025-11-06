@@ -37,7 +37,7 @@ return [
         'recaptcha_secret_key' => 'Tajny Klucz',
         'recaptcha_score_threshold' => 'Próg weryfikacji botów',
         'recaptcha_score_threshold_comment' => 'Użytkownicy poniżej tej wartości punktowej zostaną uznani za boty.',
-],
+    ],
 
     'menu' => [
         'newsletter' => 'Newsletter',
