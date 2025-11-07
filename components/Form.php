@@ -200,12 +200,12 @@ class Form extends ComponentBase
                 ])->json();
 
                 $successStatus = $response['success'];
-                $score = $response['score'];
+                $captchaScore = $response['score'];
                 $scoreThreshold = Settings::get('recaptcha_score_threshold');
 
-                if ($successStatus !== true || $score < Settings::get('recaptcha_score_threshold')) {
+                if ($successStatus !== true || $captchaScore < $scoreThreshold) {
                     throw new ValidationException([
-                        'captchaFailed' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.captcha_verification_failed')
+                        'captchaScore' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.captcha_verification_failed')
                     ]);
                 }
             } else {

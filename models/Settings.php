@@ -28,12 +28,6 @@ class Settings extends Model
         'recaptcha_secret_key' => 'nullable',
     ];
 
-    // public $rules = [
-    //     'recaptcha_score' => 'required_if:recaptcha_status,1|numeric|min:0|max:1',
-    //     'recaptcha_site_key' => 'required_if:recaptcha_status,1|string',
-    //     'recaptcha_secret_key' => 'required_if:recaptcha_status,1|string',
-    // ];
-
     public function beforeValidate()
     {
         if ($this->recaptcha_status) {
