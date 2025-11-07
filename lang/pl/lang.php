@@ -31,7 +31,7 @@ return [
         'mailerlite_api_key' => 'Klucz API MailerLite',
         'mailerlite_webhook_secret' => 'Klucz podpisu webhooka MailerLite (signing secret)',
         'mailerlite_webhook_secret_comment' => 'Ustaw [twoja-domena]/api/initbiz/newsletter/mailerlite <a target="_blank" href="https://dashboard.mailerlite.com/integrations/webhooks">tutaj</a>',
-        'recaptcha_tab' => 'ReCaptcha',
+        'captcha_tab' => 'ReCaptcha',
         'recaptcha_enabled_status' => 'Czy włączyć ReCaptcha?',
         'recaptcha_site_key' => 'Klucz witryny',
         'recaptcha_secret_key' => 'Tajny Klucz',
@@ -235,6 +235,7 @@ return [
         'update_success' => 'Zaktualizowano pomyślnie',
         'unsubscribe' => 'Wypisz',
         'error' => 'Coś poszło nie tak',
+        'captcha_verification_failed' => 'Nieprawidłowa weryfikacja ReCaptcha. Być może jesteś botem.',
     ],
 
     'mail' => [

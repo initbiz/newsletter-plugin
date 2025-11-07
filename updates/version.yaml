@@ -63,3 +63,6 @@
     - Fix signature validation after tests in production env
 1.3.2:
     - Fix tests being run from whole project
+1.3.3:
+    - Implement Captcha verification
+

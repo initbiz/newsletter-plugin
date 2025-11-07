@@ -31,7 +31,7 @@ return [
         'mailerlite_api_key' => 'MailerLite API key',
         'mailerlite_webhook_secret' => 'MailerLite webhook signing secret',
         'mailerlite_webhook_secret_comment' => 'Set [your-domain]/api/initbiz/newsletter/mailerlite <a target="_blank" href="https://dashboard.mailerlite.com/integrations/webhooks">here</a>',
-        'recaptcha_tab' => 'ReCaptcha',
+        'captcha_tab' => 'ReCaptcha',
         'recaptcha_enabled_status' => 'Enable ReCaptcha?',
         'recaptcha_site_key' => 'Your Site Key',
         'recaptcha_secret_key' => 'Your Secret Key',
@@ -235,6 +235,7 @@ return [
         'update_success' => 'Successfully updated.',
         'unsubscribe' => 'Unsubscribe',
         'error' => 'Error. Something went wrong.',
+        'captcha_verification_failed' => 'ReCaptcha verification failed. You might be a bot.',
     ],
 
     'mail' => [

@@ -23,8 +23,25 @@ class Settings extends Model
     public $settingsFields = 'fields.yaml';
 
     public $rules = [
-        'recaptcha_score' => 'required|numeric|min:0|max:1',
+        'recaptcha_score_threshold' => 'nullable',
+        'recaptcha_site_key' => 'nullable',
+        'recaptcha_secret_key' => 'nullable',
     ];
+
+    // public $rules = [
+    //     'recaptcha_score' => 'required_if:recaptcha_status,1|numeric|min:0|max:1',
+    //     'recaptcha_site_key' => 'required_if:recaptcha_status,1|string',
+    //     'recaptcha_secret_key' => 'required_if:recaptcha_status,1|string',
+    // ];
+
+    public function beforeValidate()
+    {
+        if ($this->recaptcha_status) {
+            $this->rules['recaptcha_score_threshold'] = 'required|numeric|min:0|max:1';
+            $this->rules['recaptcha_site_key'] = 'required|string';
+            $this->rules['recaptcha_secret_key'] = 'required|string';
+        }
+    }
 
     public function initSettingsData()
     {
@@ -52,17 +69,6 @@ class Settings extends Model
         }
 
         return Cms::pageUrl($subscriptionPage, $params);
-    }
-
-    public static function recaptchaEnable()
-    {
-        $recaptchaStatus = (int) Settings::get('recaptcha_status');
-        $siteKey = Settings::get('recaptcha_site_key');
-        $secretKey = Settings::get('recaptcha_secret_key');
-
-        return ($recaptchaStatus === 1 &&
-            !empty($siteKey) &&
-            !empty($secretKey));
     }
 
     protected function getSubscriptionManagePage(): ?string
