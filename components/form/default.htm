@@ -12,7 +12,9 @@
             <label for="{{ __SELF__ }}-checkbox-{{ checkbox.slug }}">{{ checkbox.text|raw }}</label>
         </div>
     {% endfor %}
-
+    {% if __SELF__.recaptchaEnabled %}
+        {% partial '@recaptcha' %}
+    {% endif %}
     <button id="{{ __SELF__.getRef() }}-submit-button" type="submit" class="btn btn-primary">{{ __SELF__.buttonText|trans }}</button>
 </form>
 

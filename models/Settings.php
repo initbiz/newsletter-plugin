@@ -11,6 +11,8 @@ use Initbiz\Newsletter\Classes\Helpers;
 
 class Settings extends Model
 {
+    use \October\Rain\Database\Traits\Validation;
+
     public $implement = [
         'System.Behaviors.SettingsModel',
     ];
@@ -19,6 +21,21 @@ class Settings extends Model
 
     // Reference to field configuration
     public $settingsFields = 'fields.yaml';
+
+    public $rules = [
+        'recaptcha_score_threshold' => 'nullable',
+        'recaptcha_site_key' => 'nullable',
+        'recaptcha_secret_key' => 'nullable',
+    ];
+
+    public function beforeValidate()
+    {
+        if ($this->is_recaptcha_enabled) {
+            $this->rules['recaptcha_score_threshold'] = 'required|numeric|min:0|max:1';
+            $this->rules['recaptcha_site_key'] = 'required|string';
+            $this->rules['recaptcha_secret_key'] = 'required|string';
+        }
+    }
 
     public function initSettingsData()
     {

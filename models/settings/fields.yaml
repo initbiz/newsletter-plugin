@@ -81,3 +81,45 @@ tabs:
                 action: show
                 condition: checked
                 field: enable_mailerlite_integration
+
+        is_recaptcha_enabled:
+            label: initbiz.newsletter::lang.settings.recaptcha_enabled_status
+            tab: initbiz.newsletter::lang.settings.captcha_tab
+            type: switch
+            default: 0
+
+        recaptcha_site_key:
+            label: initbiz.newsletter::lang.settings.recaptcha_site_key
+            tab: initbiz.newsletter::lang.settings.captcha_tab
+            type: sensitive
+            span: left
+            trigger:
+                action: show
+                field: is_recaptcha_enabled
+                condition: checked
+
+        recaptcha_secret_key:
+            label: initbiz.newsletter::lang.settings.recaptcha_secret_key
+            tab: initbiz.newsletter::lang.settings.captcha_tab
+            type: sensitive
+            span: right
+            trigger:
+                action: show
+                field: is_recaptcha_enabled
+                condition: checked
+
+        recaptcha_score_threshold:
+            label: initbiz.newsletter::lang.settings.recaptcha_score_threshold
+            comment: initbiz.newsletter::lang.settings.recaptcha_score_threshold_comment
+            tab: initbiz.newsletter::lang.settings.captcha_tab
+            span: left
+            required: true
+            type: number
+            min: 0
+            max: 1
+            step: 0.1
+            default: 0.5
+            trigger:
+                action: show
+                field: is_recaptcha_enabled
+                condition: checked
