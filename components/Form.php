@@ -202,18 +202,13 @@ class Form extends ComponentBase
                 ])->json();
 
                 $successStatus = (bool) $response['success'];
+                $captchaScore = $response['score'] ?? null;
+                $scoreThreshold = Settings::get('recaptcha_score_threshold');
 
-                if ($successStatus === true) {
-                    $captchaScore = $response['score'];
-                    $scoreThreshold = Settings::get('recaptcha_score_threshold');
-
-                    if ($captchaScore < $scoreThreshold) {
-                        throw new ValidationException([
-                            'captchaScore' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.captcha_verification_failed')
-                        ]);
-                    }
-                } else {
-                    Log::warning('[Newsletter] ReCaptcha response failed for ' . $data['email'] . ' — possible secret key misconfiguration.');
+                if ($successStatus !== true || ($captchaScore !== null && $captchaScore < $scoreThreshold)) {
+                    throw new ValidationException([
+                        'captchaScore' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.captcha_verification_failed')
+                    ]);
                 }
             }
         }
