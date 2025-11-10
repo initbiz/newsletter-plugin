@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Initbiz\Newsletter\Components;
 
+use Log;
+use Http;
 use Lang;
 use Mail;
 use Event;
@@ -45,6 +47,20 @@ class Form extends ComponentBase
      * @var null|string
      */
     public $customViewPath;
+
+    /**
+     * Indicates whether Captcha verification is enabled.
+     *
+     * @var boolean
+     */
+    public $recaptchaEnabled = false;
+
+    /**
+     * Captcha site key for frontend verification
+     *
+     * @var string
+     */
+    public $recaptchaSiteKey;
 
     public function componentDetails()
     {
@@ -117,6 +133,12 @@ class Form extends ComponentBase
         $this->selectedInputs = $this->getSelectedInputs();
         $this->buttonText = $this->property('buttonText');
         $this->customViewPath = $this->property('customViewPath');
+
+        $this->recaptchaEnabled = (bool) Settings::get('is_recaptcha_enabled');
+
+        if ($this->recaptchaEnabled) {
+            $this->recaptchaSiteKey = Settings::get('recaptcha_site_key');
+        }
     }
 
     public function onRender()
@@ -166,6 +188,29 @@ class Form extends ComponentBase
     {
         if (empty($data)) {
             $data = post();
+        }
+
+        $this->recaptchaEnabled = (bool) Settings::get('is_recaptcha_enabled');
+
+        if ($this->recaptchaEnabled) {
+            if (empty($data['g-recaptcha-response'])) {
+                Log::warning('[Newsletter] ReCaptcha response missing for ' . $data['email'] . ' — possible site key misconfiguration or frontend error.');
+            } else {
+                $response = Http::get('https://www.google.com/recaptcha/api/siteverify', [
+                    'secret' => Settings::get('recaptcha_secret_key'),
+                    'response' => $data['g-recaptcha-response']
+                ])->json();
+
+                $successStatus = (bool) $response['success'];
+                $captchaScore = $response['score'] ?? null;
+                $scoreThreshold = Settings::get('recaptcha_score_threshold');
+
+                if ($successStatus !== true || ($captchaScore !== null && $captchaScore < $scoreThreshold)) {
+                    throw new ValidationException([
+                        'captchaScore' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.captcha_verification_failed')
+                    ]);
+                }
+            }
         }
 
         $requiredCheckboxes = Checkbox::required()->get();

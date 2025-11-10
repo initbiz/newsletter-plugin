@@ -1,0 +1,16 @@
+<input name="g-recaptcha-response"
+       class="g-recaptcha"
+       type="hidden"
+       id="{{ __SELF__ }}-recaptcha-response">
+
+{% put scripts %}
+<script src="https://www.google.com/recaptcha/api.js?render={{ __SELF__ .recaptchaSiteKey }}"></script>
+
+<script>
+    grecaptcha.ready(function () {
+        grecaptcha.execute('{{ __SELF__.recaptchaSiteKey }}', { action: 'register' }).then(function (token) {
+            document.getElementById('{{ __SELF__ }}-recaptcha-response').value = token;
+        });
+    });
+</script>
+{% endput %}
