@@ -36,7 +36,7 @@ return [
         'recaptcha_site_key' => 'Your Site Key',
         'recaptcha_secret_key' => 'Your Secret Key',
         'recaptcha_score_threshold' => 'ReCaptcha Score Threshold',
-        'recaptcha_score_threshold_comment' => 'Users with a score below this value will be considered bots or suspicious',
+        'recaptcha_score_threshold_comment' => 'Users with a score below this value will be considered bots or suspicious. Default value is 0.5',
     ],
 
     'menu' => [

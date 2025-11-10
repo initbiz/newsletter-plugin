@@ -82,7 +82,7 @@ tabs:
                 condition: checked
                 field: enable_mailerlite_integration
 
-        recaptcha_status:
+        is_recaptcha_enabled:
             label: initbiz.newsletter::lang.settings.recaptcha_enabled_status
             tab: initbiz.newsletter::lang.settings.captcha_tab
             type: switch
@@ -95,7 +95,7 @@ tabs:
             span: left
             trigger:
                 action: show
-                field: recaptcha_status
+                field: is_recaptcha_enabled
                 condition: checked
 
         recaptcha_secret_key:
@@ -105,7 +105,7 @@ tabs:
             span: right
             trigger:
                 action: show
-                field: recaptcha_status
+                field: is_recaptcha_enabled
                 condition: checked
 
         recaptcha_score_threshold:
@@ -121,5 +121,5 @@ tabs:
             default: 0.5
             trigger:
                 action: show
-                field: recaptcha_status
+                field: is_recaptcha_enabled
                 condition: checked

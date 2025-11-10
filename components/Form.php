@@ -134,7 +134,7 @@ class Form extends ComponentBase
         $this->buttonText = $this->property('buttonText');
         $this->customViewPath = $this->property('customViewPath');
 
-        $this->recaptchaEnabled = (int) Settings::get('recaptcha_status');
+        $this->recaptchaEnabled = (bool) Settings::get('is_recaptcha_enabled');
 
         if ($this->recaptchaEnabled) {
             $this->recaptchaSiteKey = Settings::get('recaptcha_site_key');
@@ -190,26 +190,31 @@ class Form extends ComponentBase
             $data = post();
         }
 
-        $this->recaptchaEnabled = (int) Settings::get('recaptcha_status');
+        $this->recaptchaEnabled = (bool) Settings::get('is_recaptcha_enabled');
 
         if ($this->recaptchaEnabled) {
-            if (!empty($data['g-recaptcha-response'])) {
+            if (empty($data['g-recaptcha-response'])) {
+                Log::warning('[Newsletter] ReCaptcha response missing for ' . $data['email'] . ' — possible site key misconfiguration or frontend error.');
+            } else {
                 $response = Http::get('https://www.google.com/recaptcha/api/siteverify', [
                     'secret' => Settings::get('recaptcha_secret_key'),
                     'response' => $data['g-recaptcha-response']
                 ])->json();
 
-                $successStatus = $response['success'];
-                $captchaScore = $response['score'];
-                $scoreThreshold = Settings::get('recaptcha_score_threshold');
+                $successStatus = (bool) $response['success'];
 
-                if ($successStatus !== true || $captchaScore < $scoreThreshold) {
-                    throw new ValidationException([
-                        'captchaScore' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.captcha_verification_failed')
-                    ]);
+                if ($successStatus === true) {
+                    $captchaScore = $response['score'];
+                    $scoreThreshold = Settings::get('recaptcha_score_threshold');
+
+                    if ($captchaScore < $scoreThreshold) {
+                        throw new ValidationException([
+                            'captchaScore' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.captcha_verification_failed')
+                        ]);
+                    }
+                } else {
+                    Log::warning('[Newsletter] ReCaptcha response failed for ' . $data['email'] . ' — possible secret key misconfiguration.');
                 }
-            } else {
-                Log::warning('[Newsletter] ReCaptcha response missing for ' . $data['email'] . ' — possible site key misconfiguration or frontend error.');
             }
         }
 

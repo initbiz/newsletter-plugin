@@ -36,7 +36,7 @@ return [
         'recaptcha_site_key' => 'Klucz witryny',
         'recaptcha_secret_key' => 'Tajny Klucz',
         'recaptcha_score_threshold' => 'Próg weryfikacji botów',
-        'recaptcha_score_threshold_comment' => 'Użytkownicy poniżej tej wartości punktowej zostaną uznani za boty.',
+        'recaptcha_score_threshold_comment' => 'Użytkownicy poniżej tej wartości punktowej zostaną uznani za boty. Domyślna wartość to 0.5',
     ],
 
     'menu' => [

@@ -30,7 +30,7 @@ class Settings extends Model
 
     public function beforeValidate()
     {
-        if ($this->recaptcha_status) {
+        if ($this->is_recaptcha_enabled) {
             $this->rules['recaptcha_score_threshold'] = 'required|numeric|min:0|max:1';
             $this->rules['recaptcha_site_key'] = 'required|string';
             $this->rules['recaptcha_secret_key'] = 'required|string';
