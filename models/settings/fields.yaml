@@ -91,6 +91,7 @@ tabs:
         recaptcha_site_key:
             label: initbiz.newsletter::lang.settings.recaptcha_site_key
             tab: initbiz.newsletter::lang.settings.captcha_tab
+            required: true
             type: sensitive
             span: left
             trigger:
@@ -101,6 +102,7 @@ tabs:
         recaptcha_secret_key:
             label: initbiz.newsletter::lang.settings.recaptcha_secret_key
             tab: initbiz.newsletter::lang.settings.captcha_tab
+            required: true
             type: sensitive
             span: right
             trigger:
@@ -118,7 +120,7 @@ tabs:
             min: 0
             max: 1
             step: 0.1
-            default: 0.5
+            default: "0.5"
             trigger:
                 action: show
                 field: is_recaptcha_enabled
