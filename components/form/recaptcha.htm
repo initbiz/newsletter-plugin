@@ -1,17 +1,82 @@
+<input type="hidden"
+       class="g-recaptcha-response"
+       name="g-recaptcha-response"
+       id="{{ __SELF__ }}-recaptcha-response">
+
 {% put scripts %}
-<script src="https://www.google.com/recaptcha/api.js?render={{ __SELF__ .recaptchaSiteKey }}"></script>
-
+<script src="https://www.google.com/recaptcha/api.js?render={{ __SELF__.recaptchaSiteKey }}"></script>
 <script>
-    document.querySelectorAll('#{{ __SELF__ }}-subscribe .btn-secondary, #{{ __SELF__ }}-subscribe .btn-primary, #{{ __SELF__ }}subscribe .btn-secondary').forEach(function (button) {
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
+    function registerListener(formObj) {
+        if (formObj == null || formObj.dataset.recaptchaListener) {
+            return;
+        }
 
-            grecaptcha.execute('{{ __SELF__.recaptchaSiteKey }}', { action: 'register' }).then(function (token) {
-                oc.request('#{{ __SELF__ }}-subscribe', '{{ __SELF__ }}::onSubscription', {
-                    data: { 'g-recaptcha-response': token }
+        formObj.addEventListener('ajax:setup', function (event, context) {
+            grecaptcha.execute('{{ __SELF__.recaptchaSiteKey }}', { action: 'submit' })
+                .then(function (token) {
+                    formObj.querySelectorAll('.g-recaptcha-response')[0].value = token;
+                    window.recaptcha_token_ready = true;
                 });
-            });
+
+            function recaptchaTokenReady() {
+                window.setTimeout(function () {
+                    if (!Boolean(window["recaptcha_token_ready"])) {
+                        recaptchaTokenReady();
+                    }
+                }, 30);
+            }
+            recaptchaTokenReady();
         });
+
+        formObj.dataset.recaptchaListener = "1";
+    }
+
+    addEventListener('page:loaded', function() {
+        registerListener(document.getElementById('{{ __SELF__ }}-subscribe'));
     });
+
+    registerListener(document.getElementById('{{ __SELF__ }}-subscribe'));
+
+    // var subscribeForm = $('#{{ __SELF__ }}-subscribe');
+
+    // subscribeForm.on('ajaxSetup', async function (event, context) {
+    //     console.log(window.recaptchaTokenReady);
+    //     console.log('Ajax setup');
+    //     if (window.recaptchaReady) return;
+    //     console.log('Captcha was not true');
+    //     event.preventDefault();
+
+    //     grecaptcha.ready(async () => {
+    //         console.log('Catpcha ready');
+
+    //         const token = await grecaptcha.execute('{{ __SELF__.recaptchaSiteKey }}', { action: 'submit' }).then(function (token) {
+    //             console.log('Captcha execute');
+
+    //             return token;
+    //         });
+    //         console.log(token);
+
+
+    //         const captchaInput = document.getElementById('{{ __SELF__ }}-recaptcha-response');
+    //         captchaInput.value = token;
+
+    //         window.recaptchaReady = true;
+
+    //         $(context.el).request(context.handler);
+
+    //         window.recaptchaReady = false;
+    //         console.log('Captcha ready is false');
+    //     });
+    //     console.log('End if');
+    // })
+
+    // addEventListener('ajax:promise', function (event, context) {
+    //     const form = event.detail.context.el;
+    //     const handler = event.detail.context.handler;
+
+    //     event.preventDefault();
+
+    //     $(form).request(handler);
+    // })
 </script>
 {% endput %}
