@@ -12,71 +12,33 @@
         }
 
         formObj.addEventListener('ajax:setup', function (event, context) {
+
+            if (formObj.dataset.recaptchaDone === "1") {
+                return;
+            }
+
+            const handler = event.detail.context.handler;
+            const element = event.detail.context.el
+
+            event.preventDefault();
+
             grecaptcha.execute('{{ __SELF__.recaptchaSiteKey }}', { action: 'submit' })
                 .then(function (token) {
                     formObj.querySelectorAll('.g-recaptcha-response')[0].value = token;
                     window.recaptcha_token_ready = true;
+                    console.log(token);
+                    formObj.dataset.recaptchaDone = "1";
+                    oc.request(element, handler);
                 });
-
-            function recaptchaTokenReady() {
-                window.setTimeout(function () {
-                    if (!Boolean(window["recaptcha_token_ready"])) {
-                        recaptchaTokenReady();
-                    }
-                }, 30);
-            }
-            recaptchaTokenReady();
         });
 
         formObj.dataset.recaptchaListener = "1";
     }
 
-    addEventListener('page:loaded', function() {
+    addEventListener('page:loaded', function () {
         registerListener(document.getElementById('{{ __SELF__ }}-subscribe'));
     });
 
     registerListener(document.getElementById('{{ __SELF__ }}-subscribe'));
-
-    // var subscribeForm = $('#{{ __SELF__ }}-subscribe');
-
-    // subscribeForm.on('ajaxSetup', async function (event, context) {
-    //     console.log(window.recaptchaTokenReady);
-    //     console.log('Ajax setup');
-    //     if (window.recaptchaReady) return;
-    //     console.log('Captcha was not true');
-    //     event.preventDefault();
-
-    //     grecaptcha.ready(async () => {
-    //         console.log('Catpcha ready');
-
-    //         const token = await grecaptcha.execute('{{ __SELF__.recaptchaSiteKey }}', { action: 'submit' }).then(function (token) {
-    //             console.log('Captcha execute');
-
-    //             return token;
-    //         });
-    //         console.log(token);
-
-
-    //         const captchaInput = document.getElementById('{{ __SELF__ }}-recaptcha-response');
-    //         captchaInput.value = token;
-
-    //         window.recaptchaReady = true;
-
-    //         $(context.el).request(context.handler);
-
-    //         window.recaptchaReady = false;
-    //         console.log('Captcha ready is false');
-    //     });
-    //     console.log('End if');
-    // })
-
-    // addEventListener('ajax:promise', function (event, context) {
-    //     const form = event.detail.context.el;
-    //     const handler = event.detail.context.handler;
-
-    //     event.preventDefault();
-
-    //     $(form).request(handler);
-    // })
 </script>
 {% endput %}
