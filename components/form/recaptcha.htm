@@ -14,6 +14,7 @@
         formObj.addEventListener('ajax:setup', function (event, context) {
 
             if (formObj.dataset.recaptchaDone === "1") {
+                delete formObj.dataset.recaptchaDone;
                 return;
             }
 
@@ -25,8 +26,6 @@
             grecaptcha.execute('{{ __SELF__.recaptchaSiteKey }}', { action: 'submit' })
                 .then(function (token) {
                     formObj.querySelectorAll('.g-recaptcha-response')[0].value = token;
-                    window.recaptcha_token_ready = true;
-                    console.log(token);
                     formObj.dataset.recaptchaDone = "1";
                     oc.request(element, handler);
                 });
