@@ -1,16 +1,43 @@
-<input name="g-recaptcha-response"
-       class="g-recaptcha"
-       type="hidden"
+<input type="hidden"
+       class="g-recaptcha-response"
+       name="g-recaptcha-response"
        id="{{ __SELF__ }}-recaptcha-response">
 
 {% put scripts %}
-<script src="https://www.google.com/recaptcha/api.js?render={{ __SELF__ .recaptchaSiteKey }}"></script>
-
+<script src="https://www.google.com/recaptcha/api.js?render={{ __SELF__.recaptchaSiteKey }}"></script>
 <script>
-    grecaptcha.ready(function () {
-        grecaptcha.execute('{{ __SELF__.recaptchaSiteKey }}', { action: 'register' }).then(function (token) {
-            document.getElementById('{{ __SELF__ }}-recaptcha-response').value = token;
+    function registerListener(formObj) {
+        if (formObj == null || formObj.dataset.recaptchaListener) {
+            return;
+        }
+
+        formObj.addEventListener('ajax:setup', function (event, context) {
+
+            if (formObj.dataset.recaptchaDone === "1") {
+                delete formObj.dataset.recaptchaDone;
+                return;
+            }
+
+            const handler = event.detail.context.handler;
+            const element = event.detail.context.el
+
+            event.preventDefault();
+
+            grecaptcha.execute('{{ __SELF__.recaptchaSiteKey }}', { action: 'submit' })
+                .then(function (token) {
+                    formObj.querySelectorAll('.g-recaptcha-response')[0].value = token;
+                    formObj.dataset.recaptchaDone = "1";
+                    oc.request(element, handler);
+                });
         });
+
+        formObj.dataset.recaptchaListener = "1";
+    }
+
+    addEventListener('page:loaded', function () {
+        registerListener(document.getElementById('{{ __SELF__ }}-subscribe'));
     });
+
+    registerListener(document.getElementById('{{ __SELF__ }}-subscribe'));
 </script>
 {% endput %}

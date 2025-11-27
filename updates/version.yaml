@@ -67,3 +67,5 @@
     - "Implement Captcha verification"
 1.4.1:
     - "Fix default threshold"
+1.4.2:
+    - "Resolve turbo router and expiring token issues"
