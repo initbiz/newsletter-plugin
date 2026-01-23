@@ -69,3 +69,5 @@
     - "Fix default threshold"
 1.4.2:
     - "Resolve turbo router and expiring token issues"
+1.4.3:
+    - "Create the subscriber in add group webhook if it isn't there yet"
