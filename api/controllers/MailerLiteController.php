@@ -70,6 +70,12 @@ class MailerLiteController extends Controller
     {
         $subscriber = $this->subscriberFromMailerLiteSyntax($data);
 
+        // Sometimes webhook is pushed before the subscriber exists, we should save it in the first run then
+        $exists = Subscriber::where('email', $subscriber->email)->exists();
+        if (!$exists) {
+            $subscriber->save();
+        }
+
         $tag = Tag::where('name', $data['group']['name'])->first();
 
         if (!$tag) {
