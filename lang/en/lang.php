@@ -96,6 +96,8 @@ return [
         'button_text' => 'Text on button',
         'ref' => 'Ref',
         'ref_description' => 'Reference string to identify this form',
+        'redirect' => 'Redirect after success',
+        'redirect_description' => 'Leave empty to leave default behavior of flash message',
         'custom_view_path' => 'Custom view directory',
         'custom_view_path_description' => 'Set this to the name of directory in your theme/partials to overwrite the view',
     ],

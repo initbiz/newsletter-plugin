@@ -96,6 +96,8 @@ return [
         'button_text' => 'Napis na przycisku',
         'ref' => 'Ref - punkt odniesienia',
         'ref_description' => 'Punkt odniesienia, żeby zidentyfikować ten formularz',
+        'redirect' => 'Przekierowanie na sukcesie',
+        'redirect_description' => 'Zostaw puste, żeby zwrócić komunikat flash',
         'custom_view_path' => 'Nadpisany widok',
         'custom_view_path_description' => 'Ustaw tę wartość na nazwę katalogu z theme/partials, żeby napisać widok',
     ],

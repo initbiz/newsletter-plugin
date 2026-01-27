@@ -71,3 +71,5 @@
     - "Resolve turbo router and expiring token issues"
 1.4.3:
     - "Create the subscriber in add group webhook if it isn't there yet"
+1.5.0:
+    - "Add redirect after successful subscription using form component"

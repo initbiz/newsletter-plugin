@@ -10,6 +10,7 @@ use Lang;
 use Mail;
 use Event;
 use Request;
+use Redirect;
 use ValidationException;
 use Cms\Classes\ComponentBase;
 use Initbiz\Newsletter\Models\Tag;
@@ -102,6 +103,12 @@ class Form extends ComponentBase
             'ref' => [
                 'title' => 'initbiz.newsletter::lang.form_component.ref',
                 'description' => 'initbiz.newsletter::lang.form_component.ref_description',
+                'type' => 'string',
+            ],
+
+            'redirect' => [
+                'title' => 'initbiz.newsletter::lang.form_component.redirect',
+                'description' => 'initbiz.newsletter::lang.form_component.redirect_description',
                 'type' => 'string',
             ],
 
@@ -274,6 +281,11 @@ class Form extends ComponentBase
 
         $this->fireEvent('form.submitted', $eventParams);
         Event::fire('initbiz.newsletter.formSubmitted', array_merge([$this], $eventParams));
+
+        $redirect = $this->property('redirect');
+        if (!empty($redirect)) {
+            return Redirect::to($redirect);
+        }
 
         $result = [
             'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_success')
