@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter\Models;
 
-use Model;
 use Event;
+use Model;
 
 /**
  * Tag Model
@@ -24,7 +26,6 @@ class Tag extends Model
      */
     public $rules = [
         'name' => 'required',
-        'slug' => 'required',
         'additional_data.*.key' => 'nullable|alpha_dash:ascii|max:250',
         'additional_data.*.value' => 'nullable|max:250',
     ];
@@ -72,7 +73,7 @@ class Tag extends Model
     {
         Event::fire('initbiz.newsletter.tagDelete', [$this]);
     }
-    
+
     /**
      * Shorthand to set values to additional_data
      *
@@ -85,7 +86,7 @@ class Tag extends Model
         $additionalData = $this->additional_data;
         if (!is_array($additionalData)) {
             $additionalData = [];
-        }  
+        }
 
         $found = false;
         $newAdditionalData = [];
@@ -102,7 +103,7 @@ class Tag extends Model
                 'key' => $key,
                 'value' => $value,
             ];
-        }  
+        }
 
         $this->additional_data = $newAdditionalData;
     }
@@ -118,12 +119,12 @@ class Tag extends Model
         $additionalData = $this->additional_data;
         if (!is_array($additionalData)) {
             $additionalData = [];
-        }  
+        }
 
         foreach ($additionalData as $additionalDataEntry) {
             if ($additionalDataEntry['key'] === $key) {
                 return $additionalDataEntry['value'];
-            }   
+            }
         }
 
         return null;

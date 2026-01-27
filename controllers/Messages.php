@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter\Controllers;
 
 use Lang;
@@ -70,8 +72,7 @@ class Messages extends Controller
             });
 
             Flash::success(trans('system::lang.mail_templates.test_success'));
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             Flash::error($e->getMessage());
         }
     }
@@ -82,8 +83,9 @@ class Messages extends Controller
             $messages = Message::get();
             foreach ($checkedId as $messageId) {
                 foreach ($messages as $message) {
-                    if ($message->id !== (int) $messageId)
+                    if ($message->id !== (int) $messageId) {
                         continue;
+                    }
                     $message->delete();
                     Flash::success(Lang::get('initbiz.newsletter::lang.flash.deleted'));
                 }

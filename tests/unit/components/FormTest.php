@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter\Tests\Unit\Classes;
 
 use PluginTestCase;
+use October\Rain\Mail\FakeMailer;
 use Initbiz\Newsletter\Models\Tag;
 use October\Rain\Support\Facades\Mail;
 use Initbiz\Newsletter\Components\Form;
@@ -13,7 +16,8 @@ class FormTest extends PluginTestCase
 {
     public function testOnSubscription()
     {
-        Mail::fake();
+        \Event::fake('initbiz.newsletter.formSubmitted');
+        Mail::swap(app()->make(FakeMailer::class));
 
         $tag = new Tag();
         $tag->name = "Test";

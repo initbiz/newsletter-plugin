@@ -1,4 +1,8 @@
-<?php namespace InITbiz\Newsletter\Updates;
+<?php
+
+declare(strict_types=1);
+
+namespace InITbiz\Newsletter\Updates;
 
 use File;
 use Schema;
@@ -13,12 +17,12 @@ class UpdateSubscribersTable extends Migration
     {
         $subscribers = Subscriber::all()->pluck('email', 'agreed');
 
-        $csv = CsvWriter::createFromFileObject(new SplTempFileObject);
+        $csv = CsvWriter::createFromFileObject(new SplTempFileObject());
         $csv->setOutputBOM(CsvWriter::BOM_UTF8);
 
         $csv->insertAll($subscribers);
 
-        $csvPath = temp_path().'/subscribers.bak';
+        $csvPath = temp_path() . '/subscribers.bak';
         $output = $csv->__toString();
 
         File::put($csvPath, $output);

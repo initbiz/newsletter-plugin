@@ -1,4 +1,8 @@
-<?php namespace Initbiz\Newsletter\Controllers;
+<?php
+
+declare(strict_types=1);
+
+namespace Initbiz\Newsletter\Controllers;
 
 use BackendMenu;
 use Backend\Classes\Controller;

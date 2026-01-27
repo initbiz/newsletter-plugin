@@ -1,0 +1,5 @@
+fields:
+    ref:
+        label: initbiz.newsletter::lang.particular_ref_condition.ref
+        comment: initbiz.newsletter::lang.particular_ref_condition.ref_comment
+        type: text

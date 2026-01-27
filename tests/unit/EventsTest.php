@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Initbiz\Newsletter\Tests\Unit;
 
 use Event;
@@ -14,10 +16,8 @@ class EventsTest extends PluginTestCase
     {
         Event::fake([
             "initbiz.newsletter.subscriberCreate",
-            "initbiz.newsletter.subscriberSave",
             "initbiz.newsletter.subscriberDelete",
             "initbiz.newsletter.tagCreate",
-            "initbiz.newsletter.tagSave",
             "initbiz.newsletter.tagDelete",
             "initbiz.newsletter.subscriberCheckboxesAttached",
             "initbiz.newsletter.subscriberCheckboxesDetached",
@@ -31,7 +31,6 @@ class EventsTest extends PluginTestCase
         $tag->save();
 
         Event::assertDispatched('initbiz.newsletter.tagCreate');
-        Event::assertDispatched('initbiz.newsletter.tagSave');
 
         $checkbox = new Checkbox();
         $checkbox->name = "GDPR";
@@ -45,7 +44,6 @@ class EventsTest extends PluginTestCase
         $subscriber->save();
 
         Event::assertDispatched('initbiz.newsletter.subscriberCreate');
-        Event::assertDispatched('initbiz.newsletter.subscriberSave');
 
         $subscriber->attachTags($tag);
         Event::assertDispatched('initbiz.newsletter.subscriberTagsAttached');

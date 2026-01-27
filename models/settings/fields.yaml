@@ -19,6 +19,40 @@ tabs:
             span: auto
             type: text
 
+        additional_fields:
+            label: ''
+            tab: initbiz.newsletter::lang.settings.additional_fields_tab
+            span: full
+            type: repeater
+            form:
+                fields:
+                    attribute:
+                        label: initbiz.newsletter::lang.settings.additional_fields_attribute
+                        type: text
+                        span: auto
+                    type:
+                        label: initbiz.newsletter::lang.settings.additional_fields_type
+                        type: dropdown
+                        span: auto
+                        options:
+                            text: initbiz.newsletter::lang.settings.additional_fields_type_text
+                            email: initbiz.newsletter::lang.settings.additional_fields_type_email
+                            number: initbiz.newsletter::lang.settings.additional_fields_type_number
+                    label:
+                        label: initbiz.newsletter::lang.settings.additional_fields_label
+                        type: text
+                        span: auto
+                    input_placeholder:
+                        label: initbiz.newsletter::lang.settings.additional_fields_input_placeholder
+                        type: text
+                        span: auto
+                    rules:
+                        label: initbiz.newsletter::lang.settings.additional_fields_rules
+                        comment: initbiz.newsletter::lang.settings.additional_fields_rules_comment
+                        commentHtml: true
+                        type: text
+                        span: auto
+
         enable_mailerlite_integration:
             label: initbiz.newsletter::lang.settings.enable_mailerlite_integration
             tab: initbiz.newsletter::lang.settings.integrations_tab
@@ -29,9 +63,65 @@ tabs:
         mailerlite_api_key:
             label: initbiz.newsletter::lang.settings.mailerlite_api_key
             tab: initbiz.newsletter::lang.settings.integrations_tab
-            span: left
+            span: full
             type: sensitive
             trigger:
                 action: show
                 condition: checked
                 field: enable_mailerlite_integration
+
+        mailerlite_webhook_secret:
+            label: initbiz.newsletter::lang.settings.mailerlite_webhook_secret
+            comment: initbiz.newsletter::lang.settings.mailerlite_webhook_secret_comment
+            commentHtml: true
+            tab: initbiz.newsletter::lang.settings.integrations_tab
+            span: full
+            type: sensitive
+            trigger:
+                action: show
+                condition: checked
+                field: enable_mailerlite_integration
+
+        is_recaptcha_enabled:
+            label: initbiz.newsletter::lang.settings.recaptcha_enabled_status
+            tab: initbiz.newsletter::lang.settings.captcha_tab
+            type: switch
+            default: 0
+
+        recaptcha_site_key:
+            label: initbiz.newsletter::lang.settings.recaptcha_site_key
+            tab: initbiz.newsletter::lang.settings.captcha_tab
+            required: true
+            type: sensitive
+            span: left
+            trigger:
+                action: show
+                field: is_recaptcha_enabled
+                condition: checked
+
+        recaptcha_secret_key:
+            label: initbiz.newsletter::lang.settings.recaptcha_secret_key
+            tab: initbiz.newsletter::lang.settings.captcha_tab
+            required: true
+            type: sensitive
+            span: right
+            trigger:
+                action: show
+                field: is_recaptcha_enabled
+                condition: checked
+
+        recaptcha_score_threshold:
+            label: initbiz.newsletter::lang.settings.recaptcha_score_threshold
+            comment: initbiz.newsletter::lang.settings.recaptcha_score_threshold_comment
+            tab: initbiz.newsletter::lang.settings.captcha_tab
+            span: left
+            required: true
+            type: number
+            min: 0
+            max: 1
+            step: 0.1
+            default: "0.5"
+            trigger:
+                action: show
+                field: is_recaptcha_enabled
+                condition: checked
