@@ -43,6 +43,13 @@ class Form extends ComponentBase
     public $buttonText;
 
     /**
+     * Custom HTML attributes on form element
+     *
+     * @var null|string
+     */
+    public $customFormAttributes;
+
+    /**
      * Directory to get view from (handy for snippets)
      *
      * @var null|string
@@ -112,6 +119,12 @@ class Form extends ComponentBase
                 'type' => 'string',
             ],
 
+            'customFormAttributes' => [
+                'title' => 'initbiz.newsletter::lang.form_component.custom_form_attributes',
+                'description' => 'initbiz.newsletter::lang.form_component.custom_form_attributes_description',
+                'type' => 'string',
+            ],
+
             'customViewPath' => [
                 'title' => 'initbiz.newsletter::lang.form_component.custom_view_path',
                 'description' => 'initbiz.newsletter::lang.form_component.custom_view_path_description',
@@ -140,6 +153,7 @@ class Form extends ComponentBase
         $this->selectedInputs = $this->getSelectedInputs();
         $this->buttonText = $this->property('buttonText');
         $this->customViewPath = $this->property('customViewPath');
+        $this->customFormAttributes = $this->property('customFormAttributes');
 
         $this->recaptchaEnabled = (bool) Settings::get('is_recaptcha_enabled');
 

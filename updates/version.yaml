@@ -73,3 +73,5 @@
     - "Create the subscriber in add group webhook if it isn't there yet"
 1.5.0:
     - "Add redirect after successful subscription using form component"
+1.6.0:
+    - "Add custom attributes to inject from component to form HTML element"
