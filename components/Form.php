@@ -10,6 +10,7 @@ use Lang;
 use Mail;
 use Event;
 use Request;
+use Redirect;
 use ValidationException;
 use Cms\Classes\ComponentBase;
 use Initbiz\Newsletter\Models\Tag;
@@ -40,6 +41,13 @@ class Form extends ComponentBase
      * @var null|string
      */
     public $buttonText;
+
+    /**
+     * Custom HTML attributes on form element
+     *
+     * @var null|string
+     */
+    public $customFormAttributes;
 
     /**
      * Directory to get view from (handy for snippets)
@@ -105,6 +113,18 @@ class Form extends ComponentBase
                 'type' => 'string',
             ],
 
+            'redirect' => [
+                'title' => 'initbiz.newsletter::lang.form_component.redirect',
+                'description' => 'initbiz.newsletter::lang.form_component.redirect_description',
+                'type' => 'string',
+            ],
+
+            'customFormAttributes' => [
+                'title' => 'initbiz.newsletter::lang.form_component.custom_form_attributes',
+                'description' => 'initbiz.newsletter::lang.form_component.custom_form_attributes_description',
+                'type' => 'string',
+            ],
+
             'customViewPath' => [
                 'title' => 'initbiz.newsletter::lang.form_component.custom_view_path',
                 'description' => 'initbiz.newsletter::lang.form_component.custom_view_path_description',
@@ -133,6 +153,7 @@ class Form extends ComponentBase
         $this->selectedInputs = $this->getSelectedInputs();
         $this->buttonText = $this->property('buttonText');
         $this->customViewPath = $this->property('customViewPath');
+        $this->customFormAttributes = $this->property('customFormAttributes');
 
         $this->recaptchaEnabled = (bool) Settings::get('is_recaptcha_enabled');
 
@@ -274,6 +295,11 @@ class Form extends ComponentBase
 
         $this->fireEvent('form.submitted', $eventParams);
         Event::fire('initbiz.newsletter.formSubmitted', array_merge([$this], $eventParams));
+
+        $redirect = $this->property('redirect');
+        if (!empty($redirect)) {
+            return Redirect::to($redirect);
+        }
 
         $result = [
             'content' => Lang::get('initbiz.newsletter::lang.ajaxFormResponse.sign_up_success')

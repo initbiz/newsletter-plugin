@@ -2,7 +2,7 @@
 {% if __SELF__.customViewPath %}
     {% set viewPath = __SELF__.customViewPath ~ "/" %}
 {% endif %}
-<form data-request="{{ __SELF__ }}::onSubscription" id="{{ __SELF__ }}-subscribe">
+<form data-request="{{ __SELF__ }}::onSubscription" id="{{ __SELF__ }}-subscribe" {{ __SELF__.customFormAttributes|raw }}>
     {% for attribute,inputDef in __SELF__.selectedInputs %}
         {% partial viewPath ~ 'input_' ~ inputDef.type attribute=attribute label=inputDef.label input_placeholder=inputDef.input_placeholder %}
     {% endfor %}
