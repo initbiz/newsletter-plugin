@@ -1,44 +1,47 @@
 Newsletter plugin
 ===
 
-![Newsletter plugin](docs/newsletter.png)
+![Newsletter plugin](docs/newsletter-banner.png)
 
-### Introduction
+## Introduction
 
-The plugin helps with managing audience. Right now it has out of the box integration with MailerLite but adding a new one is pretty straightforward from any other plugin.
+Send branded newsletter e-mails to subscribers.  Easy to use and fully GDPR compliant this clever plugin gives you a number of options to offer prospective subscribers.
 
-In the plugin we have Subscribers, Tags, Checkboxes, and Messages.
-
-- Subscribers have many built in fields but they can also have additional fields added.
-- Tags are for grouping people. Every subscriber can have many tags.
-- Checkboxes are "rules" that people accept on signing in. They may be required, or not.
-- You can also send messages directly from the plugin to your audience. It's not common these days because you probably would want to use an external service for that.
+1. Simple checkbox management for opting in subscribers to all or selected lists.
+1. Automatic email verification to confirm opt in.
+1. Visitor managed message categories if required.
+1. Admin choice for sending to all or selected lists.
+1. Messages can be created and saved for future broadcast.
+1. Unsubscribe link in every message sent.
 
 ### Usage
+1. Create page for managing newsletter options by subscribers so that it has `:email` and `:token` variables (for example `manage-newsletter` with `/manage-newsletter/:email/:token` URL). Of course, those variables can be changed.
+1. Embed component `NewsletterConfirm` on exact one CMS page (Newsletter plugin will automatically look for a page that has the component and cache it for 10 minutes)
+1. Go to backend Newsletter -> Checkboxes and add checkboxes as your business requires
+1. Embed component `NewsletterForm` on the page you want to have form rendered on (landing page or just footer partial)
 
-1. Create page for the subscribers to manage their subscription - component `NewsletterConfirm` is automatically confirming and renders form for managing the subscription.
-1. Add `Form` component to every place that you want your subscribers to sign in
+> Do not forget to configure e-mail sending in your backend settings
 
-> As of version 1.1.0, `:email` parameter is optional in the newsletter management page.
+### Translations
+The plugin supports translations for all elements (there are no hardcoded frontend contents) including AJAX responses and displayed errors.
 
-## Tech documentation
+Out of the box, there are only two languages:
+* pl - Polski
+* en - English
 
-### Integrations
+But of course, you can prepare your own translations.
 
-The plugin makes it easy to integrate with other sending e-mails services like MailChimp or MailerLite.
+### E-mail templates
+Out of the box, there are two e-mail templates you can to customize:
 
-Out of the box, for now, only MailerLite is supported.
+* `inibiz.newsletter::mail.subscription` which is sent to those who want to become a subscriber
+* `initbiz.newsletter::mail.message` which is sent to subscribers
 
-To integrate with other service, you can use one the the following events:
+In `subscription` e-mail template you can use `{{activationLink}}` variable.
 
-- `initbiz.newsletter.subscriberCreate ($subscriber)`
-- `initbiz.newsletter.subscriberUpdate ($subscriber)`
-- `initbiz.newsletter.subscriberDelete ($subscriber)`
-- `initbiz.newsletter.tagCreate ($tag)`
-- `initbiz.newsletter.tagUpdate ($tag)`
-- `initbiz.newsletter.tagDelete ($tag)`
-- `initbiz.newsletter.subscriberCheckboxesAttached ($subscriber, $checkboxes)`
-- `initbiz.newsletter.subscriberCheckboxesDetached ($subscriber, $checkboxes)`
-- `initbiz.newsletter.subscriberTagsAttached ($subscriber, $tags)`
-- `initbiz.newsletter.subscriberTagsDetached ($subscriber, $tags)`
+In `message` e-mail template you can use:
+* `{{title}}` - Title of message
+* `{{content}}` - Content of message
+* `{{ newsletterLink }}` - link for subscribers to sign out from newsletter
 
+If you want, you can create your own e-mail template. While sending you just have to choose which one you want to use. The `message` e-mail template is just a default one.
